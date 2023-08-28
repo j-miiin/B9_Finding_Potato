@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindingPotato.Item;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,10 +18,15 @@ namespace FindingPotato.Character
         public VegetableType Type { get; }
         public int Level { get; set; }
         public int Health { get; set; }
+        public int CurrentHealth { get; set; }
         public int Defense { get; set; }
+        public int AddDef { get; set; }
         public int AttackPower { get; set; }
+        public int AddAtk { get; set; }
         public bool IsDead => Health <= 0;
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
+
+        public List<IItem> Inventory = new List<IItem>();
 
         public Player(string name, VegetableType type)
         {
@@ -46,6 +52,8 @@ namespace FindingPotato.Character
                 Defense = 0;
                 AttackPower = 60;
             }
+
+            CurrentHealth = Health;
         }
 
         public void TakeDamage(int damage)

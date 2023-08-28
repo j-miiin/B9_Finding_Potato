@@ -8,23 +8,23 @@
     "net6.0": []
   },
   "packageFolders": {
-    "C:\\Users\\HOME\\.nuget\\packages\\": {},
+    "C:\\Users\\Hyeonji Lee\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\minsang\\GitHub\\B9_Text_RPG\\FindingPotato\\FindingPotato\\FindingPotato.csproj",
+      "projectUniqueName": "C:\\Users\\Hyeonji Lee\\Desktop\\Sparta\\Projects\\B9_Finding_Potato\\FindingPotato\\FindingPotato\\FindingPotato.csproj",
       "projectName": "FindingPotato",
-      "projectPath": "D:\\minsang\\GitHub\\B9_Text_RPG\\FindingPotato\\FindingPotato\\FindingPotato.csproj",
-      "packagesPath": "C:\\Users\\HOME\\.nuget\\packages\\",
-      "outputPath": "D:\\minsang\\GitHub\\B9_Text_RPG\\FindingPotato\\FindingPotato\\obj\\",
+      "projectPath": "C:\\Users\\Hyeonji Lee\\Desktop\\Sparta\\Projects\\B9_Finding_Potato\\FindingPotato\\FindingPotato\\FindingPotato.csproj",
+      "packagesPath": "C:\\Users\\Hyeonji Lee\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Hyeonji Lee\\Desktop\\Sparta\\Projects\\B9_Finding_Potato\\FindingPotato\\FindingPotato\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\HOME\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Hyeonji Lee\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -33,6 +33,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

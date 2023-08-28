@@ -7,9 +7,36 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Item
 {
-    internal interface IItem
+    enum ItemType
     {
-        string Name { get; }
-        void Use(Player player); // 전사에게 아이템을 사용하는 메서드
+        HealthPotion,
+        StrengthPotion,
+        Weapon,
+        Armor
     }
+    interface IItem
+    {
+
+        string Name { get; set; }
+        ItemType Type { get; set; }
+        int Effect { get; set; }
+        string Desc { get; set; }
+
+        void Use(Player player);
+
+    }
+
+    interface IConsumable : IItem
+    {
+        int Quantity { get; set; }
+
+    }
+
+    interface IEquipable : IItem
+    {
+        bool IsEquipped { get; set; }
+    }
+
+
+
 }

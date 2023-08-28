@@ -27,3 +27,17 @@ D:\C#\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPota
 D:\C#\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.pdb
 D:\C#\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.genruntimeconfig.cache
 D:\C#\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\ref\FindingPotato.dll
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.AssemblyInfoInputs.cache
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.AssemblyInfo.cs
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.csproj.CoreCompileInputs.cache
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.dll
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\refint\FindingPotato.dll
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.pdb
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.exe
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.deps.json
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.runtimeconfig.json
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.dll
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.pdb
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.genruntimeconfig.cache
+C:\Users\Hyeonji Lee\Desktop\Sparta\Projects\B9_Finding_Potato\FindingPotato\FindingPotato\obj\Debug\net6.0\ref\FindingPotato.dll
