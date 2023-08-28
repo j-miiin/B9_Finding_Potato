@@ -138,8 +138,25 @@ public class GameManager
 
         int input = GetInput(0, 1);
 
-        if (input == 1) { /* 아이템 장착 관리*/ }
-        else return;
 
+        if (input == 0) return;
+        else { ItemManagement(); }
+
+    }
+
+    public void ItemManagement()
+    {
+        Console.Clear();
+
+        Inventory.PrintTitle();
+
+        Inventory.ListingItems(player.Inventory, true);
+
+        Inventory.ShowOptions();
+
+        int input = GetInput(0, player.Inventory.Count);
+
+        if (input == 0) return;
+        else { Inventory.ItemManager(player.Inventory[input - 1]); }
     }
 }
