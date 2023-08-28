@@ -25,18 +25,4 @@ namespace FindingPotato.Item
         void Use(Player player);
 
     }
-
-    interface IConsumable : IItem
-    {
-        int Quantity { get; set; }
-
-    }
-
-    interface IEquipable : IItem
-    {
-        bool IsEquipped { get; set; }
-    }
-
-
-
 }
