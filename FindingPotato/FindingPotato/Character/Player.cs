@@ -25,7 +25,7 @@ namespace FindingPotato.Character
         {
             Health -= damage;
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
-            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
+            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다.");
         }
     }
 }

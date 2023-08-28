@@ -195,7 +195,7 @@ namespace FindingPotato.Stage
                     int damage = monsters[i].Attack;
 
                     //몬스터 이전 체력
-                    int previousHP = monsters[i].Health;
+                    int previousHP = player.Health;
 
                     Console.WriteLine("Battle!!\n");
                     Console.WriteLine($"{monsters[i].Name}의 공격!");
