@@ -3,6 +3,7 @@ using FindingPotato.Character;
 using FindingPotato.Item;
 using FindingPotato.Stage;
 using System;
+using FindingPotato.Inventory;
 
 namespace FindingPotato
 {
@@ -101,7 +102,8 @@ public class GameManager
             int input = GetInput(0, 3);
 
             if (input == 1) { ShowStatus(); }
-            else if (input == 2) { /* 전투 시작 */ }
+            else if (input == 2) { ShowInventory(); }
+            else if (input == 3) { /* 전투 시작 */ }
             else return;
         }
     }
@@ -120,5 +122,24 @@ public class GameManager
         ColorWriteLine("\n0. 나가기");
 
         _ = GetInput(0, 0);
+    }
+
+
+    // 인벤토리 보기
+    public void ShowInventory()
+    {
+        Console.Clear();
+
+        Inventory.PrintTitle();
+
+        Inventory.ListingItems(player.Inventory, false);
+
+        Inventory.ShowOptions();
+
+        int input = GetInput(0, 1);
+
+        if (input == 1) { /* 아이템 장착 관리*/ }
+        else return;
+
     }
 }
