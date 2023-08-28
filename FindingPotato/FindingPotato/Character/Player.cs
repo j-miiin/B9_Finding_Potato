@@ -40,6 +40,7 @@ namespace FindingPotato.Character
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다. 남은 체력: {Health}");
         }
 
+        // TODO 전투 끝나면 MP 10 회복
         public bool AttackWithMP(MPAttackType attackType)
         {
             if (attackType == MPAttackType.Alpha)
