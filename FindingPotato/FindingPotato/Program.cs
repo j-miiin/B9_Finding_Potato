@@ -27,13 +27,10 @@ public class GameManager
     Onion onion;
     Banana banana;
 
-    List<IItem> stageRewards;
+    //List<IItem> stageRewards;
 
     //전체 몬스터 리스트
     List<ICharacter> monsters = new List<ICharacter>();
-
-    //스테이지 입장할 몬스터 리스트
-    List<ICharacter> RandomMonster = new List<ICharacter>();
 
     StageClass stage;
 
@@ -49,20 +46,42 @@ public class GameManager
 
         // 각 스테이지의 보상 아이템들
         //stageRewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
-
-        // 스테이지
     }
 
-    static void ShuffleList(List<ICharacter> list)
+    //몬스터를 랜덤하게 등장하는 스테이지 생성
+    StageClass CreateRandomStage(List<ICharacter> monsters, int numberOfMonsters)
     {
         Random random = new Random();
-        int n = list.Count;
-        while (n > 1)
+
+        //사용가능한 몬스터 (중복 방지를 피하기 위해 초기에 몬스터 리스트 복사)
+        List<ICharacter> availableMonsters = new List<ICharacter>(monsters);
+
+        //선택된 몬스터 
+        List<ICharacter> selectedMonsters = new List<ICharacter>();
+
+        //1~numberOfMonsters 사이에서만 해당됨 nu
+        //numberOfMonsters = Math.Clamp(numberOfMonsters, 1, numberOfMonsters);
+
+        for (int i = 0; i < numberOfMonsters; i++)
         {
-            n--;
-            int k = random.Next(n + 1);
-            (list[n], list[k]) = (list[k], list[n]);
+            //사용가능한 몬스터가 없을 경우 종료
+            if (availableMonsters.Count == 0)
+            {
+                break;
+            }
+
+            //사용가능한 몬스터 리스트에서 랜덤한 인덱스 선택 
+            int randomIndex = random.Next(availableMonsters.Count);
+
+            //선택된 몬스터를 선택된 몬스터 리스트에 추가하고 사용가능한 몬스터 리스트에서는 삭제 
+            ICharacter selectedMonster = availableMonsters[randomIndex];
+            selectedMonsters.Add(selectedMonster);
+            availableMonsters.RemoveAt(randomIndex);
         }
+
+        stage = new StageClass(player, selectedMonsters);
+
+        return stage;
     }
 
     // 캐릭터 생성 - 이름, 직업
@@ -105,13 +124,8 @@ public class GameManager
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
             {
-                ShuffleList(monsters);
-                //스테이지 입장할 몬스터리스트에 기존 몬스터 3마리 추가 
-                for (int i = 0; i < 3; i++)
-                {
-                    RandomMonster.Add(monsters[i]);
-                }
-                stage = new StageClass(player, RandomMonster, stageRewards);
+                //전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장  
+                stage = CreateRandomStage(monsters, 3);
                 stage.Start(); 
             }
             else return;

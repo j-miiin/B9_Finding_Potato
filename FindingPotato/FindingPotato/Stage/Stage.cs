@@ -4,6 +4,7 @@ using FindingPotato.Item;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ namespace FindingPotato.Stage
     internal class StageClass
     {
         private Player player; // 플레이어
-        //private ICharacter monster; // 몬스터
-        private List<IItem> rewards; // 보상 아이템들
+
+        //private List<IItem> rewards; // 보상 아이템들
 
         private List<ICharacter> monsters;
 
@@ -22,21 +23,22 @@ namespace FindingPotato.Stage
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
 
-        public StageClass(Player player, List<ICharacter> monsters, List<IItem> rewards)
+        public StageClass(Player player, List<ICharacter> monsters)
         {
             this.player = player;
             this.monsters = monsters;
-            this.rewards = rewards;
+            //this.rewards = rewards;
             OnCharacterDeath += StageClear; // 캐릭터가 죽었을 때 StageClear 메서드 호출
         }
 
+        //전투 정보 표시
         void InfoScreen(bool bNum, string str)
         {
             Console.WriteLine("Battle!!!\n");
 
             for (int i = 0; i < 3; i++)
             {
-                Console.WriteLine($"{(bNum ? i + 1 : "")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+                Console.WriteLine($"{(bNum ? (i + 1)+".": "")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
             }
 
             Console.WriteLine();
@@ -48,7 +50,7 @@ namespace FindingPotato.Stage
             Console.WriteLine();
         }
 
-        // 스테이지 시작 메서드
+        // 스테이지 시작 
         public void Start()
         {
             while (true)
@@ -67,7 +69,7 @@ namespace FindingPotato.Stage
 
                 if (input == 1)
                 {
-                    PlayerAttackSelect();
+                    InitiatePlayerAttackAction();
                 }
                 else if (input == 2)
                 {
@@ -75,12 +77,14 @@ namespace FindingPotato.Stage
                 }
                 else if (input == 0)
                 {
+                    //도망가기
                     break;
                 }
             }
         }
 
-        void PlayerAttackSelect()
+        //플레이어 공격 시작 화면 
+        void InitiatePlayerAttackAction()
         {
             while (true)
             {
@@ -90,16 +94,16 @@ namespace FindingPotato.Stage
 
                 int input = Extension.GetInput(0, 3);
 
-                if (input > 0 && input < monsters.Count())
+                if (input > 0 && input <= monsters.Count())
                 {
                     if (monsters[input - 1].IsDead) // 죽은 몬스터는 선택 X
                     {
-                        Console.WriteLine($"{monsters[input - 1].Name}은(는) 이미 죽었습니다.");
+                        Console.WriteLine($"{monsters[input-1].Name}은(는) 이미 죽었습니다.");
                         Thread.Sleep(500);
                     }
                     else
                     {
-                        PlayerTurnScreen(monsters[input - 1]);
+                        PlayerTurnScreen(monsters[input-1]);
                         EnenyPhase();
                         break;
                     }
@@ -108,23 +112,20 @@ namespace FindingPotato.Stage
                 {
                     break;
                 }
+                else return; 
             }
         }
 
-        //플레이어 공격 화면
+        //플레이어 공격 화면 
         void PlayerTurnScreen(ICharacter monster)
         {
             while (true)
             {
-                //플레이어 생사 확인
-                if (player.IsDead)
-                {
-                    break;
-                }
-                
                 Console.Clear();
+
                 //플레이어의 데미지
                 int damage = player.Attack;
+
                 //플레이어의 이전 체력
                 int previousHP = monster.Health; 
 
@@ -138,36 +139,20 @@ namespace FindingPotato.Stage
 
                 Console.WriteLine("0.다음");
 
-                string? input = Console.ReadLine();
+                int input = Extension.GetInput(0, 0);
 
-                bool isValid = int.TryParse(input, out int select);
-
-                if (isValid)
+                if(input == 0)
                 {
-                    if (select == 0)
+                    if (monsters.All(x => x.IsDead)) //몬스터가 전부 죽으면 승리 
                     {
-                        if (monsters.All(x => x.IsDead)) //몬스터가 전부 죽으면 승리 
-                        {
-                            OnCharacterDeath?.Invoke(monster);
-                            break;
-                        }
-                        else
-                            break;
+                        OnCharacterDeath?.Invoke(monster);
                     }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(500);
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
+                    break; 
                 }
             }
         }
 
+        //몬스터 공격 페이즈
         void EnenyPhase()
         {
             for(int i = 0; i<monsters.Count; i++) // 배열에 있는 몬스터들이 공격
@@ -193,29 +178,24 @@ namespace FindingPotato.Stage
 
                     Console.WriteLine("0.다음");
 
-                    string? input = Console.ReadLine();
-
-                    bool isValid = int.TryParse(input, out int select);
-
-                    if (isValid && select == 0)
-                        break;
-                    else
+                    int input = Extension.GetInput(0, 0); 
+                    
+                    if(input == 0)
                     {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(500);
+                        //플레이어 생사 확인
+                        if (player.IsDead)
+                        {
+                            OnCharacterDeath?.Invoke(player);
+                        }
+                        break; 
                     }
 
-                    //플레이어 생사 확인
-                    if (player.IsDead)
-                    {
-                        OnCharacterDeath?.Invoke(player);
-                        break;
-                    }
+
                 }
             }
         }
 
-        //스테이지 클리어 메서드
+        //스테이지 클리어 
         void StageClear(ICharacter character)
         {
             while (true)
@@ -237,18 +217,16 @@ namespace FindingPotato.Stage
                 Console.WriteLine("0.다음");
                 Console.Write(">> ");
 
-                string? input = Console.ReadLine();
+                int input = Extension.GetInput(0, 0);
 
-                bool isValid = int.TryParse(input, out int select);
-
-                if (isValid && select == 0)
-                    break;
-                else
+                if (input == 0)
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
+                    break; 
                 }
             }
         }
+
+
+
     }
 }   
