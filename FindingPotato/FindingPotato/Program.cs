@@ -11,38 +11,6 @@ namespace FindingPotato
     {
         static void Main()
         {
-            //Player player = new Player("Player"); // 플레이어 생성
-
-            //Paprika paprika = new Paprika("파프리카"); 
-            //Onion onion = new Onion("양파"); 
-            //Banana banana = new Banana("바나나");
-
-            //List<ICharacter> monsters = new List<ICharacter>();
-            //monsters.Add(onion);
-            //monsters.Add(paprika);
-            //monsters.Add(banana);
-
-            ////리스트 섞기 
-            //ShuffleList(monsters);
-
-            ////스테이지 입장할 몬스터 리스트
-            //List<ICharacter> RandomMonster = new List<ICharacter>();
-
-            ////스테이지 입장할 몬스터 리스트에 기존 몬스터 3마리 추가 
-            //for (int i = 0; i<3; i++)
-            //{
-            //    RandomMonster.Add(monsters[i]); 
-            //}
-
-            //// 각 스테이지의 보상 아이템들
-            //List<IItem> stage1Rewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
-            //List<IItem> stage2Rewards = new List<IItem> { new StrengthPotion(), new HealthPotion() };
-
-            //// 스테이지 1
-            //StageClass stage1 = new StageClass(player, monsters, stage1Rewards);
-
-            //stage1.Start();
-
             GameManager GM = new GameManager();
             GM.InitialCharacter();
             GM.GameMain();
@@ -100,11 +68,19 @@ public class GameManager
     public void InitialCharacter()
     {
         // 이름 설정 - string
-        Extension.TypeWriting("원하시는 이름을 설정해주세요.\n");
+        Extension.TypeWriting("이름 ?\n");
         Console.Write(">> ");
-        player = new Player(Console.ReadLine());
+        string playerName = Console.ReadLine();
 
         // 직업 설정 - enum(int)
+        Extension.TypeWriting("\n정체\n");
+
+        Extension.ColorWriteLine("1. 감자");
+        Extension.ColorWriteLine("2. 고구마");
+        Extension.ColorWriteLine("3. 당근");
+
+        int playerType = Extension.GetInput(1, 3);
+        player = new Player(playerName, (VegetableType)playerType);
     }
 
     // 메인 화면
@@ -146,10 +122,12 @@ public class GameManager
     {
         Console.Clear();
         Console.WriteLine($"◇----------◇----------◇----------");
-        Console.WriteLine($"| {player.Name}");
+        Console.WriteLine($"| {player.Name}      ({player.Type})");
+        Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.Health}");
-        Console.WriteLine($"| 공격력 : {player.Attack}");
+        Console.WriteLine($"| 공격력 : {player.AttackPower}");
+        Console.WriteLine($"| 방어력 : {player.Defense}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
         Extension.ColorWriteLine("\n0. 나가기");
