@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Character
 {
-    internal class Player
+    internal class Player : ICharacter
     {
         public string Name { get; }
         public int Health { get; set; }

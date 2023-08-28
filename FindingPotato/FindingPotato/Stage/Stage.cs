@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Stage
 {
-    internal class Stage
+    internal class StageClass
     {
         private ICharacter player; // 플레이어
         private ICharacter monster; // 몬스터
@@ -18,7 +18,7 @@ namespace FindingPotato.Stage
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
 
-        public Stage(ICharacter player, ICharacter monster, List<IItem> rewards)
+        public StageClass(ICharacter player, ICharacter monster, List<IItem> rewards)
         {
             this.player = player;
             this.monster = monster;
