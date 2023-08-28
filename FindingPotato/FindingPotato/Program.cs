@@ -1,6 +1,7 @@
 ﻿using FindingPotato.Character.Monster;
 using FindingPotato.Character;
 using FindingPotato.Item;
+using FindingPotato.Stage;
 
 namespace FindingPotato
 {
@@ -17,7 +18,7 @@ namespace FindingPotato
             List<IItem> stage2Rewards = new List<IItem> { new StrengthPotion(), new HealthPotion() };
 
             // 스테이지 1
-            Stage stage1 = new Stage(player, paprika, stage1Rewards);
+            StageClass stage1 = new StageClass(player, paprika, stage1Rewards);
             stage1.Start();
         }
     }
