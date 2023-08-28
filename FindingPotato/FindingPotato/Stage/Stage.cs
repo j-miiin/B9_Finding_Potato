@@ -148,9 +148,7 @@ namespace FindingPotato.Stage
                 Console.WriteLine();
 
                 Console.WriteLine($"Lv.() {monster.Name}");
-                Console.WriteLine($"HP {previousHP} -> {monster.Health}");
-              
-                Console.WriteLine();
+                Console.WriteLine($"HP {previousHP} -> {monster.Health}\n");
 
                 Console.WriteLine("0.다음");
 
@@ -213,18 +211,8 @@ namespace FindingPotato.Stage
 
                     bool isValid = int.TryParse(input, out int select);
 
-                    if (isValid)
-                    {
-                        if (select == 0)
-                        {
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine("잘못된 입력입니다.");
-                            Thread.Sleep(500);
-                        }
-                    }
+                    if (isValid && select == 0)
+                        break;
                     else
                     {
                         Console.WriteLine("잘못된 입력입니다.");
@@ -267,18 +255,8 @@ namespace FindingPotato.Stage
 
                 bool isValid = int.TryParse(input, out int select);
 
-                if (isValid)
-                {
-                    if (select == 0)
-                    {
-                        break; 
-                    }
-                    else
-                    {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(500);
-                    }
-                }
+                if (isValid && select == 0)
+                    break;
                 else
                 {
                     Console.WriteLine("잘못된 입력입니다.");

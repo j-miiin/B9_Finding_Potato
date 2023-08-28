@@ -4,21 +4,48 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+public enum VegetableType
+{
+    감자 = 1, 고구마, 당근
+}
+
 namespace FindingPotato.Character
 {
     internal class Player : ICharacter
     {
         public string Name { get; }
+        public VegetableType Type { get; }
+        public int Level { get; set; }
         public int Health { get; set; }
+        public int Defense { get; set; }
         public int AttackPower { get; set; }
         public bool IsDead => Health <= 0;
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
-        public Player(string name)
+        public Player(string name, VegetableType type)
         {
             Name = name;
-            Health = 100; // 초기 체력
-            AttackPower = 50; // 초기 공격력
+            Type = type;
+            Level = 1;
+
+            if (type == VegetableType.감자)
+            {
+                Health = 100;
+                Defense = 10;
+                AttackPower = 50;
+            }
+            else if (type == VegetableType.고구마)
+            {
+                Health = 120;
+                Defense = 20;
+                AttackPower = 40;
+            }
+            else // 당근
+            {
+                Health = 100;
+                Defense = 0;
+                AttackPower = 60;
+            }
         }
 
         public void TakeDamage(int damage)
