@@ -36,7 +36,7 @@ namespace FindingPotato.Stage
         {
             Console.WriteLine("Battle!!!\n");
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < monsters.Count(); i++)
             {
                 Console.WriteLine($"{(bNum ? (i + 1)+".": "")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
             }

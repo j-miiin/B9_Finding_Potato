@@ -59,8 +59,8 @@ public class GameManager
         //선택된 몬스터 
         List<ICharacter> selectedMonsters = new List<ICharacter>();
 
-        //1~numberOfMonsters 사이에서만 해당됨 nu
-        //numberOfMonsters = Math.Clamp(numberOfMonsters, 1, numberOfMonsters);
+        // 1~numberOfMonsters 사이에서 랜덤한 값 저장
+        numberOfMonsters = random.Next(1, numberOfMonsters+1);
 
         for (int i = 0; i < numberOfMonsters; i++)
         {
@@ -124,7 +124,6 @@ public class GameManager
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
             {
-                //전투를 시작하면 1~4마리의 몬스터가 랜덤하게 등장  
                 stage = CreateRandomStage(monsters, 3);
                 stage.Start(); 
             }
