@@ -3,6 +3,7 @@ using FindingPotato.Character;
 using FindingPotato.Item;
 using FindingPotato.Stage;
 using System;
+using System.Security.Cryptography;
 
 namespace FindingPotato
 {
@@ -11,27 +12,92 @@ namespace FindingPotato
         static void Main()
         {
             //Player player = new Player("Player"); // 플레이어 생성
-            //Paprika paprika = new Paprika("Paprika"); // 고블린 생성
-            //Onion onion = new Onion("Onion"); // 드래곤 생성
+
+            //Paprika paprika = new Paprika("파프리카"); 
+            //Onion onion = new Onion("양파"); 
+            //Banana banana = new Banana("바나나");
+
+            //List<ICharacter> monsters = new List<ICharacter>();
+            //monsters.Add(onion);
+            //monsters.Add(paprika);
+            //monsters.Add(banana);
+
+            ////리스트 섞기 
+            //ShuffleList(monsters);
+
+            ////스테이지 입장할 몬스터 리스트
+            //List<ICharacter> RandomMonster = new List<ICharacter>();
+
+            ////스테이지 입장할 몬스터 리스트에 기존 몬스터 3마리 추가 
+            //for (int i = 0; i<3; i++)
+            //{
+            //    RandomMonster.Add(monsters[i]); 
+            //}
 
             //// 각 스테이지의 보상 아이템들
             //List<IItem> stage1Rewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
             //List<IItem> stage2Rewards = new List<IItem> { new StrengthPotion(), new HealthPotion() };
 
             //// 스테이지 1
-            //StageClass stage1 = new StageClass(player, paprika, stage1Rewards);
+            //StageClass stage1 = new StageClass(player, monsters, stage1Rewards);
+
             //stage1.Start();
 
             GameManager GM = new GameManager();
             GM.InitialCharacter();
             GM.GameMain();
         }
+
+       
     }
 }
 
 public class GameManager
 {
     private Player player;
+
+    Paprika paprika;
+    Onion onion;
+    Banana banana;
+
+    List<IItem> stageRewards;
+
+    //전체 몬스터 리스트
+    List<ICharacter> monsters = new List<ICharacter>();
+
+    //스테이지 입장할 몬스터 리스트
+    List<ICharacter> RandomMonster = new List<ICharacter>();
+
+    StageClass stage;
+
+    public GameManager()
+    {
+        paprika = new Paprika("파프리카");
+        onion = new Onion("양파");
+        banana = new Banana("바나나");
+
+        monsters.Add(onion);
+        monsters.Add(paprika);
+        monsters.Add(banana);
+
+        // 각 스테이지의 보상 아이템들
+        stageRewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
+
+        // 스테이지
+      
+    }
+
+    static void ShuffleList(List<ICharacter> list)
+    {
+        Random random = new Random();
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = random.Next(n + 1);
+            (list[n], list[k]) = (list[k], list[n]);
+        }
+    }
 
     // 한 글자씩 타이핑
     private void TypeWriting(string _str)
@@ -101,7 +167,18 @@ public class GameManager
             int input = GetInput(0, 3);
 
             if (input == 1) { ShowStatus(); }
-            else if (input == 2) { /* 전투 시작 */ }
+            else if (input == 2) { /* 인벤토리 */ }
+            else if(input == 3)
+            {
+                ShuffleList(monsters);
+                //스테이지 입장할 몬스터리스트에 기존 몬스터 3마리 추가 
+                for (int i = 0; i < 3; i++)
+                {
+                    RandomMonster.Add(monsters[i]);
+                }
+                stage = new StageClass(player, RandomMonster, stageRewards);
+                stage.Start(); 
+            }
             else return;
         }
     }

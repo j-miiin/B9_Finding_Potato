@@ -11,15 +11,14 @@ namespace FindingPotato.Character
         public string Name { get; }
         public int Health { get; set; }
         public int AttackPower { get; set; }
-
         public bool IsDead => Health <= 0;
-        public int Attack => new Random().Next(10, AttackPower); // 공격력은 랜덤
+        public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
         public Player(string name)
         {
             Name = name;
             Health = 100; // 초기 체력
-            AttackPower = 20; // 초기 공격력
+            AttackPower = 50; // 초기 공격력
         }
 
         public void TakeDamage(int damage)
