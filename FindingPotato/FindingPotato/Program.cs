@@ -84,6 +84,7 @@ public class GameManager
         // 스테이지
     }
 
+    //전체 몬스터 리스트 셔플
     static void ShuffleList(List<ICharacter> list)
     {
         Random random = new Random();
@@ -134,7 +135,7 @@ public class GameManager
                 {
                     RandomMonster.Add(monsters[i]);
                 }
-                stage = new StageClass(player, RandomMonster, stageRewards);
+                stage = new StageClass(player, RandomMonster);
                 stage.Start(); 
             }
             else return;

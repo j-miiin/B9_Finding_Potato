@@ -12,9 +12,8 @@ namespace FindingPotato.Stage
 {
     internal class StageClass
     {
-        private ICharacter player; // 플레이어
-        //private ICharacter monster; // 몬스터
-        private List<IItem> rewards; // 보상 아이템들
+        private Player player; // 플레이어
+        //private List<IItem> rewards; // 보상 아이템들
 
         private List<ICharacter> monsters;
 
@@ -22,20 +21,35 @@ namespace FindingPotato.Stage
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
 
-        public StageClass(ICharacter player, List<ICharacter> monsters, List<IItem> rewards)
+        public StageClass(Player player, List<ICharacter> monsters)
         {
             this.player = player;
             this.monsters = monsters;
-            this.rewards = rewards;
+            //this.rewards = rewards;
             OnCharacterDeath += StageClear; // 캐릭터가 죽었을 때 StageClear 메서드 호출
+        }
+
+        void InfoScreen(bool bNum , string str)
+        {
+            Console.WriteLine("Battle!!!\n");
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine($"{(bNum ? i+1:"")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.player.level {player.Name}");
+            Console.WriteLine($"HP {player.Health}/player.MaxHealth");
+            Console.WriteLine();
+            Console.WriteLine(str);
+            Console.WriteLine();
         }
 
         // 스테이지 시작 메서드
         public void Start()
         {
-            //플레이어가 공격모드 전환
-            bool bPlayerAttackMode = false;
-
             while (true)
             {
                 Console.Clear();
@@ -46,87 +60,59 @@ namespace FindingPotato.Stage
                 else if (monsters.All(x => x.IsDead))
                     break;
 
-                // 안내 문자열 
-                string guideStr = (bPlayerAttackMode ? "대상을 선택해주세요." : "원하시는 행동을 입력해주세요.");
-                //선택 문자열
-                string selectStr = (bPlayerAttackMode ? "0.취소" : "1.공격");
+                InfoScreen(false, "0.도망가기 1.공격 2.스킬");
 
-                Console.WriteLine("Battle!!!\n");
+                int input = Extension.GetInput(0, 2);
 
-                // 몬스터 정보
-                for (int i = 0; i < 3; i++)
+                if(input == 1)
                 {
-                    Console.WriteLine($"{(bPlayerAttackMode ? i + 1 + "." : "")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+                    PlayerAttackSelect(); 
                 }
-
-                Console.WriteLine();
-                Console.WriteLine("[내정보]");
-                Console.WriteLine($"Lv.player.level {player.Name}");
-                Console.WriteLine($"HP {player.Health}/player.MaxHealth");
-                Console.WriteLine();
-                Console.WriteLine(selectStr);
-                Console.WriteLine();
-                Console.WriteLine(guideStr);
-                Console.Write(">> ");
-
-                string? input = Console.ReadLine();
-
-                bool isValid = int.TryParse(input, out int select);
-
-                if (isValid)
+                else if(input == 2)
                 {
-                    if (bPlayerAttackMode == false) //플레이어가 공격모드가 아닐 때  
+
+                }
+                else if(input == 0)
+                {
+                    break; 
+                }
+            }
+        }
+
+        //플레이어 공격 선택 화면 
+        void PlayerAttackSelect()
+        {
+            while(true)
+            {
+                Console.Clear();
+
+                InfoScreen(true, "0.취소");
+
+                int input = Extension.GetInput(0, 3);
+
+                if (input > 0 && input < monsters.Count())
+                {
+                    if (monsters[input - 1].IsDead) // 죽은 몬스터는 선택 X
                     {
-                        if (select == 1)
-                        {
-                            bPlayerAttackMode = true;
-                        }
-                        else
-                        {
-                            Console.WriteLine("잘못된 입력입니다.");
-                            Thread.Sleep(500);
-                        }
-                    }
-                    else if (bPlayerAttackMode)// 플레이어가 공격모드일 때 
-                    {
-                        if (select >= 1 && select <= 3)
-                        {
-                            if (monsters[select-1].IsDead) // 죽은 몬스터는 선택 X
-                            {
-                                Console.WriteLine($"{monsters[select - 1].Name}은(는) 이미 죽었습니다.");
-                                Thread.Sleep(500);
-                            }
-                            else
-                            {
-                                PlayerAttackScreen(monsters[select - 1]); //플레이어 공격 화면 
-                                EnenyPhase(); //몬스터 공격화면 
-                                bPlayerAttackMode = false;
-                            }
-                        }
-                        else if (select == 0)
-                            bPlayerAttackMode = false;
-                        else
-                        {
-                            Console.WriteLine("잘못된 입력입니다.");
-                            Thread.Sleep(500);
-                        }
+                        Console.WriteLine($"{monsters[input - 1].Name}은(는) 이미 죽었습니다.");
+                        Thread.Sleep(500);
                     }
                     else
                     {
-                        Console.WriteLine("잘못된 입력입니다.");
-                        Thread.Sleep(500);
+                        PlayerTurnScreen(monsters[input - 1]);
+                        EnenyPhase();
+                        break;
                     }
                 }
-                else
+                else if (input == 0)
                 {
-                    Console.WriteLine("잘못된 입력입니다.");
-                    Thread.Sleep(500);
+                    break;
                 }
             }
         }
 
         //플레이어 공격 화면
-        void PlayerAttackScreen(ICharacter monster)
+        void PlayerTurnScreen(ICharacter monster)
         {
             while (true)
             {
@@ -184,6 +170,7 @@ namespace FindingPotato.Stage
             }
         }
 
+        //몬스터 공격 화면 
         void EnenyPhase()
         {
             for(int i = 0; i<monsters.Count; i++) // 배열에 있는 몬스터들이 공격
