@@ -1,0 +1,14 @@
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.exe
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.deps.json
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.runtimeconfig.json
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.dll
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\bin\Debug\net6.0\FindingPotato.pdb
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.GeneratedMSBuildEditorConfig.editorconfig
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.AssemblyInfoInputs.cache
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.AssemblyInfo.cs
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.csproj.CoreCompileInputs.cache
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.dll
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\refint\FindingPotato.dll
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.pdb
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\FindingPotato.genruntimeconfig.cache
+D:\minsang\GitHub\B9_Text_RPG\FindingPotato\FindingPotato\obj\Debug\net6.0\ref\FindingPotato.dll
