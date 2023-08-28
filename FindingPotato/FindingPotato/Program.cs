@@ -4,6 +4,7 @@ using FindingPotato.Item;
 using FindingPotato.Stage;
 using System;
 using System.Security.Cryptography;
+using FindingPotato.Inventory;
 
 namespace FindingPotato
 {
@@ -47,7 +48,7 @@ public class GameManager
         monsters.Add(banana);
 
         // 각 스테이지의 보상 아이템들
-        stageRewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
+        //stageRewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
 
         // 스테이지
     }
@@ -101,7 +102,7 @@ public class GameManager
             int input = Extension.GetInput(0, 3);
 
             if (input == 1) { ShowStatus(); }
-            else if (input == 2) { /* 인벤토리 */ }
+            else if (input == 2) { ShowInventory(); }
             else if(input == 3)
             {
                 ShuffleList(monsters);
@@ -133,5 +134,31 @@ public class GameManager
         Extension.ColorWriteLine("\n0. 나가기");
 
         _ = Extension.GetInput(0, 0);
+    }
+
+    public void ShowInventory()
+    {
+        Console.Clear();
+
+        Inventory.PrintTitle();
+        Inventory.ListingItems(player.Inventory, false);
+        Inventory.ShowOptions();
+
+        int input = Extension.GetInput(0, 1);
+
+        if (input == 0) return;
+        else { ItemManagement(); }
+    }
+
+    public void ItemManagement()
+    {
+        Inventory.PrintTitle();
+        Inventory.ListingItems(player.Inventory, true);
+        Inventory.ShowOptions();
+
+        int input = Extension.GetInput(0, player.Inventory.Count);
+
+        if (input == 0) { ShowInventory(); }
+        else { Inventory.ItemManager(player.Inventory[input - 1]); }
     }
 }
