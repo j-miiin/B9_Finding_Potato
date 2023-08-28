@@ -10,17 +10,21 @@ namespace FindingPotato
     {
         static void Main()
         {
-            Player player = new Player("Player"); // 플레이어 생성
-            Paprika paprika = new Paprika("Paprika"); // 고블린 생성
-            Onion onion = new Onion("Onion"); // 드래곤 생성
+            //Player player = new Player("Player"); // 플레이어 생성
+            //Paprika paprika = new Paprika("Paprika"); // 고블린 생성
+            //Onion onion = new Onion("Onion"); // 드래곤 생성
 
-            // 각 스테이지의 보상 아이템들
-            List<IItem> stage1Rewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
-            List<IItem> stage2Rewards = new List<IItem> { new StrengthPotion(), new HealthPotion() };
+            //// 각 스테이지의 보상 아이템들
+            //List<IItem> stage1Rewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
+            //List<IItem> stage2Rewards = new List<IItem> { new StrengthPotion(), new HealthPotion() };
 
-            // 스테이지 1
-            StageClass stage1 = new StageClass(player, paprika, stage1Rewards);
-            stage1.Start();
+            //// 스테이지 1
+            //StageClass stage1 = new StageClass(player, paprika, stage1Rewards);
+            //stage1.Start();
+
+            GameManager GM = new GameManager();
+            GM.InitialCharacter();
+            GM.GameMain();
         }
     }
 }
@@ -86,8 +90,8 @@ public class GameManager
         {
             Console.Clear();
             Console.WriteLine("====================================");
-            TypeWriting($"스파르타 마을에 어서오세요. {player.Name} 님");
-            TypeWriting("이곳에서 콘솔 던전으로 들어가기 전 활동을 할 수 있습니다.\n");
+            TypeWriting($"어서오세요. {player.Name} 님");
+            TypeWriting("이곳에서 활동을 할 수 있습니다.\n");
 
             ColorWriteLine("1. 상태 보기");
             ColorWriteLine("2. 인벤토리");
