@@ -13,8 +13,14 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace FindingPotato.Stage
 {
+    enum StageDifficulty
+    {
+        Easy = 1, Normal,Hard
+    }
     internal class StageClass
     {
+        public StageDifficulty Difficulty;
+
         private Player player; // 플레이어
         private List<Monster> monsters; // 몬스터 리스트
         private List<IItem> rewards; // 보상 아이템 리스트
@@ -22,12 +28,12 @@ namespace FindingPotato.Stage
         // 이벤트 델리게이트 정의
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
-
-        public StageClass(Player player, List<Monster> monsters, List<IItem> rewards)
+        public StageClass(Player player, List<Monster> monsters, , List<IItem> rewards, StageDifficulty difficulty)
         {
             this.player = player;
             this.monsters = monsters;
             this.rewards = rewards;
+            Difficulty = difficulty;
             OnCharacterDeath += StageClear; // 캐릭터가 죽었을 때 StageClear 메서드 호출
         }
 
@@ -75,6 +81,7 @@ namespace FindingPotato.Stage
 
                 if (input == 1)
                 {
+                    //공격
                     InitiatePlayerAttackAction();
                 }
                 else if (input == 2)
@@ -383,9 +390,23 @@ namespace FindingPotato.Stage
                 if (character is Monster) //플레이어 승리 
                 {
                     Extension.TypeWriting("VICTORY");
-                    Extension.TypeWriting($"던전에서 몬스터 {monsters.Count()}마리를 잡았습니다.");
-                    Console.WriteLine();
+                    switch(Difficulty)
+                    {
+                        case StageDifficulty.Easy:
+                            Extension.TypeWriting($"과일 코너를 지나갔다!");
+                            break;
+
+                        case StageDifficulty.Normal:
+                            Extension.TypeWriting($"채소 코너를 지나갔다!");
+                            break;
+
+                        case StageDifficulty.Hard:
+                            Extension.TypeWriting($"내친구 감자를 구했다!!");
+                            break;
+                    }
+                    player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
                     GiveRewards();
+                    Console.WriteLine();
                 }
                 else //몬스터 승리 
                 {

@@ -5,6 +5,8 @@ using FindingPotato.Stage;
 using System;
 using System.Security.Cryptography;
 using FindingPotato.Inventory;
+using System.Dynamic;
+using System.ComponentModel.Design;
 
 namespace FindingPotato
 {
@@ -23,42 +25,64 @@ public class GameManager
 {
     private Player player;
 
+    //몬스터 생성
+    Banana banana;
+    Durian durian;
+    Rambutan rambutan;
+    Watermelon watermelon;
+    Beet beet; 
     Paprika paprika;
     Onion onion;
-    Banana banana;
+    Customer customer;
+
 
     // 아이템 생성 (효과 수치는 조정 예정)
     static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
-    static IItem nutrient = new HealthPotion("식물영양제", 5, "오는 길에 훔친 영양제.");
+    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
     static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
 
     static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
-    static IItem peeler = new Weapon("필러", 5, "날카롭다.");
+    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
     static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
 
-    //전체 몬스터 리스트
-    List<Monster> monsters = new List<Monster>();
 
-    StageClass stage;
+    // 몬스터 리스트
+    List<Monster> EasyMonsters = new List<Monster>();
+    List<Monster> NormalMonsters = new List<Monster>();
+    List<Monster> HardMonsters = new List<Monster>();
+    
+    StageClass stage1;
+    StageClass stage2;
+    StageClass stage3;
+
+
 
     public GameManager()
     {
+        //몬스터 초기화 
+        banana = new Banana("바나나");
+        durian = new Durian("두리안");
+        rambutan = new Rambutan("람부탄");
+        watermelon = new Watermelon("수박");
+
+        beet = new Beet("비트"); 
         paprika = new Paprika("파프리카");
         onion = new Onion("양파");
-        banana = new Banana("바나나");
+     
+        customer = new Customer("감자진열대앞손님");
 
-        monsters.Add(onion);
-        monsters.Add(paprika);
-        monsters.Add(banana);  
+        EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon }; 
+        NormalMonsters = new List<Monster> { beet, paprika, onion };
+        HardMonsters = new List<Monster> { customer }; 
     }
 
     //몬스터를 랜덤하게 등장하는 스테이지 생성
-    StageClass CreateRandomStage(List<Monster> monsters, int numberOfMonsters)
+    List<Monster> CreateRandomStage(List<Monster> monsters, int numberOfMonsters)
     {
         Random random = new Random();
 
@@ -69,7 +93,7 @@ public class GameManager
         List<Monster> selectedMonsters = new List<Monster>();
 
         // 1~numberOfMonsters 사이에서 랜덤한 값 저장
-        numberOfMonsters = random.Next(1, numberOfMonsters+1);
+        numberOfMonsters = random.Next(2, numberOfMonsters+1);
 
         for (int i = 0; i < numberOfMonsters; i++)
         {
@@ -87,12 +111,8 @@ public class GameManager
             selectedMonsters.Add(selectedMonster);
             availableMonsters.RemoveAt(randomIndex);
         }
-
-        List<IItem> itemRewards = GetStageRewards();
-
-        stage = new StageClass(player, selectedMonsters, itemRewards);
-
-        return stage;
+       
+        return selectedMonsters;
     }
 
     // 캐릭터 생성 - 이름, 직업
@@ -112,6 +132,7 @@ public class GameManager
 
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
+
     }
 
     // 메인 화면
@@ -135,10 +156,73 @@ public class GameManager
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
             {
-                stage = CreateRandomStage(monsters, 3);
-                stage.Start(); 
+                ShowStageSelection(); 
             }
             else return;
+        }
+    }
+    //스테이지 선택 화면 
+    public void ShowStageSelection()
+    {
+        while(true)
+        {
+            Console.Clear();
+            Console.WriteLine("감자를 구하러 가려면 과일코너에서  채소코너를 지나감자 진열대 까지 가야해 !\n");
+
+            Console.WriteLine("1.과일 코너 (Easy)");
+
+            if (player.CurrentStage >= (int)StageDifficulty.Normal)
+                Console.WriteLine("2.야채코너 (Normal)");
+            else
+                Extension.ColorWriteLine("2.야채코너 (Normal)", ConsoleColor.Black,ConsoleColor.DarkGray);
+
+            if (player.CurrentStage >= (int)StageDifficulty.Hard)
+                Console.WriteLine("3.감자 진열대 (Hard)");
+            else
+                Extension.ColorWriteLine("3.감자 진열대 (Hard)", ConsoleColor.Black, ConsoleColor.DarkGray);
+
+            Console.WriteLine("0.나가기"); 
+
+            int input = Extension.GetInput(0,3);
+            
+            if(input == 1)
+            {
+                List<IItem> itemRewards = GetStageRewards(input);
+                stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
+                stage1.Start();
+                break; 
+            }
+            else if(input == 2)
+            {
+                if (player.CurrentStage >= (int)StageDifficulty.Normal)
+                {
+                    NormalMonsters = CreateRandomStage(NormalMonsters, 3);
+                    NormalMonsters.AddRange(CreateRandomStage(EasyMonsters, 2));
+                    List<IItem> itemRewards = GetStageRewards(input);
+                    stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
+                    stage2.Start();
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("아직 채소 코너는 보이지 않는다.");
+                    Thread.Sleep(500);
+                }
+            }
+            else if (input == 3)
+            {
+                if (player.CurrentStage >= (int)StageDifficulty.Hard)
+                {
+                    List<IItem> itemRewards = GetStageRewards(input);
+                    stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
+                    stage3.Start(); 
+                }
+                else
+                {
+                    Console.WriteLine("아직 감자 진열대는 보이지 않는다.");
+                    Thread.Sleep(500); 
+                }
+            }
         }
     }
 
@@ -151,8 +235,22 @@ public class GameManager
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
-        Console.WriteLine($"| 공격력 : {player.AttackPower}");
-        Console.WriteLine($"| 방어력 : {player.Defense}");
+        Console.Write($"| 공격력 : {player.AttackPower}");
+        if(player.AddAtk != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddAtk}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
+        Console.Write($"| 방어력 : {player.Defense}");
+        if(player.AddDef != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddDef}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
         Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
@@ -163,34 +261,47 @@ public class GameManager
 
     public void ShowInventory()
     {
-        Console.Clear();
+        while( true)
+        {
+            Console.Clear();
 
-        Inventory.PrintTitle();
-        Inventory.PrintItemList(player.Inventory, false);
-        Inventory.ShowOptions();
+            Inventory.PrintTitle(false);
+            Inventory.PrintItemList(player.Inventory, false);
+            Inventory.ShowOptions();
 
-        int input = Extension.GetInput(0, 1);
+            int input = Extension.GetInput(0, 1);
 
-        if (input == 0) return;
-        else { ItemManagement(); }
+            if (input == 0) break;
+            else { ItemManagement(); }
+        }
     }
 
     public void ItemManagement()
     {
-        Inventory.PrintTitle();
-        Inventory.PrintItemList(player.Inventory, true);
-        Inventory.ShowOptions();
+        while (true)
+        {
+            Console.Clear();
 
-        int input = Extension.GetInput(0, player.Inventory.Count);
+            Inventory.PrintTitle(true);
+            Inventory.PrintItemList(player.Inventory, true);
 
-        if (input == 0) { ShowInventory(); }
-        else { player.Inventory[input - 1].Use(player); }
+            Inventory.ShowOptions(player.Inventory);
+
+            int input = Extension.GetInput(0, player.Inventory.Count);
+
+            if (input == 0) { break; }
+            else
+            {
+                Inventory.ApplyingItem(player.Inventory[input - 1], player);
+                ItemManagement();
+                return;
+            }
+        }
     }
 
-    private List<IItem> GetStageRewards()
+    private List<IItem> GetStageRewards(int curStageNum)
     {
         // 각 스테이지의 보상 아이템들
-        int curStageNum = 1;    // 임시 변수 -> 스테이지 추가하면 스테이지 번호 값으로 변경
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
         for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i * curStageNum]);
