@@ -23,6 +23,7 @@ namespace FindingPotato.Character
         public int AddDef { get; set; }
         public int AttackPower { get; set; }
         public int AddAtk { get; set; }
+        public int MP { get; set; }
         public bool IsDead => Health <= 0;
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
@@ -39,18 +40,21 @@ namespace FindingPotato.Character
                 Health = 100;
                 Defense = 10;
                 AttackPower = 50;
+                MP = 70;
             }
             else if (type == VegetableType.고구마)
             {
                 Health = 120;
                 Defense = 20;
                 AttackPower = 40;
+                MP = 30;
             }
             else // 당근
             {
                 Health = 100;
                 Defense = 0;
                 AttackPower = 60;
+                MP = 50;
             }
 
             CurrentHealth = Health;
@@ -61,6 +65,18 @@ namespace FindingPotato.Character
             Health -= damage;
             if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
             else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다.");
+        }
+
+        public void AttackWithMP(MPAttackType type)
+        {
+            if (type == MPAttackType.ALPHA) MP -= (int)MPAttackType.ALPHA;
+            else MP -= (int)MPAttackType.DOUBLE;
+        }
+
+        public enum MPAttackType
+        {
+            ALPHA = 10,
+            DOUBLE = 15
         }
     }
 }
