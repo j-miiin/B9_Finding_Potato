@@ -11,6 +11,7 @@ namespace FindingPotato.Character
         string Name { get; }
         int Health { get; set; }
         int Attack { get; }
+        int Level { get; set; }
         bool IsDead { get; }
         void TakeDamage(int damage);
     }
