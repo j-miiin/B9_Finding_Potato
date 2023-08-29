@@ -41,16 +41,18 @@ public class GameManager
     static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
     static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
+
     static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
     static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
-    static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
-    static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
- 
-    // 인벤토리 생성
+
     Inventory inventory = new Inventory();
+  
+    static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
+    static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
+
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -74,15 +76,12 @@ public class GameManager
         beet = new Beet("비트"); 
         paprika = new Paprika("파프리카");
         onion = new Onion("양파");
-
+     
         customer = new Customer("감자진열대앞손님");
 
         EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon }; 
         NormalMonsters = new List<Monster> { beet, paprika, onion };
         HardMonsters = new List<Monster> { customer }; 
-
-        // 각 스테이지의 보상 아이템들
-        //stageRewards = new List<IItem> { new HealthPotion(), new StrengthPotion() };
     }
 
     //몬스터를 랜덤하게 등장하는 스테이지 생성
@@ -191,7 +190,8 @@ public class GameManager
             
             if(input == 1)
             {
-                stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), StageDifficulty.Easy);
+                List<IItem> itemRewards = GetStageRewards(input);
+                stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
                 Inventory.PotionEffectReset(player);
                 break; 
@@ -202,7 +202,8 @@ public class GameManager
                 {
                     NormalMonsters = CreateRandomStage(NormalMonsters, 3);
                     NormalMonsters.AddRange(CreateRandomStage(EasyMonsters, 2));
-                    stage2 = new StageClass(player, NormalMonsters, StageDifficulty.Normal);
+                    List<IItem> itemRewards = GetStageRewards(input);
+                    stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
                     Inventory.PotionEffectReset(player);
                     break;
@@ -217,8 +218,9 @@ public class GameManager
             {
                 if (player.CurrentStage >= (int)StageDifficulty.Hard)
                 {
-                    stage3 = new StageClass(player, HardMonsters, StageDifficulty.Normal);
-                    stage3.Start();
+                    List<IItem> itemRewards = GetStageRewards(input);
+                    stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
+                    stage3.Start(); 
                     Inventory.PotionEffectReset(player);
                 }
                 else
@@ -300,5 +302,15 @@ public class GameManager
                 return;
             }
         }
+    }
+
+    private List<IItem> GetStageRewards(int curStageNum)
+    {
+        // 각 스테이지의 보상 아이템들
+        List<IItem> stageRewards = new List<IItem>();
+        // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
+        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i * curStageNum]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i * curStageNum]);
+        return stageRewards;
     }
 }

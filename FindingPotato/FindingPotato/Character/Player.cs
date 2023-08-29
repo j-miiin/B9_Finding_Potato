@@ -19,8 +19,8 @@ namespace FindingPotato.Character
         public string Name { get; }
         public VegetableType Type { get; }
         public int Level { get; set; }
-        public int MaxHealth { get; set; }
-        public int CurrentHealth 
+        public int MaxHealth { get; set; }  // Player가 가질 수 있는 최대 체력 값
+        public int CurrentHealth    // Player 현재 체력 값
         { 
             get => currentHealth;
             set => currentHealth = Math.Max(0, Math.Min(value, MaxHealth));
@@ -30,9 +30,9 @@ namespace FindingPotato.Character
         public int AttackPower { get; set; }
         public int AddAtk { get; set; }
 
-        public int MaxMP { get; set; }
+        public int MaxMP { get; set; }  // Player가 가질 수 있는 현재 마나 값
 
-        public int CurrentMP
+        public int CurrentMP    // Player의 현재 마나 값
         {
             get => currentMP;
             set => currentMP = Math.Max(0, Math.Min(value, MaxMP));
@@ -77,6 +77,7 @@ namespace FindingPotato.Character
             CurrentMP = MaxMP;
         }
 
+        // Player가 공격 당했을 때 실행
         public void TakeDamage(int damage)
         {
             CurrentHealth -= damage;
@@ -84,6 +85,7 @@ namespace FindingPotato.Character
             else Extension.TypeWriting($"{Name}이(가) {damage}의 데미지를 받았습니다.");
         }
 
+        // Player가 스킬을 사용할 때 실행
         public void AttackWithMP(MPAttackType type)
         {
             if (type == MPAttackType.ALPHA) CurrentMP -= (int)MPAttackType.ALPHA;
