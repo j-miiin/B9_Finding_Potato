@@ -21,7 +21,7 @@ namespace FindingPotato.Character
         public int Health { get; set; }
         public int CurrentHealth 
         { 
-            get =>currentHealth;
+            get => currentHealth;
             set => currentHealth = Math.Max(0, Math.Min(value, Health));
         }
         public int Defense { get; set; }

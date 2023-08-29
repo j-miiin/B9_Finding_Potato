@@ -126,7 +126,7 @@ namespace FindingPotato.Stage
         }
 
         //플레이어 공격 화면 
-        void PlayerTurnScreen(ICharacter monster)
+        void PlayerTurnScreen(Monster monster)
         {
             while (true)
             {
@@ -140,12 +140,28 @@ namespace FindingPotato.Stage
 
                 Console.WriteLine("Battle!!\n");
                 Extension.TypeWriting($"{player.Name}의 공격!");
-                monster.TakeDamage(damage);
+
+                // 10% 의 확률로 플레이어의 공격을 회피
+                if (IsOccur(10)) monster.Avoid();
+                else
+                {
+                    Console.Write($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.");
+                    // 15% 의 확률로 치명타 공격
+                    if (IsOccur(15))
+                    {
+                        damage = (int)(damage * 1.6);
+                        Console.WriteLine($" [ 데미지 : {damage} ] - 치명타 공격!!");
+                    }
+                    else Console.WriteLine($" [ 데미지 : {damage} ]");
+                    Console.WriteLine();
+
+                    monster.TakeDamage(damage);
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                    Console.WriteLine($"HP {previousHP} -> {monster.Health}\n");
+                }
+
                 Console.WriteLine();
-
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-                Console.WriteLine($"HP {previousHP} -> {monster.Health}\n");
-
                 Console.WriteLine("0.다음");
 
                 int input = Extension.GetInput(0, 0);
@@ -159,6 +175,15 @@ namespace FindingPotato.Stage
                     break; 
                 }
             }
+        }
+
+        // prob 확률의 이벤트가 발생한다면 true, 아니면 false 리턴
+        // 15% 확률로 일어나는 이벤트 -> IsOccur(15)
+        private bool IsOccur(int prob)
+        {
+            int isOccur = new Random().Next(0, 100);
+            if (isOccur < prob) return true;
+            else return false;
         }
 
         //몬스터 공격 페이즈

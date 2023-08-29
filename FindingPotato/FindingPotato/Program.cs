@@ -153,6 +153,7 @@ public class GameManager
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.Health}");
         Console.WriteLine($"| 공격력 : {player.AttackPower}");
         Console.WriteLine($"| 방어력 : {player.Defense}");
+        Console.WriteLine($"| 마  력 : {player.MP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
         Extension.ColorWriteLine("\n0. 나가기");
