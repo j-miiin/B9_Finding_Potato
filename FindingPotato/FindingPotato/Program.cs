@@ -139,7 +139,7 @@ public class GameManager
         Console.WriteLine($"| {player.Name}      ({player.Type})");
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
-        Console.WriteLine($"| 체  력 : {player.Health}");
+        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.Health}");
         Console.WriteLine($"| 공격력 : {player.AttackPower}");
         Console.WriteLine($"| 방어력 : {player.Defense}");
         Console.WriteLine($"◇----------◇----------◇----------");
