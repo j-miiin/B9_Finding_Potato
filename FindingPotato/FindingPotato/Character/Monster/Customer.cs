@@ -8,6 +8,6 @@ namespace FindingPotato.Character.Monster
 {
     internal class Customer : Monster
     {
-        public Customer(string name) : base(name, 50) { }
+        public Customer(string name) : base(name, 50,10) { }
     }
 }

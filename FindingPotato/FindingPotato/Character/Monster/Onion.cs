@@ -8,6 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Onion : Monster
     {
-        public Onion(string name) : base(name, 50) { }
+        public Onion(string name) : base(name, 50,1) { }
+
+        public override void AttackMessage()
+        {
+            Extension.TypeWriting("양파즙 뿌리기!"); 
+        }
     }
 }
