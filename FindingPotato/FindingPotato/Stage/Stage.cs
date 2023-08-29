@@ -26,9 +26,9 @@ namespace FindingPotato.Stage
         private List<IItem> rewards; // 보상 아이템 리스트
 
         // 이벤트 델리게이트 정의
-        public delegate void GameEvent(ICharacter character);
+        public delegate void GameEvent(bool isPlayerWin);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
-        public StageClass(Player player, List<Monster> monsters, , List<IItem> rewards, StageDifficulty difficulty)
+        public StageClass(Player player, List<Monster> monsters, List<IItem> rewards, StageDifficulty difficulty)
         {
             this.player = player;
             this.monsters = monsters;
@@ -88,6 +88,11 @@ namespace FindingPotato.Stage
                 {
                     //스킬
                     UsePlayerSkill();
+                    if (monsters.All(x => x.IsDead)) //몬스터가 전부 죽으면 승리 
+                    {
+                        OnCharacterDeath?.Invoke(true);
+                    }
+                    break;
                 }
                 else if (input == 0)
                 {
@@ -175,7 +180,7 @@ namespace FindingPotato.Stage
                 {
                     if (monsters.All(x => x.IsDead)) //몬스터가 전부 죽으면 승리 
                     {
-                        OnCharacterDeath?.Invoke(monster);
+                        OnCharacterDeath?.Invoke(true);
                     }
                     break; 
                 }
@@ -225,7 +230,7 @@ namespace FindingPotato.Stage
                         //플레이어 생사 확인
                         if (player.IsDead)
                         {
-                            OnCharacterDeath?.Invoke(player);
+                            OnCharacterDeath?.Invoke(false);
                             break;
                         }
                     }
@@ -240,8 +245,11 @@ namespace FindingPotato.Stage
             {
                 Console.Clear();
 
+                // 공격할 몬스터가 없으면 break;
+                if (monsters.All(x => x.IsDead)) break;
+
                 string str = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n\n" +
-                    "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n0. 취소";
+                    "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n\n0. 취소";
 
                 InfoScreen(false, str);
 
@@ -249,13 +257,6 @@ namespace FindingPotato.Stage
 
                 if (input == 1)
                 {
-                    if (monsters.All(x => x.IsDead))
-                    {
-                        Console.WriteLine("공격할 수 있는 적이 없습니다!");
-                        Thread.Sleep(1000);
-                        continue;
-                    }
-
                     if (player.CurrentMP < (int)Player.MPAttackType.ALPHA)
                     {
                         Console.WriteLine("MP가 부족합니다!");
@@ -276,13 +277,6 @@ namespace FindingPotato.Stage
                 }
                 else if (input == 2)
                 {
-                    if (monsters.All(x => x.IsDead))
-                    {
-                        Console.WriteLine("공격할 수 있는 적이 없습니다!");
-                        Thread.Sleep(1000);
-                        continue;
-                    }
-
                     if (player.CurrentMP < (int)Player.MPAttackType.DOUBLE)
                     {
                         Console.WriteLine("MP가 부족합니다!");
@@ -381,13 +375,13 @@ namespace FindingPotato.Stage
         }
 
         //스테이지 클리어 
-        void StageClear(ICharacter character)
+        void StageClear(bool isPlayerWin)
         {
             while (true)
             {
                 Console.Clear();
                 Console.WriteLine("Battle!! - Result\n");
-                if (character is Monster) //플레이어 승리 
+                if (isPlayerWin) //플레이어 승리 
                 {
                     Extension.TypeWriting("VICTORY");
                     switch(Difficulty)
@@ -405,8 +399,8 @@ namespace FindingPotato.Stage
                             break;
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
-                    GiveRewards();
                     Console.WriteLine();
+                    GiveRewards();
                 }
                 else //몬스터 승리 
                 {
