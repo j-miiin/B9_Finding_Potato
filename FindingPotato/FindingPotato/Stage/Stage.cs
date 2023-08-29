@@ -39,6 +39,10 @@ namespace FindingPotato.Stage
 
             //this.rewards = rewards;
             OnCharacterDeath += StageClear; // 캐릭터가 죽었을 때 StageClear 메서드 호출
+
+            //스테이지가 생성되면 몬스터 체력 회복
+            foreach (Monster monster in monsters)
+                monster.CurrentHealth = monster.MaxHealth;
         }
 
         //전투 정보 표시
@@ -49,7 +53,7 @@ namespace FindingPotato.Stage
             for (int i = 0; i < monsters.Count(); i++)
             {
                 if (monsters[i].IsDead)
-                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
+                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")}Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
 
                 else
                     Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}");
@@ -204,7 +208,8 @@ namespace FindingPotato.Stage
                 if (!monsters[i].IsDead) //죽은 몬스터는 공격 X
                 {
                     //몬스터 데미지
-                    int damage = monsters[i].Attack;
+                    int damage = monsters[i].Attack - (player.Defense+player.AddDef);
+                    damage = Math.Max(damage,0); 
 
                     //몬스터 이전 체력
                     int previousHP = player.CurrentHealth;
@@ -408,6 +413,7 @@ namespace FindingPotato.Stage
                 else //몬스터 승리 
                 {
                     Console.WriteLine("YOU DIED");
+                    Environment.Exit(0);
                 }
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");

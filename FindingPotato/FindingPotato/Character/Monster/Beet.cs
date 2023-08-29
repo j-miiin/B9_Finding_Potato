@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Beet :Monster
     {
-        public Beet(string name) : base(name, 50, 5) { }
+        public Beet(string name) : base(name, 150, 5) { }
 
         public override void AttackMessage()
         {

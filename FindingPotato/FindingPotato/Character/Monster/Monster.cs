@@ -8,7 +8,8 @@ namespace FindingPotato.Character.Monster
 {
     internal class Monster : ICharacter
     {
-        private int health; 
+        private int health;
+        public int MaxHealth { get; set; }
         public string Name { get; }
 
         public int Level { get; set; }
@@ -22,10 +23,11 @@ namespace FindingPotato.Character.Monster
 
         public bool IsDead => CurrentHealth <= 0;
 
-        public Monster(string name, int health, int level)
+        public Monster(string name, int maxHealth, int level)
         {
             Name = name;
-            CurrentHealth = health;
+            MaxHealth = maxHealth;
+            CurrentHealth = maxHealth;
             Level = level;
         }
 
