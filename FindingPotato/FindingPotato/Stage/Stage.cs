@@ -177,7 +177,7 @@ namespace FindingPotato.Stage
                     player.TakeDamage(damage);
                     Console.WriteLine();
 
-                    Console.WriteLine($"Lv.() {player.Name}");
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
                     Console.WriteLine($"HP {previousHP} -> {player.CurrentHealth}");
 
                     Console.WriteLine();
