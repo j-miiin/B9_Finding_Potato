@@ -28,6 +28,8 @@ namespace FindingPotato.Item
         { 
             if (!this.IsEquipped) player.AddDef += this.Effect;
             else player.AddDef -= this.Effect;
+
+            this.IsEquipped = !this.IsEquipped;
         }
 
     }

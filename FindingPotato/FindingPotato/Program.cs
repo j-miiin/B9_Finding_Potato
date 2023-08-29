@@ -29,16 +29,17 @@ public class GameManager
 
     // 아이템 생성 (효과 수치는 조정 예정)
     static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
-    static IItem nutrient = new HealthPotion("식물영양제", 5, "오는 길에 훔친 영양제.");
+    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
     static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
     static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
-    static IItem peeler = new Weapon("필러", 5, "날카롭다.");
+    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
     static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
+
 
     //전체 몬스터 리스트
     List<Monster> monsters = new List<Monster>();
@@ -112,6 +113,16 @@ public class GameManager
 
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
+
+        // 인벤토리 테스트용 //
+
+        player.Inventory.Add(water);
+        player.Inventory.Add(styrofoam);
+        player.Inventory.Add(firtilizer);
+        player.Inventory.Add(peeler);
+
+
+        //------------------------------------
     }
 
     // 메인 화면
@@ -164,7 +175,7 @@ public class GameManager
     {
         Console.Clear();
 
-        Inventory.PrintTitle();
+        Inventory.PrintTitle(false);
         Inventory.PrintItemList(player.Inventory, false);
         Inventory.ShowOptions();
 
@@ -176,13 +187,20 @@ public class GameManager
 
     public void ItemManagement()
     {
-        Inventory.PrintTitle();
+        Console.Clear();
+
+        Inventory.PrintTitle(true);
         Inventory.PrintItemList(player.Inventory, true);
-        Inventory.ShowOptions();
+        Inventory.ShowOptions(player.Inventory);
 
         int input = Extension.GetInput(0, player.Inventory.Count);
 
         if (input == 0) { ShowInventory(); }
-        else { player.Inventory[input - 1].Use(player); }
+        else 
+        { 
+            player.Inventory[input - 1].Use(player);
+            ItemManagement();
+            return;
+        }
     }
 }
