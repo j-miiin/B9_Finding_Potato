@@ -8,6 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Paprika : Monster
     {
-        public Paprika(string name) : base(name, 50) { }
+        public Paprika(string name) : base(name, 50,2) { }
+
+        public override void AttackMessage()
+        {
+            Extension.TypeWriting("고함 지르기!");
+        }
     }
 }
