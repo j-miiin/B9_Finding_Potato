@@ -30,7 +30,7 @@ public class GameManager
     //List<IItem> stageRewards;
 
     //전체 몬스터 리스트
-    List<ICharacter> monsters = new List<ICharacter>();
+    List<Monster> monsters = new List<Monster>();
 
     StageClass stage;
 
@@ -49,15 +49,15 @@ public class GameManager
     }
 
     //몬스터를 랜덤하게 등장하는 스테이지 생성
-    StageClass CreateRandomStage(List<ICharacter> monsters, int numberOfMonsters)
+    StageClass CreateRandomStage(List<Monster> monsters, int numberOfMonsters)
     {
         Random random = new Random();
 
         //사용가능한 몬스터 (중복 방지를 피하기 위해 초기에 몬스터 리스트 복사)
-        List<ICharacter> availableMonsters = new List<ICharacter>(monsters);
+        List<Monster> availableMonsters = new List<Monster>(monsters);
 
         //선택된 몬스터 
-        List<ICharacter> selectedMonsters = new List<ICharacter>();
+        List<Monster> selectedMonsters = new List<Monster>();
 
         // 1~numberOfMonsters 사이에서 랜덤한 값 저장
         numberOfMonsters = random.Next(1, numberOfMonsters+1);
@@ -74,7 +74,7 @@ public class GameManager
             int randomIndex = random.Next(availableMonsters.Count);
 
             //선택된 몬스터를 선택된 몬스터 리스트에 추가하고 사용가능한 몬스터 리스트에서는 삭제 
-            ICharacter selectedMonster = availableMonsters[randomIndex];
+            Monster selectedMonster = availableMonsters[randomIndex];
             selectedMonsters.Add(selectedMonster);
             availableMonsters.RemoveAt(randomIndex);
         }
@@ -139,7 +139,7 @@ public class GameManager
         Console.WriteLine($"| {player.Name}      ({player.Type})");
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
-        Console.WriteLine($"| 체  력 : {player.Health}");
+        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.Health}");
         Console.WriteLine($"| 공격력 : {player.AttackPower}");
         Console.WriteLine($"| 방어력 : {player.Defense}");
         Console.WriteLine($"◇----------◇----------◇----------");

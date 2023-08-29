@@ -14,17 +14,26 @@ namespace FindingPotato.Character
 {
     internal class Player : ICharacter
     {
+        private int currentHealth; 
         public string Name { get; }
         public VegetableType Type { get; }
         public int Level { get; set; }
         public int Health { get; set; }
-        public int CurrentHealth { get; set; }
+        public int CurrentHealth 
+        { 
+            get =>currentHealth;
+            set => currentHealth = Math.Max(0, Math.Min(value, Health));
+        }
         public int Defense { get; set; }
         public int AddDef { get; set; }
         public int AttackPower { get; set; }
         public int AddAtk { get; set; }
+
         public int MP { get; set; }
-        public bool IsDead => Health <= 0;
+        
+
+        public bool IsDead => CurrentHealth <= 0;
+
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
         public List<IItem> Inventory = new List<IItem>();
@@ -62,9 +71,9 @@ namespace FindingPotato.Character
 
         public void TakeDamage(int damage)
         {
-            Health -= damage;
-            if (IsDead) Console.WriteLine($"{Name}이(가) 죽었습니다.");
-            else Console.WriteLine($"{Name}이(가) {damage}의 데미지를 받았습니다.");
+            CurrentHealth -= damage;
+            if (IsDead) Extension.TypeWriting($"{Name}이(가) 죽었습니다.");
+            else Extension.TypeWriting($"{Name}이(가) {damage}의 데미지를 받았습니다.");
         }
 
         public void AttackWithMP(MPAttackType type)

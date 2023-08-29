@@ -19,13 +19,13 @@ namespace FindingPotato.Stage
 
         //private List<IItem> rewards; // 보상 아이템들
 
-        private List<ICharacter> monsters;
+        private List<Monster> monsters;
 
         // 이벤트 델리게이트 정의
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
 
-        public StageClass(Player player, List<ICharacter> monsters)
+        public StageClass(Player player, List<Monster> monsters)
         {
             this.player = player;
             this.monsters = monsters;
@@ -40,13 +40,18 @@ namespace FindingPotato.Stage
 
             for (int i = 0; i < monsters.Count(); i++)
             {
-                Console.WriteLine($"{(bNum ? (i + 1)+".": "")}{monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+                if (monsters[i].IsDead)
+                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}", ConsoleColor.Black, ConsoleColor.DarkGray);
+
+                else
+                    Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+
             }
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.player.level {player.Name}");
-            Console.WriteLine($"HP {player.Health}/player.MaxHealth");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.Health}");
             Console.WriteLine($"MP {player.MP}/50");
             Console.WriteLine();
             Console.WriteLine(str);
@@ -131,14 +136,14 @@ namespace FindingPotato.Stage
                 int damage = player.Attack;
 
                 //플레이어의 이전 체력
-                int previousHP = monster.Health; 
+                int previousHP = monster.Health;
 
                 Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"{player.Name}의 공격!");
+                Extension.TypeWriting($"{player.Name}의 공격!");
                 monster.TakeDamage(damage);
                 Console.WriteLine();
 
-                Console.WriteLine($"Lv.() {monster.Name}");
+                Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
                 Console.WriteLine($"HP {previousHP} -> {monster.Health}\n");
 
                 Console.WriteLine("0.다음");
@@ -168,15 +173,16 @@ namespace FindingPotato.Stage
                     int damage = monsters[i].Attack;
 
                     //몬스터 이전 체력
-                    int previousHP = player.Health;
+                    int previousHP = player.CurrentHealth;
 
                     Console.WriteLine("Battle!!\n");
-                    Console.WriteLine($"{monsters[i].Name}의 공격!");
+                    Console.Write($"Lv.{monsters[i].Level} {monsters[i].Name}의 ");
+                    monsters[i].AttackMessage();
                     player.TakeDamage(damage);
                     Console.WriteLine();
 
-                    Console.WriteLine($"Lv.() {player.Name}");
-                    Console.WriteLine($"HP {previousHP} -> {player.Health}");
+                    Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                    Console.WriteLine($"HP {previousHP} -> {player.CurrentHealth}");
 
                     Console.WriteLine();
 
@@ -190,11 +196,10 @@ namespace FindingPotato.Stage
                         if (player.IsDead)
                         {
                             OnCharacterDeath?.Invoke(player);
+                            break;
                         }
-                        break; 
+                      
                     }
-
-
                 }
             }
         }
@@ -320,19 +325,18 @@ namespace FindingPotato.Stage
                 Console.WriteLine("Battle!! - Result\n");
                 if (character is Monster) //플레이어 승리 
                 {
-                    Console.WriteLine("VICTORY");
-                    Console.WriteLine($"던전에서 몬스터 {monsters.Count()}마리를 잡았습니다.");
+                    Extension.TypeWriting("VICTORY");
+                    Extension.TypeWriting($"던전에서 몬스터 {monsters.Count()}마리를 잡았습니다.");
                 }
                 else //몬스터 승리 
                 {
                     Console.WriteLine("YOU DIED");
                 }
 
-                Console.WriteLine($"Lv.player.level {player.Name}");
-                Console.WriteLine($"HP player.MaxHealth-> {player.Health}\n");
-                Console.WriteLine("0.다음");
-                Console.Write(">> ");
-
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {player.Health}-> {player.CurrentHealth}\n");
+                Console.WriteLine("0.다음\n");
+                
                 int input = Extension.GetInput(0, 0);
 
                 if (input == 0)
@@ -341,8 +345,5 @@ namespace FindingPotato.Stage
                 }
             }
         }
-
-
-
     }
 }   
