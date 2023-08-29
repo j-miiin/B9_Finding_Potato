@@ -24,13 +24,13 @@ namespace FindingPotato.Item
             Type = ItemType.HealthPotion;
         }
 
-        public void Use(Player player)
+        public void Use(Player player, List<IItem> list)
         {
             player.CurrentHealth += this.Effect;
             if (player.CurrentHealth > player.MaxHealth) player.CurrentHealth = player.MaxHealth;
 
             --this.Quantity;
-            if (this.Quantity == 0) player.Inventory.Remove(this);
+            if (this.Quantity == 0) list.Remove(this);
         }
     }
 }

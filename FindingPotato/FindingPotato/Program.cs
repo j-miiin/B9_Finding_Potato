@@ -47,6 +47,9 @@ public class GameManager
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
+
+    Inventory inventory = new Inventory();
+  
     static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
 
@@ -190,6 +193,7 @@ public class GameManager
                 List<IItem> itemRewards = GetStageRewards(input);
                 stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
+                Inventory.PotionEffectReset(player);
                 break; 
             }
             else if(input == 2)
@@ -201,6 +205,7 @@ public class GameManager
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
+                    Inventory.PotionEffectReset(player);
                     break;
                 }
                 else
@@ -216,6 +221,7 @@ public class GameManager
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
                     stage3.Start(); 
+                    Inventory.PotionEffectReset(player);
                 }
                 else
                 {
@@ -265,9 +271,9 @@ public class GameManager
         {
             Console.Clear();
 
-            Inventory.PrintTitle(false);
-            Inventory.PrintItemList(player.Inventory, false);
-            Inventory.ShowOptions();
+            inventory.PrintTitle(false);
+            inventory.PrintItemList(false);
+            inventory.ShowOptions();
 
             int input = Extension.GetInput(0, 1);
 
@@ -282,17 +288,16 @@ public class GameManager
         {
             Console.Clear();
 
-            Inventory.PrintTitle(true);
-            Inventory.PrintItemList(player.Inventory, true);
+            inventory.PrintTitle(true);
+            inventory.PrintItemList(true);
+            inventory.ShowOptions(inventory.InventoryItems);
 
-            Inventory.ShowOptions(player.Inventory);
-
-            int input = Extension.GetInput(0, player.Inventory.Count);
+            int input = Extension.GetInput(0, inventory.InventoryItems.Count);
 
             if (input == 0) { break; }
             else
             {
-                Inventory.ApplyingItem(player.Inventory[input - 1], player);
+                inventory.ApplyingItem(inventory.InventoryItems[input - 1], player);
                 ItemManagement();
                 return;
             }

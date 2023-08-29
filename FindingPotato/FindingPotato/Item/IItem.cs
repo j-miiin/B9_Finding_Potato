@@ -22,7 +22,7 @@ namespace FindingPotato.Item
         int Effect { get; set; }
         string Desc { get; set; }
 
-        void Use(Player player);
+        void Use(Player player, List<IItem> list);
 
     }
 }

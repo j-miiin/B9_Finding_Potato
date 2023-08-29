@@ -11,15 +11,21 @@ namespace FindingPotato.Inventory
 {
     internal class Inventory
     {
+        static bool hadPotion = false;
+        static int potionEffect = 0;
+
         private static readonly Dictionary<ItemType, string> EffectDictionary = new Dictionary<ItemType, string>
         {
-            { ItemType.StrengthPotion, "공격력" },
+            { ItemType.StrengthPotion, "공격력 (1회)" },
             { ItemType.HealthPotion, "체력 회복" },
             { ItemType.Weapon, "공격력" },
             { ItemType.Armor, "방어력" }
         };
 
-        public static void PrintTitle(bool isManagement)
+        public List<IItem> InventoryItems = new List<IItem>();
+
+
+        public void PrintTitle(bool isManagement)
         { 
             if (isManagement)
             {
@@ -37,7 +43,7 @@ namespace FindingPotato.Inventory
             Console.ResetColor();
         }
 
-        public static void ShowOptions()       // 수정하기
+        public void ShowOptions()       
         {
             
             Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");    
@@ -45,7 +51,7 @@ namespace FindingPotato.Inventory
             Extension.ColorWriteLine("\n0. 나가기");
         }
 
-        public static void ShowOptions(List<IItem> list)       
+        public void ShowOptions(List<IItem> list)       
         {
 
             switch (list.Count)
@@ -62,12 +68,12 @@ namespace FindingPotato.Inventory
             Extension.ColorWriteLine("\n0. 나가기");
         }
 
-        public static void PrintItemList(List<IItem> list, bool isManagement)
+        public void PrintItemList(bool isManagement)
         {
 
             Console.SetCursorPosition(0, 6);
             Console.WriteLine($"◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------\n");
-            if (list == null || list.Count == 0)
+            if (InventoryItems == null || InventoryItems.Count == 0)
             {
                 Console.ForegroundColor = ConsoleColor.DarkGray;
                 Console.WriteLine("\n                                            보유 중인 아이템이 없습니다.\n");
@@ -75,14 +81,14 @@ namespace FindingPotato.Inventory
             }
             else
             {
-                foreach (IItem item in list)
+                foreach (IItem item in InventoryItems)
                 {
                     Inventory.PrintItemInfo(item);
                 }
 
                 Console.SetCursorPosition(0, 8);
                 // 리스트 앞 기호 출력
-                for (int i = 1; i < list.Count + 1; i++)
+                for (int i = 1; i < InventoryItems.Count + 1; i++)
                 {
                     Console.WriteLine(isManagement ? $" {i}." : " -");
                 }
@@ -120,14 +126,18 @@ namespace FindingPotato.Inventory
             Console.WriteLine();
         }
 
-        public static void ApplyingItem(IItem item, Player player)      //아이템 적용
+        public void ApplyingItem(IItem item, Player player)      //아이템 적용
         {
-            if (item.Type != ItemType.HealthPotion || player.CurrentHealth != player.MaxHealth) { item.Use(player); }
-            else
+            if (item.Type == ItemType.StrengthPotion)
+            {
+                potionEffect = item.Effect;
+                item.Use(player, InventoryItems);
+            }
+            else if (item.Type == ItemType.HealthPotion && player.CurrentHealth == player.MaxHealth)
             {
                 // HealthPotion 최력 최대치일 때 섭취 불가
-                Console.SetCursorPosition(0, player.Inventory.Count + 11);
-                Console.ForegroundColor = ConsoleColor.Red;  
+                Console.SetCursorPosition(0, InventoryItems.Count + 11);
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" 현재 체력이 최대입니다.           ");
                 Console.WriteLine("                                   ");
                 Console.WriteLine("                                   ");
@@ -135,6 +145,7 @@ namespace FindingPotato.Inventory
                 Console.ResetColor();
 
             }
+            else item.Use(player, InventoryItems);
         }
 
 
@@ -142,6 +153,13 @@ namespace FindingPotato.Inventory
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
+        }
+
+        public static void PotionEffectReset(Player player)
+        {
+            hadPotion = false;
+            player.AddAtk -= potionEffect;
+            potionEffect = 0;
         }
     }
 }
