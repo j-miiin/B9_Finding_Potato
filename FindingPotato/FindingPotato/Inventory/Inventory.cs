@@ -120,6 +120,21 @@ namespace FindingPotato.Inventory
             Console.WriteLine();
         }
 
+        public static void ApplyingItem(IItem item, Player player)      //아이템 적용
+        {
+            if (item.Type != ItemType.HealthPotion || player.CurrentHealth != player.Health) { item.Use(player); }
+            else
+            {
+                // HealthPotion 최력 최대치일 때 섭취 불가
+                Console.SetCursorPosition(0, player.Inventory.Count + 11);
+                Console.WriteLine(" 현재 체력이 최대입니다.           ");
+                Console.WriteLine("                                   ");
+                Console.WriteLine("                                   ");
+                Thread.Sleep(2000);
+
+            }
+        }
+
 
         private static void WriteAtPosition(string text, int position, int line)
         {

@@ -173,34 +173,41 @@ public class GameManager
 
     public void ShowInventory()
     {
-        Console.Clear();
+        while( true)
+        {
+            Console.Clear();
 
-        Inventory.PrintTitle(false);
-        Inventory.PrintItemList(player.Inventory, false);
-        Inventory.ShowOptions();
+            Inventory.PrintTitle(false);
+            Inventory.PrintItemList(player.Inventory, false);
+            Inventory.ShowOptions();
 
-        int input = Extension.GetInput(0, 1);
+            int input = Extension.GetInput(0, 1);
 
-        if (input == 0) return;
-        else { ItemManagement(); }
+            if (input == 0) break;
+            else { ItemManagement(); }
+        }
     }
 
     public void ItemManagement()
     {
-        Console.Clear();
+        while (true)
+        {
+            Console.Clear();
 
-        Inventory.PrintTitle(true);
-        Inventory.PrintItemList(player.Inventory, true);
-        Inventory.ShowOptions(player.Inventory);
+            Inventory.PrintTitle(true);
+            Inventory.PrintItemList(player.Inventory, true);
 
-        int input = Extension.GetInput(0, player.Inventory.Count);
+            Inventory.ShowOptions(player.Inventory);
 
-        if (input == 0) { ShowInventory(); }
-        else 
-        { 
-            player.Inventory[input - 1].Use(player);
-            ItemManagement();
-            return;
+            int input = Extension.GetInput(0, player.Inventory.Count);
+
+            if (input == 0) { break; }
+            else
+            {
+                Inventory.ApplyingItem(player.Inventory[input - 1], player);
+                ItemManagement();
+                return;
+            }
         }
     }
 }
