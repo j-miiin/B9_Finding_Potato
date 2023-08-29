@@ -153,8 +153,22 @@ public class GameManager
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
-        Console.WriteLine($"| 공격력 : {player.AttackPower}");
-        Console.WriteLine($"| 방어력 : {player.Defense}");
+        Console.Write($"| 공격력 : {player.AttackPower}");
+        if(player.AddAtk != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddAtk}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
+        Console.Write($"| 방어력 : {player.Defense}");
+        if(player.AddDef != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddDef}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
         Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
