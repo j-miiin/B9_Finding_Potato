@@ -15,7 +15,7 @@ namespace FindingPotato.Item
         public string Desc { get; set; }
         public bool IsEquipped { get; set; }
 
-        Weapon(string name, int effect, string desc)
+        internal Weapon(string name, int effect, string desc)
         {
             Name = name;
             Effect = effect;
@@ -26,7 +26,8 @@ namespace FindingPotato.Item
 
         public void Use(Player player)
         {
-            player.AddAtk += this.Effect;
+            if (!this.IsEquipped) player.AddAtk += this.Effect;
+            else player.AddAtk -= this.Effect;
         }
 
     }

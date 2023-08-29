@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Item
 {
-    internal class HealthPotion : IConsumable
+     class HealthPotion : IConsumable
     {
         public string Name { get; set; }
         public ItemType Type { get; set; }
@@ -15,7 +15,7 @@ namespace FindingPotato.Item
         public string Desc { get; set; }
         public int Quantity { get; set; }
 
-        HealthPotion(string name, int effect, string desc)
+        internal HealthPotion(string name, int effect, string desc)
         {
             Name = name;
             Effect = effect;
@@ -28,6 +28,9 @@ namespace FindingPotato.Item
         {
             player.CurrentHealth += this.Effect;
             if (player.CurrentHealth > player.MaxHealth) player.CurrentHealth = player.MaxHealth;
+
+            --this.Quantity;
+            if (this.Quantity == 0) player.Inventory.Remove(this);
         }
     }
 }

@@ -15,7 +15,7 @@ namespace FindingPotato.Item
         public string Desc { get; set; }
         public bool IsEquipped { get; set; }
 
-        Armor(string name, int effect, string desc)
+        internal Armor(string name, int effect, string desc)
         {
             Name = name;
             Effect = effect;
@@ -25,8 +25,9 @@ namespace FindingPotato.Item
         }
 
         public void Use(Player player)
-        {
-            player.AddDef += this.Effect;
+        { 
+            if (!this.IsEquipped) player.AddDef += this.Effect;
+            else player.AddDef -= this.Effect;
         }
 
     }
