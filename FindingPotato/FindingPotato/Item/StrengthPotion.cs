@@ -15,7 +15,7 @@ namespace FindingPotato.Item
         public string Desc { get; set; }
         public int Quantity { get; set; }
 
-        StrengthPotion(string name, int effect, string desc)
+        internal StrengthPotion(string name, int effect, string desc)
         {
             Name = name;
             Effect = effect;
@@ -27,6 +27,8 @@ namespace FindingPotato.Item
         public void Use(Player player)
         {
             player.AddAtk += this.Effect;
+            --this.Quantity;
+            if (this.Quantity == 0) player.Inventory.Remove(this);
         }
 
     }
