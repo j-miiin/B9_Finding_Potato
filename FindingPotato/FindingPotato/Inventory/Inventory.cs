@@ -11,13 +11,17 @@ namespace FindingPotato.Inventory
 {
     internal class Inventory
     {
+        static bool hadPotion = false;
+        static int potionEffect = 0;
+
         private static readonly Dictionary<ItemType, string> EffectDictionary = new Dictionary<ItemType, string>
         {
-            { ItemType.StrengthPotion, "공격력" },
+            { ItemType.StrengthPotion, "공격력 (1회)" },
             { ItemType.HealthPotion, "체력 회복" },
             { ItemType.Weapon, "공격력" },
             { ItemType.Armor, "방어력" }
         };
+
 
         public static void PrintTitle(bool isManagement)
         { 
@@ -122,12 +126,16 @@ namespace FindingPotato.Inventory
 
         public static void ApplyingItem(IItem item, Player player)      //아이템 적용
         {
-            if (item.Type != ItemType.HealthPotion || player.CurrentHealth != player.MaxHealth) { item.Use(player); }
-            else
+            if (item.Type == ItemType.StrengthPotion)
+            {
+                potionEffect = item.Effect;
+                item.Use(player);
+            }
+            else if (item.Type == ItemType.HealthPotion && player.CurrentHealth == player.MaxHealth)
             {
                 // HealthPotion 최력 최대치일 때 섭취 불가
                 Console.SetCursorPosition(0, player.Inventory.Count + 11);
-                Console.ForegroundColor = ConsoleColor.Red;  
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" 현재 체력이 최대입니다.           ");
                 Console.WriteLine("                                   ");
                 Console.WriteLine("                                   ");
@@ -135,6 +143,7 @@ namespace FindingPotato.Inventory
                 Console.ResetColor();
 
             }
+            else item.Use(player);
         }
 
 
@@ -142,6 +151,13 @@ namespace FindingPotato.Inventory
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
+        }
+
+        public static void PotionEffectReset(Player player)
+        {
+            hadPotion = false;
+            player.AddAtk -= potionEffect;
+            potionEffect = 0;
         }
     }
 }
