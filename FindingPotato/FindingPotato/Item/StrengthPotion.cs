@@ -27,6 +27,8 @@ namespace FindingPotato.Item
         public void Use(Player player)
         {
             player.AddAtk += this.Effect;
+            --this.Quantity;
+            if (this.Quantity == 0) player.Inventory.Remove(this);
         }
 
     }

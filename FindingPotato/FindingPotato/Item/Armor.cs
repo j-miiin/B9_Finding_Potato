@@ -25,8 +25,9 @@ namespace FindingPotato.Item
         }
 
         public void Use(Player player)
-        {
-            player.AddDef += this.Effect;
+        { 
+            if (!this.IsEquipped) player.AddDef += this.Effect;
+            else player.AddDef -= this.Effect;
         }
 
     }
