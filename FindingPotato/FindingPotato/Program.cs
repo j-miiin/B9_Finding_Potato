@@ -183,6 +183,6 @@ public class GameManager
         int input = Extension.GetInput(0, player.Inventory.Count);
 
         if (input == 0) { ShowInventory(); }
-        else { Inventory.ItemManager(player.Inventory[input - 1], player); }
+        else { player.Inventory[input - 1].Use(player); }
     }
 }

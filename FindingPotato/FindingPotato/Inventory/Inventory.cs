@@ -93,16 +93,5 @@ namespace FindingPotato.Inventory
             Console.SetCursorPosition(position, Console.CursorTop);
             Console.Write(text);
         }
-
-       
-
-        
-
-        public static void ItemManager(IItem item, Player player)
-        {
-            item.Use(player);
-            //소모품일 경우
-            //장착템일 경우
-        }
     }
 }

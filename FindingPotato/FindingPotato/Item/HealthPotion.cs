@@ -28,6 +28,9 @@ namespace FindingPotato.Item
         {
             player.CurrentHealth += this.Effect;
             if (player.CurrentHealth > player.Health) player.CurrentHealth = player.Health;
+
+            --this.Quantity;
+            if (this.Quantity == 0) player.Inventory.Remove(this);
         }
 
 
