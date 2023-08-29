@@ -49,6 +49,8 @@ public class GameManager
     static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
 
+    static bool hadPotion = false;
+    static int potionEffect = 0;
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -135,6 +137,7 @@ public class GameManager
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
 
+
     }
 
     // 메인 화면
@@ -191,6 +194,8 @@ public class GameManager
             {
                 stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), StageDifficulty.Easy);
                 stage1.Start();
+                hadPotion = false;
+                potionEffect = 0;
                 break; 
             }
             else if(input == 2)
@@ -201,6 +206,8 @@ public class GameManager
                     NormalMonsters.AddRange(CreateRandomStage(EasyMonsters, 2));
                     stage2 = new StageClass(player, NormalMonsters, StageDifficulty.Normal);
                     stage2.Start();
+                    hadPotion = false;
+                    potionEffect = 0;
                     break;
                 }
                 else
@@ -214,7 +221,9 @@ public class GameManager
                 if (player.CurrentStage >= (int)StageDifficulty.Hard)
                 {
                     stage3 = new StageClass(player, HardMonsters, StageDifficulty.Normal);
-                    stage3.Start(); 
+                    stage3.Start();
+                    hadPotion = false;
+                    potionEffect = 0;
                 }
                 else
                 {
