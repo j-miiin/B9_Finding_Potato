@@ -47,7 +47,6 @@ namespace FindingPotato.Inventory
         {
             
             Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");    
-            Console.WriteLine("");
             Extension.ColorWriteLine("\n0. 나가기");
         }
 
@@ -75,9 +74,7 @@ namespace FindingPotato.Inventory
             Console.WriteLine($"◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------\n");
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
-                Console.ForegroundColor = ConsoleColor.DarkGray;
-                Console.WriteLine("\n                                            보유 중인 아이템이 없습니다.\n");
-                Console.ResetColor();
+                Extension.ColorWriteLine("\n                                            보유 중인 아이템이 없습니다.\n", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
             else
             {
