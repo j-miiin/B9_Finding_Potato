@@ -84,8 +84,8 @@ public class GameManager
         HardMonsters = new List<Monster> { customer }; 
     }
 
-    //몬스터를 랜덤하게 등장하는 스테이지 생성
-    List<Monster> CreateRandomStage(List<Monster> monsters, int numberOfMonsters)
+    //몬스터 목록에서 랜덤하게 선택된 몬스터 리스트 반환 (중복X) 
+    List<Monster> CreateRandomMonsterLineup(List<Monster> monsters, int numberOfMonsters)
     {
         Random random = new Random();
 
@@ -191,7 +191,7 @@ public class GameManager
             if(input == 1)
             {
                 List<IItem> itemRewards = GetStageRewards(input);
-                stage1 = new StageClass(player, CreateRandomStage(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
+                stage1 = new StageClass(player, CreateRandomMonsterLineup(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
                 Inventory.PotionEffectReset(player);
                 break; 
@@ -200,8 +200,8 @@ public class GameManager
             {
                 if (player.CurrentStage >= (int)StageDifficulty.Normal)
                 {
-                    NormalMonsters = CreateRandomStage(NormalMonsters, 3);
-                    NormalMonsters.AddRange(CreateRandomStage(EasyMonsters, 2));
+                    NormalMonsters = CreateRandomMonsterLineup(NormalMonsters, 3);
+                    NormalMonsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
