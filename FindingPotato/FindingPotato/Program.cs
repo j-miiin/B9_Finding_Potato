@@ -139,10 +139,10 @@ public class GameManager
         Console.WriteLine($"| {player.Name}      ({player.Type})");
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
-        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.Health}");
+        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
         Console.WriteLine($"| 공격력 : {player.AttackPower}");
         Console.WriteLine($"| 방어력 : {player.Defense}");
-        Console.WriteLine($"| 마  력 : {player.MP}");
+        Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
         Extension.ColorWriteLine("\n0. 나가기");

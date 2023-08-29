@@ -27,9 +27,7 @@ namespace FindingPotato.Item
         public void Use(Player player)
         {
             player.CurrentHealth += this.Effect;
-            if (player.CurrentHealth > player.Health) player.CurrentHealth = player.Health;
+            if (player.CurrentHealth > player.MaxHealth) player.CurrentHealth = player.MaxHealth;
         }
-
-
     }
 }
