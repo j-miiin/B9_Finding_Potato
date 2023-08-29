@@ -114,15 +114,6 @@ public class GameManager
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
 
-        // 인벤토리 테스트용 //
-
-        player.Inventory.Add(water);
-        player.Inventory.Add(styrofoam);
-        player.Inventory.Add(firtilizer);
-        player.Inventory.Add(peeler);
-
-
-        //------------------------------------
     }
 
     // 메인 화면
@@ -162,8 +153,22 @@ public class GameManager
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
-        Console.WriteLine($"| 공격력 : {player.AttackPower}");
-        Console.WriteLine($"| 방어력 : {player.Defense}");
+        Console.Write($"| 공격력 : {player.AttackPower}");
+        if(player.AddAtk != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddAtk}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
+        Console.Write($"| 방어력 : {player.Defense}");
+        if(player.AddDef != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddDef}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
         Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
