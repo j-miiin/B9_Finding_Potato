@@ -114,15 +114,6 @@ public class GameManager
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
 
-        // 인벤토리 테스트용 //
-
-        player.Inventory.Add(water);
-        player.Inventory.Add(styrofoam);
-        player.Inventory.Add(firtilizer);
-        player.Inventory.Add(peeler);
-
-
-        //------------------------------------
     }
 
     // 메인 화면
