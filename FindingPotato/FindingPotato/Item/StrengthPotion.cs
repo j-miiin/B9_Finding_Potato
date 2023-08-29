@@ -15,7 +15,7 @@ namespace FindingPotato.Item
         public string Desc { get; set; }
         public int Quantity { get; set; }
 
-        StrengthPotion(string name, int effect, string desc)
+        internal StrengthPotion(string name, int effect, string desc)
         {
             Name = name;
             Effect = effect;

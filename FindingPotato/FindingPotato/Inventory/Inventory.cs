@@ -96,9 +96,9 @@ namespace FindingPotato.Inventory
             }
         }
 
-        public static void ItemManager(IItem item)
+        public static void ItemManager(IItem item, Player player)
         {
-            // 장착에 따른 효과 적용 구현 예정
+            item.Use(player);
         }
     }
 }

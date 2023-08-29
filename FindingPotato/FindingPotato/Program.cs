@@ -27,7 +27,18 @@ public class GameManager
     Onion onion;
     Banana banana;
 
-    //List<IItem> stageRewards;
+    // 아이템 생성 (효과 수치는 조정 예정)
+    static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
+    static IItem nutrient = new HealthPotion("식물영양제", 5, "오는 길에 훔친 영양제.");
+    static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
+    static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
+    static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
+    static IItem peeler = new Weapon("필러", 5, "날카롭다.");
+    static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
+    static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
+
+    static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
+    static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
 
     //전체 몬스터 리스트
     List<ICharacter> monsters = new List<ICharacter>();
@@ -154,7 +165,7 @@ public class GameManager
         Console.Clear();
 
         Inventory.PrintTitle();
-        Inventory.ListingItems(player.Inventory, false);
+        Inventory.PrintItemList(player.Inventory, false);
         Inventory.ShowOptions();
 
         int input = Extension.GetInput(0, 1);
@@ -166,12 +177,12 @@ public class GameManager
     public void ItemManagement()
     {
         Inventory.PrintTitle();
-        Inventory.ListingItems(player.Inventory, true);
+        Inventory.PrintItemList(player.Inventory, true);
         Inventory.ShowOptions();
 
         int input = Extension.GetInput(0, player.Inventory.Count);
 
         if (input == 0) { ShowInventory(); }
-        else { Inventory.ItemManager(player.Inventory[input - 1]); }
+        else { Inventory.ItemManager(player.Inventory[input - 1], player); }
     }
 }
