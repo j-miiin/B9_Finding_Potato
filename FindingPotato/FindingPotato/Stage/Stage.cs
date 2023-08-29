@@ -16,20 +16,18 @@ namespace FindingPotato.Stage
     internal class StageClass
     {
         private Player player; // 플레이어
-
-        //private List<IItem> rewards; // 보상 아이템들
-
-        private List<Monster> monsters;
+        private List<Monster> monsters; // 몬스터 리스트
+        private List<IItem> rewards; // 보상 아이템 리스트
 
         // 이벤트 델리게이트 정의
         public delegate void GameEvent(ICharacter character);
         public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
 
-        public StageClass(Player player, List<Monster> monsters)
+        public StageClass(Player player, List<Monster> monsters, List<IItem> rewards)
         {
             this.player = player;
             this.monsters = monsters;
-            //this.rewards = rewards;
+            this.rewards = rewards;
             OnCharacterDeath += StageClear; // 캐릭터가 죽었을 때 StageClear 메서드 호출
         }
 
@@ -297,8 +295,8 @@ namespace FindingPotato.Stage
         {
             Console.Clear();
 
-            Console.WriteLine("Battle!!\n");
-            Console.WriteLine($"{player.Name}의 알파 스트라이크 공격!");
+            Extension.TypeWriting("Battle!!\n");
+            Extension.TypeWriting($"{player.Name}의 알파 스트라이크 공격!");
             Console.WriteLine();
 
             Monster curMonster = (Monster)monsters[monsterIdx];
@@ -307,6 +305,7 @@ namespace FindingPotato.Stage
             curMonster.TakeDamage(player.Attack * 2);  // 공격력 * 2 로 하나의 적 공격
             player.AttackWithMP(Player.MPAttackType.ALPHA);
 
+            // 알파 스트라이크 결과 출력
             Console.WriteLine($"Lv.{curMonster.Level} {curMonster.Name}");
             Console.WriteLine($"HP {monsterPrevHP} -> {curMonster.CurrentHealth}\n");
 
@@ -320,27 +319,31 @@ namespace FindingPotato.Stage
         {
             Console.Clear();
 
-            Console.WriteLine("Battle!!\n");
-            Console.WriteLine($"{player.Name}의 더블 스트라이크 공격!");
+            Extension.TypeWriting("Battle!!\n");
+            Extension.TypeWriting($"{player.Name}의 더블 스트라이크 공격!");
             Console.WriteLine();
 
+            // 살아있는 몬스터의 수
             int aliveMonster = monsters.Where(m => !m.IsDead).Count();
 
+            // 살아있는 몬스터가 2마리 미만이면 1마리만 공격, 2마리 이상이면 2마리 공격
             int num = (aliveMonster < 2) ? 1 : 2;
             List<int> randomIdx = GetRandomIdx(num, 0, monsters.Count);
 
+            // 공격 당하기 전 몬스터 체력을 저장해놓을 배열
             List<int> monsterPrevHPList = new List<int>();
 
             foreach (int idx in randomIdx)
             {
                 if (monsters[idx].IsDead) continue;
-                monsterPrevHPList.Add(monsters[idx].CurrentHealth);
+                monsterPrevHPList.Add(monsters[idx].CurrentHealth); // 공격 당하기 전 몬스터 체력 저장
                 monsters[idx].TakeDamage((int)(player.Attack * 1.5));   // 공격력 * 1.5 로 2명의 적을 랜덤 공격
             }
             player.AttackWithMP(Player.MPAttackType.DOUBLE);
 
             Console.WriteLine();
 
+            // 더블 스트라이크 결과 출력
             int prevHPidx = 0;
             foreach (int idx in randomIdx)
             {
@@ -381,6 +384,8 @@ namespace FindingPotato.Stage
                 {
                     Extension.TypeWriting("VICTORY");
                     Extension.TypeWriting($"던전에서 몬스터 {monsters.Count()}마리를 잡았습니다.");
+                    Console.WriteLine();
+                    GiveRewards();
                 }
                 else //몬스터 승리 
                 {
@@ -398,6 +403,25 @@ namespace FindingPotato.Stage
                     break; 
                 }
             }
+        }
+
+        private void GiveRewards()
+        {
+            // 보상 아이템
+            // 소모 가능한 보상 아이템
+            int consumableItemIdx = GetRandomIdx(1, 0, rewards.Count / 2)[0];
+            IItem consumableItemReward = rewards[consumableItemIdx];
+            rewards.Remove(consumableItemReward);
+
+            // 착용 가능한 보상 아이템
+            int equipableItemIdx = GetRandomIdx(1, rewards.Count / 2, rewards.Count)[0];
+            IItem equipableItemReward = rewards[equipableItemIdx];
+            rewards.Remove(equipableItemReward);
+
+            Console.WriteLine("[ 획득 아이템 ]");
+            Console.WriteLine($"{consumableItemReward.Name} - 1");
+            Console.WriteLine($"{equipableItemReward.Name} - 1");
+            Console.WriteLine();
         }
     }
 }   
