@@ -28,7 +28,8 @@ namespace FindingPotato.Character
         public int AddDef { get; set; }
         public int AttackPower { get; set; }
         public int AddAtk { get; set; }
-        public bool IsDead => Health <= 0;
+        public bool IsDead => CurrentHealth <= 0;
+
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
         public List<IItem> Inventory = new List<IItem>();
