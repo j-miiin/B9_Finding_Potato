@@ -44,8 +44,6 @@ namespace FindingPotato.Character
 
         public int CurrentStage { get; set; } = 1; 
 
-        public List<IItem> Inventory = new List<IItem>();
-
 
         public Player(string name, VegetableType type)
         {

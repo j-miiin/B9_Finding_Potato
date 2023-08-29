@@ -49,6 +49,8 @@ public class GameManager
     static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
  
+    // 인벤토리 생성
+    Inventory inventory = new Inventory();
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -134,7 +136,6 @@ public class GameManager
 
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
-
 
     }
 
@@ -268,9 +269,9 @@ public class GameManager
         {
             Console.Clear();
 
-            Inventory.PrintTitle(false);
-            Inventory.PrintItemList(player.Inventory, false);
-            Inventory.ShowOptions();
+            inventory.PrintTitle(false);
+            inventory.PrintItemList(false);
+            inventory.ShowOptions();
 
             int input = Extension.GetInput(0, 1);
 
@@ -285,17 +286,16 @@ public class GameManager
         {
             Console.Clear();
 
-            Inventory.PrintTitle(true);
-            Inventory.PrintItemList(player.Inventory, true);
+            inventory.PrintTitle(true);
+            inventory.PrintItemList(true);
+            inventory.ShowOptions(inventory.InventoryItems);
 
-            Inventory.ShowOptions(player.Inventory);
-
-            int input = Extension.GetInput(0, player.Inventory.Count);
+            int input = Extension.GetInput(0, inventory.InventoryItems.Count);
 
             if (input == 0) { break; }
             else
             {
-                Inventory.ApplyingItem(player.Inventory[input - 1], player);
+                inventory.ApplyingItem(inventory.InventoryItems[input - 1], player);
                 ItemManagement();
                 return;
             }
