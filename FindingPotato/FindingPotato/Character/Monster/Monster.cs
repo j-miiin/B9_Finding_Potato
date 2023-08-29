@@ -13,27 +13,32 @@ namespace FindingPotato.Character.Monster
 
         public int Level { get; set; }
 
-        public int Health 
+        public int CurrentHealth
         {
             get => health;
             set => health = Math.Max(value,0);
         }
         public int Attack => new Random().Next(10, 20); // 공격력은 랜덤
 
-        public bool IsDead => Health <= 0;
+        public bool IsDead => CurrentHealth <= 0;
 
         public Monster(string name, int health, int level)
         {
             Name = name;
-            Health = health;
+            CurrentHealth = health;
             Level = level;
         }
 
         public void TakeDamage(int damage)
         {
-            Health -= damage;
-            if (IsDead) Extension.TypeWriting($"{Name}이(가) 죽었습니다.");
-            else Extension.TypeWriting($"{Name}이(가) {damage}의 데미지를 받았습니다.");
+            CurrentHealth -= damage;
+            if (IsDead) Extension.TypeWriting($"{Name} 이(가) 죽었습니다.");
+            else Extension.TypeWriting($"{Name} 이(가) {damage}의 데미지를 받았습니다.");
+        }
+
+        public void Avoid()
+        {
+            Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
         }
 
         public virtual void AttackMessage()

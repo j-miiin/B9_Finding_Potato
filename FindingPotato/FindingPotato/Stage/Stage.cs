@@ -49,18 +49,18 @@ namespace FindingPotato.Stage
             for (int i = 0; i < monsters.Count(); i++)
             {
                 if (monsters[i].IsDead)
-                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}", ConsoleColor.Black, ConsoleColor.DarkGray);
+                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
 
                 else
-                    Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].Health)}");
+                    Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}");
 
             }
 
             Console.WriteLine();
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine($"HP {player.CurrentHealth}/{player.Health}");
-            Console.WriteLine($"MP {player.MP}/50");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaxHealth}");
+            Console.WriteLine($"MP {player.CurrentMP}/{player.MaxMP}");
             Console.WriteLine();
             Console.WriteLine(str);
             Console.WriteLine();
@@ -135,7 +135,7 @@ namespace FindingPotato.Stage
         }
 
         //플레이어 공격 화면 
-        void PlayerTurnScreen(ICharacter monster)
+        void PlayerTurnScreen(Monster monster)
         {
             while (true)
             {
@@ -145,16 +145,32 @@ namespace FindingPotato.Stage
                 int damage = player.Attack;
 
                 //플레이어의 이전 체력
-                int previousHP = monster.Health;
+                int previousHP = monster.CurrentHealth;
 
                 Console.WriteLine("Battle!!\n");
                 Extension.TypeWriting($"{player.Name}의 공격!");
-                monster.TakeDamage(damage);
+
+                // 10% 의 확률로 플레이어의 공격을 회피
+                if (IsOccur(10)) monster.Avoid();
+                else
+                {
+                    Console.Write($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.");
+                    // 15% 의 확률로 치명타 공격
+                    if (IsOccur(15))
+                    {
+                        damage = (int)(damage * 1.6);
+                        Console.WriteLine($" [ 데미지 : {damage} ] - 치명타 공격!!");
+                    }
+                    else Console.WriteLine($" [ 데미지 : {damage} ]");
+                    Console.WriteLine();
+
+                    monster.TakeDamage(damage);
+                    Console.WriteLine();
+                    Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                    Console.WriteLine($"HP {previousHP} -> {monster.CurrentHealth}\n");
+                }
+
                 Console.WriteLine();
-
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
-                Console.WriteLine($"HP {previousHP} -> {monster.Health}\n");
-
                 Console.WriteLine("0.다음");
 
                 int input = Extension.GetInput(0, 0);
@@ -168,6 +184,15 @@ namespace FindingPotato.Stage
                     break; 
                 }
             }
+        }
+
+        // prob 확률의 이벤트가 발생한다면 true, 아니면 false 리턴
+        // 15% 확률로 일어나는 이벤트 -> IsOccur(15)
+        private bool IsOccur(int prob)
+        {
+            int isOccur = new Random().Next(0, 100);
+            if (isOccur < prob) return true;
+            else return false;
         }
 
         //몬스터 공격 페이즈
@@ -207,7 +232,6 @@ namespace FindingPotato.Stage
                             OnCharacterDeath?.Invoke(player);
                             break;
                         }
-                      
                     }
                 }
             }
@@ -220,7 +244,7 @@ namespace FindingPotato.Stage
             {
                 Console.Clear();
 
-                string str = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n" +
+                string str = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n\n" +
                     "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n0. 취소";
 
                 InfoScreen(false, str);
@@ -229,18 +253,45 @@ namespace FindingPotato.Stage
 
                 if (input == 1)
                 {
-                    if (player.MP < (int)Player.MPAttackType.ALPHA) Console.WriteLine("MP가 부족합니다!");
+                    if (monsters.All(x => x.IsDead))
+                    {
+                        Console.WriteLine("공격할 수 있는 적이 없습니다!");
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
+                    if (player.CurrentMP < (int)Player.MPAttackType.ALPHA)
+                    {
+                        Console.WriteLine("MP가 부족합니다!");
+                        Thread.Sleep(1000);
+                    }
                     else
                     {
                         Console.Clear();
                         InfoScreen(true, "");
                         int monsterIdx = Extension.GetInput(1, monsters.Count) - 1;
-                        AlphaStrikeAttack(monsterIdx);
+                        if (monsters[monsterIdx].IsDead)
+                        {
+                            Console.WriteLine($"{monsters[monsterIdx].Name} 은(는) 이미 죽었습니다.");
+                            Thread.Sleep(1000);
+                        }
+                        else AlphaStrikeAttack(monsterIdx);
                     }
                 }
                 else if (input == 2)
                 {
-                    if (player.MP < (int)Player.MPAttackType.DOUBLE) Console.WriteLine("MP가 부족합니다!");
+                    if (monsters.All(x => x.IsDead))
+                    {
+                        Console.WriteLine("공격할 수 있는 적이 없습니다!");
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
+                    if (player.CurrentMP < (int)Player.MPAttackType.DOUBLE)
+                    {
+                        Console.WriteLine("MP가 부족합니다!");
+                        Thread.Sleep(1000);
+                    }
                     else
                     {
                         DoubleStrikeAttack();
@@ -255,18 +306,18 @@ namespace FindingPotato.Stage
         {
             Console.Clear();
 
-            Monster curMonster = (Monster)monsters[monsterIdx];
-            int monsterPrevHP = curMonster.Health;
-
-            curMonster.TakeDamage(player.Attack * 2);  // 공격력 * 2 로 하나의 적 공격
-            player.AttackWithMP(Player.MPAttackType.ALPHA);
-
             Console.WriteLine("Battle!!\n");
             Console.WriteLine($"{player.Name}의 알파 스트라이크 공격!");
             Console.WriteLine();
 
-            Console.WriteLine($"Lv.() {curMonster.Name}");
-            Console.WriteLine($"HP {monsterPrevHP} -> {curMonster.Health}\n");
+            Monster curMonster = (Monster)monsters[monsterIdx];
+            int monsterPrevHP = curMonster.CurrentHealth;
+
+            curMonster.TakeDamage(player.Attack * 2);  // 공격력 * 2 로 하나의 적 공격
+            player.AttackWithMP(Player.MPAttackType.ALPHA);
+
+            Console.WriteLine($"Lv.{curMonster.Level} {curMonster.Name}");
+            Console.WriteLine($"HP {monsterPrevHP} -> {curMonster.CurrentHealth}\n");
 
             Console.WriteLine("0.다음");
 
@@ -282,13 +333,17 @@ namespace FindingPotato.Stage
             Console.WriteLine($"{player.Name}의 더블 스트라이크 공격!");
             Console.WriteLine();
 
-            List<int> randomIdx = GetRandomIdx(2, 0, monsters.Count);
+            int aliveMonster = monsters.Where(m => !m.IsDead).Count();
+
+            int num = (aliveMonster < 2) ? 1 : 2;
+            List<int> randomIdx = GetRandomIdx(num, 0, monsters.Count);
 
             List<int> monsterPrevHPList = new List<int>();
 
             foreach (int idx in randomIdx)
             {
-                monsterPrevHPList.Add(monsters[idx].Health);
+                if (monsters[idx].IsDead) continue;
+                monsterPrevHPList.Add(monsters[idx].CurrentHealth);
                 monsters[idx].TakeDamage((int)(player.Attack * 1.5));   // 공격력 * 1.5 로 2명의 적을 랜덤 공격
             }
             player.AttackWithMP(Player.MPAttackType.DOUBLE);
@@ -298,8 +353,8 @@ namespace FindingPotato.Stage
             int prevHPidx = 0;
             foreach (int idx in randomIdx)
             {
-                Console.WriteLine($"Lv.() {monsters[idx].Name}");
-                Console.WriteLine($"HP {monsterPrevHPList[prevHPidx++]} -> {monsters[idx].Health}\n");
+                Console.WriteLine($"Lv.{monsters[idx].Level} {monsters[idx].Name}");
+                Console.WriteLine($"HP {monsterPrevHPList[prevHPidx++]} -> {monsters[idx].CurrentHealth}\n");
             }
            
             Console.WriteLine("0.다음");
@@ -315,11 +370,10 @@ namespace FindingPotato.Stage
             while (randomIdx.Count < n)
             {
                 int currentNum = new Random().Next(min, max);
-                if (randomIdx.Contains(currentNum))
+                if (!randomIdx.Contains(currentNum))
                 {
-                    currentNum = new Random().Next(min, max);
+                    randomIdx.Add(currentNum);
                 }
-                randomIdx.Add(currentNum);
             }
 
             return randomIdx;
@@ -357,7 +411,7 @@ namespace FindingPotato.Stage
                 }
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {player.Health}-> {player.CurrentHealth}\n");
+                Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
                 Console.WriteLine("0.다음\n");
                 
                 int input = Extension.GetInput(0, 0);

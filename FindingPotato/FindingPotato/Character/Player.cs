@@ -14,23 +14,29 @@ namespace FindingPotato.Character
 {
     internal class Player : ICharacter
     {
-        private int currentHealth; 
+        private int currentHealth;
+        private int currentMP;
         public string Name { get; }
         public VegetableType Type { get; }
         public int Level { get; set; }
-        public int Health { get; set; }
+        public int MaxHealth { get; set; }
         public int CurrentHealth 
         { 
-            get =>currentHealth;
-            set => currentHealth = Math.Max(0, Math.Min(value, Health));
+            get => currentHealth;
+            set => currentHealth = Math.Max(0, Math.Min(value, MaxHealth));
         }
         public int Defense { get; set; }
         public int AddDef { get; set; }
         public int AttackPower { get; set; }
         public int AddAtk { get; set; }
 
-        public int MP { get; set; }
-        
+        public int MaxMP { get; set; }
+
+        public int CurrentMP
+        {
+            get => currentMP;
+            set => currentMP = Math.Max(0, Math.Min(value, MaxMP));
+        }
 
         public bool IsDead => CurrentHealth <= 0;
 
@@ -40,6 +46,7 @@ namespace FindingPotato.Character
 
         public List<IItem> Inventory = new List<IItem>();
 
+
         public Player(string name, VegetableType type)
         {
             Name = name;
@@ -48,27 +55,28 @@ namespace FindingPotato.Character
 
             if (type == VegetableType.감자)
             {
-                Health = 100;
+                MaxHealth = 100;
                 Defense = 10;
                 AttackPower = 50;
-                MP = 70;
+                MaxMP = 70;
             }
             else if (type == VegetableType.고구마)
             {
-                Health = 120;
+                MaxHealth = 120;
                 Defense = 20;
                 AttackPower = 40;
-                MP = 30;
+                MaxMP = 30;
             }
             else // 당근
             {
-                Health = 100;
+                MaxHealth = 100;
                 Defense = 0;
                 AttackPower = 60;
-                MP = 50;
+                MaxMP = 50;
             }
 
-            CurrentHealth = Health;
+            CurrentHealth = MaxHealth;
+            CurrentMP = MaxMP;
         }
 
         public void TakeDamage(int damage)
@@ -80,8 +88,8 @@ namespace FindingPotato.Character
 
         public void AttackWithMP(MPAttackType type)
         {
-            if (type == MPAttackType.ALPHA) MP -= (int)MPAttackType.ALPHA;
-            else MP -= (int)MPAttackType.DOUBLE;
+            if (type == MPAttackType.ALPHA) CurrentMP -= (int)MPAttackType.ALPHA;
+            else CurrentMP -= (int)MPAttackType.DOUBLE;
         }
 
         public enum MPAttackType

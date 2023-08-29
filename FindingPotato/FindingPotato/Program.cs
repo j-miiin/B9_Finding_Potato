@@ -38,16 +38,17 @@ public class GameManager
 
     // 아이템 생성 (효과 수치는 조정 예정)
     static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
-    static IItem nutrient = new HealthPotion("식물영양제", 5, "오는 길에 훔친 영양제.");
+    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
     static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
     static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
-    static IItem peeler = new Weapon("필러", 5, "날카롭다.");
+    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
     static List<IItem> Consumable = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> Equipable = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
+
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -57,6 +58,8 @@ public class GameManager
     StageClass stage1;
     StageClass stage2;
     StageClass stage3;
+
+
 
     public GameManager()
     {
@@ -131,6 +134,7 @@ public class GameManager
 
         int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
+
     }
 
     // 메인 화면
@@ -229,9 +233,24 @@ public class GameManager
         Console.WriteLine($"| {player.Name}      ({player.Type})");
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
-        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.Health}");
-        Console.WriteLine($"| 공격력 : {player.AttackPower}");
-        Console.WriteLine($"| 방어력 : {player.Defense}");
+        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
+        Console.Write($"| 공격력 : {player.AttackPower}");
+        if(player.AddAtk != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddAtk}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
+        Console.Write($"| 방어력 : {player.Defense}");
+        if(player.AddDef != 0)
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"  + {player.AddDef}");
+            Console.ResetColor();
+        }
+        else { Console.WriteLine(); }
+        Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
 
         Extension.ColorWriteLine("\n0. 나가기");
@@ -241,27 +260,41 @@ public class GameManager
 
     public void ShowInventory()
     {
-        Console.Clear();
+        while( true)
+        {
+            Console.Clear();
 
-        Inventory.PrintTitle();
-        Inventory.PrintItemList(player.Inventory, false);
-        Inventory.ShowOptions();
+            Inventory.PrintTitle(false);
+            Inventory.PrintItemList(player.Inventory, false);
+            Inventory.ShowOptions();
 
-        int input = Extension.GetInput(0, 1);
+            int input = Extension.GetInput(0, 1);
 
-        if (input == 0) return;
-        else { ItemManagement(); }
+            if (input == 0) break;
+            else { ItemManagement(); }
+        }
     }
 
     public void ItemManagement()
     {
-        Inventory.PrintTitle();
-        Inventory.PrintItemList(player.Inventory, true);
-        Inventory.ShowOptions();
+        while (true)
+        {
+            Console.Clear();
 
-        int input = Extension.GetInput(0, player.Inventory.Count);
+            Inventory.PrintTitle(true);
+            Inventory.PrintItemList(player.Inventory, true);
 
-        if (input == 0) { ShowInventory(); }
-        else { player.Inventory[input - 1].Use(player); }
+            Inventory.ShowOptions(player.Inventory);
+
+            int input = Extension.GetInput(0, player.Inventory.Count);
+
+            if (input == 0) { break; }
+            else
+            {
+                Inventory.ApplyingItem(player.Inventory[input - 1], player);
+                ItemManagement();
+                return;
+            }
+        }
     }
 }
