@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Character.Monster
 {
-    internal class Onion : Monster
+    internal class Watermelon : Monster
     {
-        public Onion(string name) : base(name, 50,5) { }
+        public Watermelon(string name) : base(name, 50, 2) { }
 
         public override void AttackMessage()
         {
-            Extension.TypeWriting("양파즙 뿌리기!"); 
+            Extension.TypeWriting("몸통 박치기!");
         }
     }
 }

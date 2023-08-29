@@ -8,6 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Customer : Monster
     {
-        public Customer(string name) : base(name, 50,10) { }
+        public Customer(string name) : base(name, 50, 10) { }
+
+        public override void AttackMessage()
+        {
+            Extension.TypeWriting("손 휘젓기!");
+        }
     }
 }
