@@ -44,6 +44,7 @@ namespace FindingPotato.Character
 
         public List<IItem> Inventory = new List<IItem>();
 
+
         public Player(string name, VegetableType type)
         {
             Name = name;
