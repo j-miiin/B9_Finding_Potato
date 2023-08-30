@@ -147,9 +147,7 @@ public class GameManager
         {
             Console.Clear();
 
-            SelectActivitySceneUI.GetPlayerActivity(player.Name);
-
-            int input = Extension.GetInput(0, 3);
+            int input = SelectActivitySceneUI.GetPlayerActivity(player.Name);
 
             if (input == 1) { ShowStatus(); }
             else if (input == 2) { ShowInventory(); }
