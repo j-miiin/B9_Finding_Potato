@@ -17,7 +17,7 @@ namespace FindingPotato.Skill
         public AlphaSkill()
         {
             SkillType = SkillType.ALPHA;
-            Description = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n";
+            Description = "알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n";
         }
 
         public void Use(Player player, List<ICharacter> monsterList)
