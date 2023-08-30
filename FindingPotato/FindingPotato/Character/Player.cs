@@ -98,5 +98,11 @@ namespace FindingPotato.Character
             ALPHA = 10,
             DOUBLE = 15
         }
+        public void PotionEffectReset()
+        {
+            hadPotion = false;
+            AddAtk -= potionEffect;
+            potionEffect = 0;
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace FindingPotato.Item
 
         public void Use(Player player, List<IItem> list)
         {
+            player.potionEffect = this.Effect;
+
             player.AddAtk += this.Effect;
             --this.Quantity;
             if (this.Quantity == 0) list.Remove(this);

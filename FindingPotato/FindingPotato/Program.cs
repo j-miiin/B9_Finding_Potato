@@ -193,7 +193,7 @@ public class GameManager
                 List<IItem> itemRewards = GetStageRewards(input);
                 stage1 = new StageClass(player, CreateRandomMonsterLineup(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
-                Inventory.PotionEffectReset(player);
+                player.PotionEffectReset();
                 break; 
             }
             else if(input == 2)
@@ -205,7 +205,7 @@ public class GameManager
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
-                    Inventory.PotionEffectReset(player);
+                    player.PotionEffectReset();
                     break;
                 }
                 else
@@ -220,8 +220,8 @@ public class GameManager
                 {
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
-                    stage3.Start(); 
-                    Inventory.PotionEffectReset(player);
+                    stage3.Start();
+                    player.PotionEffectReset();
                 }
                 else
                 {
@@ -273,7 +273,9 @@ public class GameManager
 
             inventory.PrintTitle(false);
             inventory.PrintItemList(false);
-            inventory.ShowOptions();
+
+            Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");
+            Extension.ColorWriteLine("\n0. 나가기");
 
             int input = Extension.GetInput(0, 1);
 
@@ -297,7 +299,7 @@ public class GameManager
             if (input == 0) { break; }
             else
             {
-                inventory.ApplyingItem(inventory.InventoryItems[input - 1], player);
+                inventory.InventoryItems[input - 1].Use(player, inventory.InventoryItems);
                 ItemManagement();
                 return;
             }
