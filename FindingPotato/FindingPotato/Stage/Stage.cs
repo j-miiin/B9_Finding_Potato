@@ -379,7 +379,8 @@ namespace FindingPotato.Stage
                             break;
 
                         case StageDifficulty.Hard:
-                             EndingScreen(); 
+                            Thread.Sleep(1000); 
+                            EndingScreen(); 
                              break;
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
