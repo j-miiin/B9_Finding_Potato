@@ -42,7 +42,8 @@ namespace FindingPotato.Character
 
         public bool IsDead => CurrentHealth <= 0;
 
-        public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
+        public int Attack => new Random().Next(AttackPower-5, AttackPower+5); 
+        // 공격력은 랜덤
 
         public int CurrentStage { get; set; } = 1;
 
@@ -61,24 +62,24 @@ namespace FindingPotato.Character
 
             if (type == VegetableType.감자)
             {
-                MaxHealth = 100;
+                MaxHealth = 120;
                 Defense = 10;
                 AttackPower = 50;
-                MaxMP = 70;
+                MaxMP = 50;
             }
             else if (type == VegetableType.고구마)
             {
-                MaxHealth = 120;
+                MaxHealth = 140;
                 Defense = 20;
                 AttackPower = 40;
-                MaxMP = 30;
+                MaxMP = 20;
             }
             else // 당근
             {
-                MaxHealth = 100;
-                Defense = 0;
+                MaxHealth = 110;
+                Defense = 5;
                 AttackPower = 60;
-                MaxMP = 50;
+                MaxMP = 30;
             }
 
             CurrentHealth = MaxHealth;
@@ -111,6 +112,20 @@ namespace FindingPotato.Character
                 SkillList[skillIdx].Use(this, monsterList);
             }
         }
+
+        public void GetReward(IItem newItem)
+        {
+            IItem item = PlayerInventory.InventoryItems.Find(x => x.Name == newItem.Name);
+            if (item == null) PlayerInventory.InventoryItems.Add(newItem);
+            else
+            {
+                if (item.Type == ItemType.HealthPotion || item.Type == ItemType.StrengthPotion)
+                {
+                    ((IConsumable)item).Quantity++;
+                }
+            }
+        }
+
         public void PotionEffectReset()
         {
             hadPotion = false;

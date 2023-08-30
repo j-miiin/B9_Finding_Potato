@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Paprika : Monster
     {
-        public Paprika(string name) : base(name, 150,35,5) { }
+        public Paprika(string name) : base(name, 80,25,4) { }
 
         public override string AttackMessage()
         {

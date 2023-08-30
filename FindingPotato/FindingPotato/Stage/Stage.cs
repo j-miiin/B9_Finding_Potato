@@ -4,6 +4,7 @@ using FindingPotato.Item;
 using FindingPotato.Skill;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Linq;
@@ -378,18 +379,18 @@ namespace FindingPotato.Stage
                             break;
 
                         case StageDifficulty.Hard:
-                            Extension.TypeWriting($"내친구 감자를 구했다!!");
-                            break;
+                             EndingScreen(); 
+                             break;
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
-                    GiveRewards();
+                    if (Difficulty != StageDifficulty.Hard) GiveRewards();
                 }
                 else //몬스터 승리 
                 {
                     Console.WriteLine("YOU DIED\n");
                     Extension.TypeWriting("직원의 손에 이끌려 포장되었다...\n"); 
-                    Console.WriteLine("아무키나 누르세요."); 
+                    Console.WriteLine("아무키나 눌러서 종료."); 
                     Console.ReadKey(); 
                     Environment.Exit(0);
                 }
@@ -416,13 +417,13 @@ namespace FindingPotato.Stage
             // 소모 가능한 보상 아이템
             int consumableItemIdx = GetRandomIdx(1, 0, rewards.Count / 2)[0];
             IItem consumableItemReward = rewards[consumableItemIdx];
-            player.PlayerInventory.InventoryItems.Add(consumableItemReward);
+            player.GetReward(consumableItemReward);
             rewards.Remove(consumableItemReward);
 
             // 착용 가능한 보상 아이템
             int equipableItemIdx = GetRandomIdx(1, rewards.Count / 2, rewards.Count)[0];
             IItem equipableItemReward = rewards[equipableItemIdx];
-            player.PlayerInventory.InventoryItems.Add(equipableItemReward);
+            player.GetReward(equipableItemReward);
             rewards.Remove(equipableItemReward);
 
             Console.WriteLine("[ 획득 아이템 ]");
@@ -446,6 +447,16 @@ namespace FindingPotato.Stage
             }
 
             return randomIdx;
+        }
+
+        void EndingScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("-The End-\n");
+            Extension.TypeWriting($"내 친구 감자를 구했다!!\n");
+            Console.WriteLine("아무키나 눌러서 종료.\n");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }   

@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Rambutan :Monster
     {
-        public Rambutan(string name) : base(name, 100, 25,3) { }
+        public Rambutan(string name) : base(name, 60, 20,2) { }
 
         public override string AttackMessage()
         {
