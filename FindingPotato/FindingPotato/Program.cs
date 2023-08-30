@@ -126,10 +126,7 @@ public class GameManager
     public void InitialCharacter()
     {
         ConsoleUI.PrintGameTitleUI();
-        // 이름 설정 - string
-        Extension.TypeWriting("이름 ?\n");
-        Console.Write(">> ");
-        string playerName = Console.ReadLine();
+        string playerName = ConsoleUI.GetUserName();
 
         // 직업 설정 - enum(int)
         Extension.TypeWriting("\n정체\n");
