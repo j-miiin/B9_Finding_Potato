@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Watermelon : Monster
     {
-        public Watermelon(string name) : base(name, 75,25, 2) { }
+        public Watermelon(string name) : base(name, 60,20, 2) { }
 
         public override string AttackMessage()
         {
