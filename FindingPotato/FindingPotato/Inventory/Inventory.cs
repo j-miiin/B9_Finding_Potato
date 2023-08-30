@@ -6,6 +6,7 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FindingPotato.Inventory
 {
@@ -87,7 +88,7 @@ namespace FindingPotato.Inventory
                 // 리스트 앞 기호 출력
                 for (int i = 1; i < InventoryItems.Count + 1; i++)
                 {
-                    Console.SetCursorPosition(20, Console.CursorTop);
+                    Console.SetCursorPosition(0, Console.CursorTop);
                     Console.WriteLine(isManagement ? $" {i}." : " -");
                 }
             }
@@ -100,30 +101,18 @@ namespace FindingPotato.Inventory
 
         private static void PrintItemInfo(IItem item)
         {
-            int initialLine = Console.CursorTop;
-            Console.Write("                                       |                   |                   |                                       |                    "); // 간격 20 | 20 | 20 | 40 | 20
+            //리스트 출력 내용 하나도 합치기
+            string equipMark = (item is IEquipable equipable) ? "[E] " : "    ";
+            string itemName = item.Name.PadRight(13 - item.Name.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
+            string itemType = item.Type.ToString().PadRight(18);
+            string itemEffect = "";
+            string effect;
+            if (EffectDictionary.TryGetValue(item.Type , out effect)) { itemEffect = effect.PadRight(12 - effect.Count(c => c >= '\uAC00' && c <= '\uD7AF')) + string.Format($" + {item.Effect}").PadRight(6); }
+            string itemDesc = item.Desc.PadRight(38 - item.Desc.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
+            string itemCount = item is IConsumable consumable ? string.Format($"보유 중 : {consumable.Quantity.ToString()} 개") : "";
 
-            if (item is IEquipable equipable) // 장착 중인 아이템의 경우 장착 표시
-            {
-                if (equipable.IsEquipped) { WriteAtPosition("[E]", 23, initialLine); }
-            }
-
-            WriteAtPosition(item.Name, 26, initialLine);
-            WriteAtPosition(item.Type.ToString(), 41, initialLine);
-
-            if (EffectDictionary.TryGetValue(item.Type, out var effect))
-            {
-                WriteAtPosition($"{effect} + {item.Effect}", 61, initialLine);
-            }
-
-            WriteAtPosition(item.Desc, 81, initialLine);
-
-            if (item is IConsumable consumable) // 소모품 개수 표시
-            {
-                WriteAtPosition($"보유 중: {consumable.Quantity} 개", 121, initialLine  );
-            }
-
-            Console.WriteLine();
+            string itemInfo = string.Format($"   {equipMark}{itemName}|  {itemType}|  {itemEffect}|  {itemDesc}|  {itemCount}");
+            Console.WriteLine(itemInfo);
         }
 
         private static void WriteAtPosition(string text, int position, int line)
