@@ -29,7 +29,7 @@ namespace FindingPotato.Item
             if (player.CurrentHealth == player.MaxHealth)
             {
                 // HealthPotion 체력 최대치일 때 섭취 불가
-                Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11);
+                Console.SetCursorPosition(15, 24); // 메시지 위치 잡기
                 Extension.ColorWriteLine(" 현재 체력이 최대입니다.           ", ConsoleColor.Black, ConsoleColor.Red);
                 Console.WriteLine("                                   ");
                 Console.WriteLine("                                   ");

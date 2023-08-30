@@ -36,10 +36,11 @@ namespace FindingPotato.Item
 
         public void UseMessage(Player player)
         {
-            Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11); // 메시지 위치 잡기
+            Console.SetCursorPosition(15, 24); // 메시지 위치 잡기
             if (IsEquipped)
             {
                 Extension.ColorWriteLine($" {Name} 을/를 장착했습니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+                Console.SetCursorPosition(15, Console.CursorTop);
                 Extension.ColorWriteLine($" 공격력이 + {Effect} 증가합니다.", ConsoleColor.Black, ConsoleColor.Green);
             }
             else

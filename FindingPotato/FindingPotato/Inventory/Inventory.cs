@@ -31,45 +31,58 @@ namespace FindingPotato.Inventory
         { 
             if (isManagement)
             {
-                Console.SetCursorPosition(18, 1);
-                Console.Write(" - 아이템 장착 및 소모");
-                Console.SetCursorPosition(0, 0);
+                Console.SetCursorPosition(0, 4);
+                CenterAlign(" - 아이템 장착 및 소모 -         ", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
-            Console.WriteLine("  --------------");
-            Console.WriteLine(" |   인벤토리   |");
-            Console.WriteLine("  --------------");
+
+            Console.SetCursorPosition(0, 1);
+
+            CenterAlign("▣==============▣", ConsoleColor.Black, ConsoleColor.Cyan);
+            CenterAlign("||   인벤토리   || ", ConsoleColor.Black, ConsoleColor.Cyan);
+            CenterAlign("▣==============▣", ConsoleColor.Black, ConsoleColor.Cyan);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            if (!isManagement) Extension.TypeWriting("  보유 중인 아이템을 관리할 수 있습니다.");
-            else Console.WriteLine("  보유 중인 아이템을 관리할 수 있습니다.");
+            Console.WriteLine("\n");
+            CenterAlign("보유 중인 아이템을 관리할 수 있습니다.              ");
             Console.ResetColor();
         }
 
-        public void ShowOptions()       
+        public void ShowOptions(bool isManagement)       
         {
+            Console.SetCursorPosition(15, 24);
 
-            switch (InventoryItems.Count)
+            if (!isManagement)
             {
-                case 0:
-                    break;
-                case 1:
-                    Extension.ColorWriteLine("\n1. 해당 아이템 장착 및 소모");
-                    break;
-                default:
-                    Extension.ColorWriteLine($"\n1 ~ {InventoryItems.Count}. 해당 아이템 장착 및 소모");
-                    break;
+                Extension.ColorWriteLine("1. 아이템 장착 및 소모");
             }
-            Extension.ColorWriteLine("\n0. 나가기");
+            else
+            {
+                switch (InventoryItems.Count)
+                {
+                    case 0:
+                        break;
+                    case 1:
+                        Extension.ColorWriteLine("1. 해당 아이템 장착 및 소모");
+                        break;
+                    default:
+                        Extension.ColorWriteLine($"1 ~ {InventoryItems.Count}. 해당 아이템 장착 및 소모");
+                        break;
+                }
+            }
+
+            Console.SetCursorPosition(15, 26);
+            Extension.ColorWriteLine("0. 나가기");
         }
 
         public void PrintItemList(bool isManagement)
         {
 
-            Console.SetCursorPosition(0, 6);
-            Console.WriteLine($"◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------\n");
+            Console.SetCursorPosition(0, 10);
+            CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+            Console.WriteLine();
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
-                Extension.ColorWriteLine("\n                                            보유 중인 아이템이 없습니다.\n", ConsoleColor.Black, ConsoleColor.DarkGray);
+                CenterAlign("보유 중인 아이템이 없습니다.            ", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
             else
             {
@@ -78,14 +91,17 @@ namespace FindingPotato.Inventory
                     PrintItemInfo(item);
                 }
 
-                Console.SetCursorPosition(0, 8);
+                Console.SetCursorPosition(0, Console.CursorTop - InventoryItems.Count);
                 // 리스트 앞 기호 출력
                 for (int i = 1; i < InventoryItems.Count + 1; i++)
                 {
+                    Console.SetCursorPosition(15, Console.CursorTop);
                     Console.WriteLine(isManagement ? $" {i}." : " -");
                 }
             }
-            Console.WriteLine($"\n◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------");
+            Console.WriteLine();
+            CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+            Console.WriteLine();
 
         }
 
@@ -93,26 +109,26 @@ namespace FindingPotato.Inventory
         private static void PrintItemInfo(IItem item)
         {
             int initialLine = Console.CursorTop;
-            Console.Write("                     |                    |                    |                                        |                    "); // 간격 20 | 20 | 20 | 40 | 20
+            Console.Write("                                       |                   |                   |                                       |                    "); // 간격 20 | 20 | 20 | 40 | 20
 
             if (item is IEquipable equipable) // 장착 중인 아이템의 경우 장착 표시
             {
-                if (equipable.IsEquipped) { WriteAtPosition("[E]", 3, initialLine); }
+                if (equipable.IsEquipped) { WriteAtPosition("[E]", 18, initialLine); }
             }
 
-            WriteAtPosition(item.Name, 7, initialLine);
-            WriteAtPosition(item.Type.ToString(), 26, initialLine);
+            WriteAtPosition(item.Name,21, initialLine);
+            WriteAtPosition(item.Type.ToString(), 41, initialLine);
 
             if (EffectDictionary.TryGetValue(item.Type, out var effect))
             {
-                WriteAtPosition($"{effect} + {item.Effect}", 46, initialLine);
+                WriteAtPosition($"{effect} + {item.Effect}", 61, initialLine);
             }
 
-            WriteAtPosition(item.Desc, 66, initialLine);
+            WriteAtPosition(item.Desc, 81, initialLine);
 
             if (item is IConsumable consumable) // 소모품 개수 표시
             {
-                WriteAtPosition($"보유 중: {consumable.Quantity} 개", 106, initialLine  );
+                WriteAtPosition($"보유 중: {consumable.Quantity} 개", 121, initialLine  );
             }
 
             Console.WriteLine();
@@ -122,6 +138,13 @@ namespace FindingPotato.Inventory
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
+        }
+
+        static void CenterAlign(string text, ConsoleColor _back = ConsoleColor.Black, ConsoleColor _front = ConsoleColor.White)
+        {
+            int len = (150 - text.Length) / 2;
+            Console.SetCursorPosition(len, Console.CursorTop);
+            Extension.ColorWriteLine(text, _back, _front);
         }
     }
 }

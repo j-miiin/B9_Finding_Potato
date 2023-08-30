@@ -14,6 +14,8 @@ namespace FindingPotato
     {
         static void Main()
         {
+            Console.WindowHeight = 50;
+            Console.WindowWidth = 150;
             GameManager GM = new GameManager();
             GM.InitialCharacter();
             GM.GameMain();
@@ -267,8 +269,7 @@ public class GameManager
             InventoryClass.PrintTitle(false);
             player.PlayerInventory.PrintItemList(false);
 
-            Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");
-            Extension.ColorWriteLine("\n0. 나가기");
+            player.PlayerInventory.ShowOptions(false);
 
             int input = Extension.GetInput(0, 1);
 
@@ -285,7 +286,7 @@ public class GameManager
 
             InventoryClass.PrintTitle(true);
             player.PlayerInventory.PrintItemList(true);
-            player.PlayerInventory.ShowOptions();
+            player.PlayerInventory.ShowOptions(true);
 
             int input = Extension.GetInput(0, player.PlayerInventory.InventoryItems.Count);
 
