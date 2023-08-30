@@ -26,7 +26,7 @@ namespace FindingPotato.Character
             get;
             set;
         }
-        public int MaxiExp  // player 레벨 별 최대 경험치
+        public int MaxExp  // player 레벨 별 최대 경험치
         {
             get
             {
