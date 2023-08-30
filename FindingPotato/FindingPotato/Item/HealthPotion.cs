@@ -30,12 +30,10 @@ namespace FindingPotato.Item
             {
                 // HealthPotion 체력 최대치일 때 섭취 불가
                 Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(" 현재 체력이 최대입니다.           ");
+                Extension.ColorWriteLine(" 현재 체력이 최대입니다.           ", ConsoleColor.Black, ConsoleColor.Red);
                 Console.WriteLine("                                   ");
                 Console.WriteLine("                                   ");
                 Thread.Sleep(2000);
-                Console.ResetColor();
             }
             else
             {
@@ -44,7 +42,17 @@ namespace FindingPotato.Item
 
                 --this.Quantity;
                 if (this.Quantity == 0) player.PlayerInventory.InventoryItems.Remove(this);
+                UseMessage(player);
             }
+        }
+
+        public void UseMessage(Player player)
+        {
+            Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11); // 메시지 위치 잡기
+            Extension.ColorWriteLine($" 체력을 + {Effect} 회복했습니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+            Console.WriteLine("                                           ");
+            Console.WriteLine("                                         ");
+            Thread.Sleep(2000);
         }
     }
 }
