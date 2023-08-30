@@ -17,6 +17,7 @@ namespace FindingPotato.Stage
     {
         Easy = 1, Normal,Hard
     }
+
     internal class StageClass
     {
         public StageDifficulty Difficulty;
@@ -127,7 +128,7 @@ namespace FindingPotato.Stage
                     else
                     {
                         PlayerTurnScreen(monsters[input-1]);
-                        EnenyPhase();
+                        EnemyPhase();
                         break;
                     }
                 }
@@ -147,9 +148,9 @@ namespace FindingPotato.Stage
                 Console.Clear();
 
                 //플레이어의 데미지
-                int damage = player.Attack;
+                int damage = player.Attack + player.AddAtk;
 
-                //플레이어의 이전 체력
+                //몬스터의 이전 체력
                 int previousHP = monster.CurrentHealth;
 
                 Console.WriteLine("Battle!!\n");
@@ -201,7 +202,7 @@ namespace FindingPotato.Stage
         }
 
         //몬스터 공격 페이즈
-        void EnenyPhase()
+        void EnemyPhase()
         {
             for(int i = 0; i<monsters.Count; i++) // 배열에 있는 몬스터들이 공격
             {
@@ -212,7 +213,7 @@ namespace FindingPotato.Stage
                     int damage = monsters[i].Attack - (player.Defense+player.AddDef);
                     damage = Math.Max(damage,0); 
 
-                    //몬스터 이전 체력
+                    //플레이어 이전 체력
                     int previousHP = player.CurrentHealth;
 
                     Console.WriteLine("Battle!!\n");
