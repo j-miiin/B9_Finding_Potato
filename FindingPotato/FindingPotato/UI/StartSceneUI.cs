@@ -55,11 +55,11 @@ namespace FindingPotato.UI
             string playerName = "";
             while (true)
             {
-                Console.SetCursorPosition(x + 15, y + 5);
+                Console.SetCursorPosition(x + 18, y + 5);
                 playerName = Console.ReadLine();
                 if (playerName.Length == 0)
                 {
-                    Console.SetCursorPosition(x + 10, y + 6);
+                    Console.SetCursorPosition(x + 12, y + 6);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("닉네임을 입력해주세요!");
                     Console.ResetColor();
@@ -85,11 +85,11 @@ namespace FindingPotato.UI
             Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
             Console.WriteLine("└────────────────────────────────────────────┘"); Console.SetCursorPosition(x, y++);
 
-            string[] playerTypeStrList = { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 " };
+            string[] playerTypeStrList = { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 ", "0" };
 
             x = 68; y = 34;
 
-            return UIExtension.GetPlayerSelectFromUI(x, y, 1, playerTypeStrList);
+            return UIExtension.GetPlayerSelectFromUI(x, y, 1, playerTypeStrList, false);
         }
     }
 }
