@@ -24,7 +24,7 @@ namespace FindingPotato.Item
             Type = ItemType.Armor;
         }
 
-        public void Use(Player player, List<IItem> list)
+        public void Use(Player player)
         { 
             if (!this.IsEquipped) player.AddDef += this.Effect;
             else player.AddDef -= this.Effect;

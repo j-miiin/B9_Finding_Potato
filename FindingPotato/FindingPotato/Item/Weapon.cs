@@ -24,7 +24,7 @@ namespace FindingPotato.Item
             Type = ItemType.Weapon;
         }
 
-        public void Use(Player player, List<IItem> list)
+        public void Use(Player player)
         {
             if (!this.IsEquipped) player.AddAtk += this.Effect;
             else player.AddAtk -= this.Effect;

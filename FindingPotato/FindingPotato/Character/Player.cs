@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindingPotato.Inventory;
 
 public enum VegetableType
 {
@@ -43,10 +44,14 @@ namespace FindingPotato.Character
 
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
-        public int CurrentStage { get; set; } = 1; 
-    
+        public int CurrentStage { get; set; } = 1;
+
+        public InventoryClass PlayerInventory;
+        
         public List<ISkill> SkillList { get; }
 
+        public bool hadPotion = false;
+        public int potionEffect = 0;
         public Player(string name, VegetableType type)
         {
             Name = name;
@@ -77,7 +82,7 @@ namespace FindingPotato.Character
 
             CurrentHealth = MaxHealth;
             CurrentMP = MaxMP;
-
+            PlayerInventory = new InventoryClass();
             SkillList = new List<ISkill> { new AlphaSkill(), new DoubleSkill() };
         }
 
@@ -104,6 +109,12 @@ namespace FindingPotato.Character
                 int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.DOUBLE);
                 SkillList[skillIdx].Use(this, monsterList);
             }
+        }
+        public void PotionEffectReset()
+        {
+            hadPotion = false;
+            AddAtk -= potionEffect;
+            potionEffect = 0;
         }
     }
 }

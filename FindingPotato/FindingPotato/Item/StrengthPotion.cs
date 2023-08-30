@@ -24,11 +24,13 @@ namespace FindingPotato.Item
             Type = ItemType.StrengthPotion;
         }
 
-        public void Use(Player player, List<IItem> list)
+        public void Use(Player player)
         {
+            player.potionEffect = this.Effect;
+
             player.AddAtk += this.Effect;
             --this.Quantity;
-            if (this.Quantity == 0) list.Remove(this);
+            if (this.Quantity == 0) player.PlayerInventory.InventoryItems.Remove(this);
         }
 
     }
