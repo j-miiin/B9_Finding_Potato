@@ -32,18 +32,18 @@ namespace FindingPotato.Inventory
             if (isManagement)
             {
                 Console.SetCursorPosition(0, 4);
-                CenterAlign(" - 아이템 장착 및 소모 -         ", ConsoleColor.Black, ConsoleColor.DarkGray);
+                Extension.CenterAlign(" - 아이템 장착 및 소모 -", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
 
             Console.SetCursorPosition(0, 1);
 
-            CenterAlign("▣==============▣", ConsoleColor.Black, ConsoleColor.Cyan);
-            CenterAlign("||   인벤토리   || ", ConsoleColor.Black, ConsoleColor.Cyan);
-            CenterAlign("▣==============▣", ConsoleColor.Black, ConsoleColor.Cyan);
+            Extension.CenterAlign("▣==============▣  ", ConsoleColor.Black, ConsoleColor.Cyan);
+            Extension.CenterAlign("||   인벤토리   ||", ConsoleColor.Black, ConsoleColor.Cyan);
+            Extension.CenterAlign("▣==============▣  ", ConsoleColor.Black, ConsoleColor.Cyan);
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
             Console.WriteLine("\n");
-            CenterAlign("보유 중인 아이템을 관리할 수 있습니다.              ");
+            Extension.CenterAlign("보유 중인 아이템을 관리할 수 있습니다.");
             Console.ResetColor();
         }
 
@@ -78,11 +78,11 @@ namespace FindingPotato.Inventory
         {
 
             Console.SetCursorPosition(0, 10);
-            CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------");
             Console.WriteLine();
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
-                CenterAlign("보유 중인 아이템이 없습니다.            ", ConsoleColor.Black, ConsoleColor.DarkGray);
+                Extension.CenterAlign("보유 중인 아이템이 없습니다.", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
             else
             {
@@ -100,7 +100,7 @@ namespace FindingPotato.Inventory
                 }
             }
             Console.WriteLine();
-            CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------");
             Console.WriteLine();
 
         }
@@ -138,13 +138,6 @@ namespace FindingPotato.Inventory
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
-        }
-
-        static void CenterAlign(string text, ConsoleColor _back = ConsoleColor.Black, ConsoleColor _front = ConsoleColor.White)
-        {
-            int len = (150 - text.Length) / 2;
-            Console.SetCursorPosition(len, Console.CursorTop);
-            Extension.ColorWriteLine(text, _back, _front);
         }
     }
 }
