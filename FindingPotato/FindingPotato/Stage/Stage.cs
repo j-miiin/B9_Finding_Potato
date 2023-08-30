@@ -384,7 +384,7 @@ namespace FindingPotato.Stage
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
-                    GiveRewards();
+                    if (Difficulty != StageDifficulty.Hard) GiveRewards();
                 }
                 else //몬스터 승리 
                 {
@@ -417,13 +417,13 @@ namespace FindingPotato.Stage
             // 소모 가능한 보상 아이템
             int consumableItemIdx = GetRandomIdx(1, 0, rewards.Count / 2)[0];
             IItem consumableItemReward = rewards[consumableItemIdx];
-            player.PlayerInventory.InventoryItems.Add(consumableItemReward);
+            player.GetReward(consumableItemReward);
             rewards.Remove(consumableItemReward);
 
             // 착용 가능한 보상 아이템
             int equipableItemIdx = GetRandomIdx(1, rewards.Count / 2, rewards.Count)[0];
             IItem equipableItemReward = rewards[equipableItemIdx];
-            player.PlayerInventory.InventoryItems.Add(equipableItemReward);
+            player.GetReward(equipableItemReward);
             rewards.Remove(equipableItemReward);
 
             Console.WriteLine("[ 획득 아이템 ]");
