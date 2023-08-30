@@ -244,41 +244,44 @@ namespace FindingPotato.Stage
         // 스킬을 사용한 공격
         void UsePlayerSkill()
         {
-            while (true)
+            Console.Clear();
+
+                
+
+            string str = "";
+            int idx = 1;
+            foreach (ISkill skill in player.SkillList)
             {
-                Console.Clear();
+                str += idx++ + ". " + skill.Description + "\n";
+            }
+            str += "0. 취소\n";
 
-                // Player가 죽으면 스테이지 클리어 실패(false)
-                if (player.IsDead)
-                {
-                    OnCharacterDeath?.Invoke(false);
-                    break;
-                }
-                // 공격할 몬스터가 없으면 스테이지 클리어 성공(true)
-                else if (monsters.All(x => x.IsDead))
-                {
-                    OnCharacterDeath?.Invoke(true);
-                    break;
-                } 
+            InfoScreen(false, str);
 
-                string str = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n\n" +
-                    "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n\n0. 취소";
+            int input = Extension.GetInput(0, 2);
 
-                InfoScreen(false, str);
-
-                int input = Extension.GetInput(0, 2);
-
-                if (input == 1)
-                {
-                    AlphaStrikeAttack();
-                }
-                else if (input == 2)
-                {
-                    DoubleStrikeAttack();
-                }
-                else break;
-
+            if (input == 1)
+            {
+                AlphaStrikeAttack();
                 EnemyPhase();
+            }
+            else if (input == 2)
+            {
+                DoubleStrikeAttack();
+                EnemyPhase();
+            }
+
+            // Player가 죽으면 스테이지 클리어 실패(false)
+            if (player.IsDead)
+            {
+                OnCharacterDeath?.Invoke(false);
+                return;
+            }
+            // 공격할 몬스터가 없으면 스테이지 클리어 성공(true)
+            else if (monsters.All(x => x.IsDead))
+            {
+                OnCharacterDeath?.Invoke(true);
+                return;
             }
         }
 

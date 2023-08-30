@@ -37,19 +37,23 @@ public class GameManager
     Onion onion;
     Customer customer;
 
-    // 아이템 생성 (효과 수치는 조정 예정)
+    // 아이템 생성
+    // 소모 아이템
     static IItem water = new HealthPotion("물", 20, "웅덩이에 고여 있던 물.");
     static IItem nutrient = new HealthPotion("식물 영양제", 50, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 10, "밭에서 챙긴 비료.");
     static IItem pesticide = new StrengthPotion("농약", 20, "각성.");
-
+  
+    //장착 아이템
+    // stage 1
     static IItem toothpick = new Weapon("이쑤시개", 10, "뾰족하다.");
     static IItem peeler = new Weapon("감자 필러", 15, "날카롭다.");
+    // stage 2
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 10, "충격 완화.");
   
-    static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
-    static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
+    static List<IItem> ConsumableItemList = new List<IItem>() { water, firtilizer, nutrient,  pesticide };
+    static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, plastic, peeler, styrofoam };
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -183,21 +187,21 @@ public class GameManager
             Console.WriteLine("0.나가기"); 
 
             int input = Extension.GetInput(0,3);
-            
-            if(input == 1)
+
+            if (input == 1)
             {
                 List<IItem> itemRewards = GetStageRewards(input);
                 stage1 = new StageClass(player, CreateRandomMonsterLineup(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
                 player.PotionEffectReset();
-                break; 
+                break;
             }
-            else if(input == 2)
+            else if (input == 2)
             {
                 if (player.CurrentStage >= (int)StageDifficulty.Normal)
                 {
                     List<Monster> monsters = CreateRandomMonsterLineup(NormalMonsters, 3);
-                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2)); 
+                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, monsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
@@ -222,9 +226,10 @@ public class GameManager
                 else
                 {
                     Console.WriteLine("아직 감자 진열대는 보이지 않는다.");
-                    Thread.Sleep(500); 
+                    Thread.Sleep(500);
                 }
             }
+            else break;
         }
     }
 
@@ -238,20 +243,10 @@ public class GameManager
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
         Console.Write($"| 공격력 : {player.AttackPower}");
-        if(player.AddAtk != 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"  + {player.AddAtk}");
-            Console.ResetColor();
-        }
+        if (player.AddAtk != 0) { Extension.ColorWriteLine($"  + {player.AddAtk}", ConsoleColor.Black, ConsoleColor.Green); }
         else { Console.WriteLine(); }
         Console.Write($"| 방어력 : {player.Defense}");
-        if(player.AddDef != 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"  + {player.AddDef}");
-            Console.ResetColor();
-        }
+        if (player.AddDef != 0) { Extension.ColorWriteLine($"  + {player.AddDef}", ConsoleColor.Black, ConsoleColor.Green); }
         else { Console.WriteLine(); }
         Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
@@ -307,8 +302,8 @@ public class GameManager
         // 각 스테이지의 보상 아이템들
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
-        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i * curStageNum]);
-        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i * curStageNum]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i + curStageNum]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i + curStageNum]);
         return stageRewards;
     }
 }
