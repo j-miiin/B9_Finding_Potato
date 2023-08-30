@@ -30,7 +30,25 @@ namespace FindingPotato.Item
             else player.AddAtk -= this.Effect;
 
             this.IsEquipped = !this.IsEquipped;
+
+            UseMessage(player);
         }
 
+        public void UseMessage(Player player)
+        {
+            Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11); // 메시지 위치 잡기
+            if (IsEquipped)
+            {
+                Extension.ColorWriteLine($" {Name} 을/를 장착했습니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+                Extension.ColorWriteLine($" 공격력이 + {Effect} 증가합니다.", ConsoleColor.Black, ConsoleColor.Green);
+            }
+            else
+            {
+                Extension.ColorWriteLine($" {Name}을/를 장착 해제 했습니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+                Console.WriteLine("                                         ");
+            }
+            Console.WriteLine("                                         ");
+            Thread.Sleep(2000);
+        }
     }
 }
