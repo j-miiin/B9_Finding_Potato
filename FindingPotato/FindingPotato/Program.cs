@@ -125,19 +125,15 @@ public class GameManager
     // 캐릭터 생성 - 이름, 직업
     public void InitialCharacter()
     {
-        ConsoleUI.PrintGameTitleUI();
-        string playerName = ConsoleUI.GetUserName();
+        StartSceneUI.PrintGameTitleUI();
+        string playerName = StartSceneUI.GetUserName();
 
         // 직업 설정 - enum(int)
-        Extension.TypeWriting("\n정체\n");
+        Console.Clear();
+        StartSceneUI.PrintGameTitleUI();
+        int playerType = StartSceneUI.GetPlayerType();
 
-        Extension.ColorWriteLine("1. 감자");
-        Extension.ColorWriteLine("2. 고구마");
-        Extension.ColorWriteLine("3. 당근");
-
-        int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
-
     }
 
     // 메인 화면
