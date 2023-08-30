@@ -1,9 +1,11 @@
 ﻿using FindingPotato.Item;
+using FindingPotato.Skill;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FindingPotato.Inventory;
 
 public enum VegetableType
 {
@@ -42,9 +44,15 @@ namespace FindingPotato.Character
 
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
-        public int CurrentStage { get; set; } = 3; 
+        public int CurrentStage { get; set; } = 1;
 
 
+        public InventoryClass PlayerInventory;
+        
+        public List<ISkill> SkillList { get; }
+
+        public bool hadPotion = false;
+        public int potionEffect = 0;
         public Player(string name, VegetableType type)
         {
             Name = name;
@@ -75,6 +83,8 @@ namespace FindingPotato.Character
 
             CurrentHealth = MaxHealth;
             CurrentMP = MaxMP;
+            PlayerInventory = new InventoryClass();
+            SkillList = new List<ISkill> { new AlphaSkill(), new DoubleSkill() };
         }
 
         // Player가 공격 당했을 때 실행
@@ -86,16 +96,26 @@ namespace FindingPotato.Character
         }
 
         // Player가 스킬을 사용할 때 실행
-        public void AttackWithMP(MPAttackType type)
+        public void UseSkill(SkillType type, List<ICharacter> monsterList)
         {
-            if (type == MPAttackType.ALPHA) CurrentMP -= (int)MPAttackType.ALPHA;
-            else CurrentMP -= (int)MPAttackType.DOUBLE;
+            if (type == SkillType.ALPHA)
+            {
+                CurrentMP -= (int)SkillType.ALPHA;
+                int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.ALPHA);
+                SkillList[skillIdx].Use(this, monsterList);
+            }
+            else
+            {
+                CurrentMP -= (int)SkillType.DOUBLE;
+                int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.DOUBLE);
+                SkillList[skillIdx].Use(this, monsterList);
+            }
         }
-
-        public enum MPAttackType
+        public void PotionEffectReset()
         {
-            ALPHA = 10,
-            DOUBLE = 15
+            hadPotion = false;
+            AddAtk -= potionEffect;
+            potionEffect = 0;
         }
     }
 }

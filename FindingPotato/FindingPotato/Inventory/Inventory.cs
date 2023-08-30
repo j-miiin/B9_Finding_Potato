@@ -9,11 +9,8 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Inventory
 {
-    internal class Inventory
+    internal class InventoryClass
     {
-        static bool hadPotion = false;
-        static int potionEffect = 0;
-
         private static readonly Dictionary<ItemType, string> EffectDictionary = new Dictionary<ItemType, string>
         {
             { ItemType.StrengthPotion, "공격력 (1회)" },
@@ -22,10 +19,15 @@ namespace FindingPotato.Inventory
             { ItemType.Armor, "방어력" }
         };
 
-        public List<IItem> InventoryItems = new List<IItem>();
 
+        public List<IItem> InventoryItems;
+        public InventoryClass()
+        {
+             InventoryItems = new List<IItem>();
+        }
 
-        public void PrintTitle(bool isManagement)
+        // isManagement는 GameManager의 ItemManagement에서 호출되었을 때  true  전달 
+        public static void PrintTitle(bool isManagement)
         { 
             if (isManagement)
             {
@@ -45,15 +47,8 @@ namespace FindingPotato.Inventory
 
         public void ShowOptions()       
         {
-            
-            Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");    
-            Extension.ColorWriteLine("\n0. 나가기");
-        }
 
-        public void ShowOptions(List<IItem> list)       
-        {
-
-            switch (list.Count)
+            switch (InventoryItems.Count)
             {
                 case 0:
                     break;
@@ -61,7 +56,7 @@ namespace FindingPotato.Inventory
                     Extension.ColorWriteLine("\n1. 해당 아이템 장착 및 소모");
                     break;
                 default:
-                    Extension.ColorWriteLine($"\n1 ~ {list.Count}. 해당 아이템 장착 및 소모");
+                    Extension.ColorWriteLine($"\n1 ~ {InventoryItems.Count}. 해당 아이템 장착 및 소모");
                     break;
             }
             Extension.ColorWriteLine("\n0. 나가기");
@@ -80,7 +75,7 @@ namespace FindingPotato.Inventory
             {
                 foreach (IItem item in InventoryItems)
                 {
-                    Inventory.PrintItemInfo(item);
+                    PrintItemInfo(item);
                 }
 
                 Console.SetCursorPosition(0, 8);
@@ -123,40 +118,10 @@ namespace FindingPotato.Inventory
             Console.WriteLine();
         }
 
-        public void ApplyingItem(IItem item, Player player)      //아이템 적용
-        {
-            if (item.Type == ItemType.StrengthPotion)
-            {
-                potionEffect = item.Effect;
-                item.Use(player, InventoryItems);
-            }
-            else if (item.Type == ItemType.HealthPotion && player.CurrentHealth == player.MaxHealth)
-            {
-                // HealthPotion 최력 최대치일 때 섭취 불가
-                Console.SetCursorPosition(0, InventoryItems.Count + 11);
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(" 현재 체력이 최대입니다.           ");
-                Console.WriteLine("                                   ");
-                Console.WriteLine("                                   ");
-                Thread.Sleep(2000);
-                Console.ResetColor();
-
-            }
-            else item.Use(player, InventoryItems);
-        }
-
-
         private static void WriteAtPosition(string text, int position, int line)
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
-        }
-
-        public static void PotionEffectReset(Player player)
-        {
-            hadPotion = false;
-            player.AddAtk -= potionEffect;
-            potionEffect = 0;
         }
     }
 }
