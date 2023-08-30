@@ -23,6 +23,8 @@ namespace FindingPotato
 
 public class GameManager
 {
+    Random random = new Random();
+
     private Player player;
 
     //몬스터 생성
@@ -35,7 +37,6 @@ public class GameManager
     Onion onion;
     Customer customer;
 
-
     // 아이템 생성 (효과 수치는 조정 예정)
     static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
     static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
@@ -47,23 +48,20 @@ public class GameManager
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
-
     Inventory inventory = new Inventory();
   
     static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
-
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
     List<Monster> NormalMonsters = new List<Monster>();
     List<Monster> HardMonsters = new List<Monster>();
     
+    //전투 스테이지
     StageClass stage1;
     StageClass stage2;
     StageClass stage3;
-
-
 
     public GameManager()
     {
@@ -79,9 +77,9 @@ public class GameManager
      
         customer = new Customer("감자진열대앞손님");
 
-        EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon }; 
+        EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon };
         NormalMonsters = new List<Monster> { beet, paprika, onion };
-        HardMonsters = new List<Monster> { customer }; 
+        HardMonsters = new List<Monster> { customer };
     }
 
     //몬스터 목록에서 랜덤하게 선택된 몬스터 리스트 반환 (중복X) 
@@ -200,10 +198,10 @@ public class GameManager
             {
                 if (player.CurrentStage >= (int)StageDifficulty.Normal)
                 {
-                    NormalMonsters = CreateRandomMonsterLineup(NormalMonsters, 3);
-                    NormalMonsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
+                    List<Monster> monsters = CreateRandomMonsterLineup(NormalMonsters, 3);
+                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2)); 
                     List<IItem> itemRewards = GetStageRewards(input);
-                    stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
+                    stage2 = new StageClass(player, monsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
                     Inventory.PotionEffectReset(player);
                     break;

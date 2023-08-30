@@ -8,11 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Rambutan :Monster
     {
-        public Rambutan(string name) : base(name, 100, 3) { }
+        public Rambutan(string name) : base(name, 100, 25,3) { }
 
-        public override void AttackMessage()
+        public override string AttackMessage()
         {
-            Extension.TypeWriting("찌르기!");
+            return "찌르기!";
         }
     }
 }
