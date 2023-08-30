@@ -112,6 +112,20 @@ namespace FindingPotato.Character
                 SkillList[skillIdx].Use(this, monsterList);
             }
         }
+
+        public void GetReward(IItem newItem)
+        {
+            IItem item = PlayerInventory.InventoryItems.Find(x => x.Name == newItem.Name);
+            if (item == null) PlayerInventory.InventoryItems.Add(newItem);
+            else
+            {
+                if (item.Type == ItemType.HealthPotion || item.Type == ItemType.StrengthPotion)
+                {
+                    ((IConsumable)item).Quantity++;
+                }
+            }
+        }
+
         public void PotionEffectReset()
         {
             hadPotion = false;
