@@ -41,6 +41,7 @@ namespace FindingPotato.Stage
             //스테이지가 생성되면 몬스터 체력 회복
             foreach (Monster monster in monsters)
                 monster.CurrentHealth = monster.MaxHealth;
+
         }
 
         //전투 정보 표시
@@ -51,7 +52,7 @@ namespace FindingPotato.Stage
             for (int i = 0; i < monsters.Count(); i++)
             {
                 if (monsters[i].IsDead)
-                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")}Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
+                    Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
 
                 else
                     Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}");
@@ -112,7 +113,7 @@ namespace FindingPotato.Stage
 
                 InfoScreen(true, "0.취소");
 
-                int input = Extension.GetInput(0, 3);
+                int input = Extension.GetInput(0, monsters.Count);
 
                 if (input > 0 && input <= monsters.Count())
                 {
@@ -214,7 +215,7 @@ namespace FindingPotato.Stage
 
                     Console.WriteLine("Battle!!\n");
                     Console.Write($"Lv.{monsters[i].Level} {monsters[i].Name}의 ");
-                    monsters[i].AttackMessage();
+                    Extension.TypeWriting(monsters[i].AttackMessage());
                     player.TakeDamage(damage);
                     Console.WriteLine();
 
@@ -343,10 +344,12 @@ namespace FindingPotato.Stage
                     switch(Difficulty)
                     {
                         case StageDifficulty.Easy:
+                            Extension.TypeWriting($"나를 막던 과일들이 포장 되었다!\n");
                             Extension.TypeWriting($"과일 코너를 지나갔다!");
                             break;
 
                         case StageDifficulty.Normal:
+                            Extension.TypeWriting($"나를 막던 채소들이 판매 되었다!\n");
                             Extension.TypeWriting($"채소 코너를 지나갔다!");
                             break;
 
@@ -360,7 +363,10 @@ namespace FindingPotato.Stage
                 }
                 else //몬스터 승리 
                 {
-                    Console.WriteLine("YOU DIED");
+                    Console.WriteLine("YOU DIED\n");
+                    Extension.TypeWriting("직원의 손에 이끌려 포장되었다...\n"); 
+                    Console.WriteLine("아무키나 누르세요."); 
+                    Console.ReadKey(); 
                     Environment.Exit(0);
                 }
 

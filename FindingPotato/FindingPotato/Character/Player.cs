@@ -46,6 +46,7 @@ namespace FindingPotato.Character
 
         public int CurrentStage { get; set; } = 1;
 
+
         public InventoryClass PlayerInventory;
         
         public List<ISkill> SkillList { get; }

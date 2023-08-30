@@ -8,11 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Durian : Monster
     {
-        public Durian(string name) : base(name, 50, 1) { }
+        public Durian(string name) : base(name, 50,25, 1) { }
 
-        public override void AttackMessage()
+        public override string AttackMessage()
         {
-            Extension.TypeWriting("냄새 풍기기!");
+           return "냄새 풍기기!!";
         }
     }
 }
