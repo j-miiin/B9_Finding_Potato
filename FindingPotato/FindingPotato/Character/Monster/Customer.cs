@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Customer : Monster
     {
-        public Customer(string name) : base(name, 300, 50, 10) { }
+        public Customer(string name) : base(name, 300, 70, 5) { }
 
         public override void Avoid()
         {

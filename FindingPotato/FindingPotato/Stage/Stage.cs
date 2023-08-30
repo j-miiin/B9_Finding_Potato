@@ -145,7 +145,7 @@ namespace FindingPotato.Stage
                 Console.Clear();
 
                 //플레이어의 데미지
-                int damage = player.Attack + player.AddAtk;
+                int damage = player.Attack;
 
                 //몬스터의 이전 체력
                 int previousHP = monster.CurrentHealth;
@@ -378,8 +378,8 @@ namespace FindingPotato.Stage
                             break;
 
                         case StageDifficulty.Hard:
-                            Extension.TypeWriting($"내친구 감자를 구했다!!");
-                            break;
+                             EndingScreen(); 
+                             break;
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
@@ -389,7 +389,7 @@ namespace FindingPotato.Stage
                 {
                     Console.WriteLine("YOU DIED\n");
                     Extension.TypeWriting("직원의 손에 이끌려 포장되었다...\n"); 
-                    Console.WriteLine("아무키나 누르세요."); 
+                    Console.WriteLine("아무키나 눌러서 종료."); 
                     Console.ReadKey(); 
                     Environment.Exit(0);
                 }
@@ -446,6 +446,16 @@ namespace FindingPotato.Stage
             }
 
             return randomIdx;
+        }
+
+        void EndingScreen()
+        {
+            Console.Clear();
+            Console.WriteLine("-The End-\n");
+            Extension.TypeWriting($"내 친구 감자를 구했다!!\n");
+            Console.WriteLine("아무키나 눌러서 종료.\n");
+            Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }   

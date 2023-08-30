@@ -37,22 +37,20 @@ public class GameManager
     Onion onion;
     Customer customer;
 
-    // 아이템 생성 (효과 수치는 조정 예정)
+    // 아이템 생성
     // 소모 아이템
+    static IItem water = new HealthPotion("물", 20, "웅덩이에 고여 있던 물.");
+    static IItem nutrient = new HealthPotion("식물 영양제", 50, "오는 길에 훔친 영양제.");
+    static IItem firtilizer = new StrengthPotion("비료", 10, "밭에서 챙긴 비료.");
+    static IItem pesticide = new StrengthPotion("농약", 20, "각성.");
+  
+    //장착 아이템
     // stage 1
-    static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
-    static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
+    static IItem toothpick = new Weapon("이쑤시개", 10, "뾰족하다.");
+    static IItem peeler = new Weapon("감자 필러", 15, "날카롭다.");
     // stage 2
-    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
-    static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
-
-    // 장착 아이템
-    // stage 1
-    static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
-    // stage 2
-    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
-    static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
+    static IItem styrofoam = new Armor("스티로폼", 10, "충격 완화.");
   
     static List<IItem> ConsumableItemList = new List<IItem>() { water, firtilizer, nutrient,  pesticide };
     static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, plastic, peeler, styrofoam };
@@ -79,7 +77,7 @@ public class GameManager
         paprika = new Paprika("파프리카");
         onion = new Onion("양파");
      
-        customer = new Customer("감자진열대앞손님");
+        customer = new Customer("굶주린 자취생");
 
         EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon };
         NormalMonsters = new List<Monster> { beet, paprika, onion };

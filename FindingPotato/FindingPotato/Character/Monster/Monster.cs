@@ -22,8 +22,7 @@ namespace FindingPotato.Character.Monster
             get => health;
             set => health = Math.Max(value,0);
         }
-        public int Attack => Random.Next(10, AttackPower); // 공격력은 랜덤
-
+        public int Attack => Random.Next(AttackPower-10, AttackPower+5);
         public int AttackPower { get; set; }
         public bool IsDead => CurrentHealth <= 0;
 
