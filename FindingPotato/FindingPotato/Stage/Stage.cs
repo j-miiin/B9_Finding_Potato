@@ -370,6 +370,9 @@ namespace FindingPotato.Stage
                     Environment.Exit(0);
                 }
 
+                // 스테이지 종료 후 MP 회복
+                player.CurrentMP = player.MaxMP;
+
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
                 Console.WriteLine("0.다음\n");
