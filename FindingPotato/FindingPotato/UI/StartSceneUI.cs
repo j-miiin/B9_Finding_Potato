@@ -101,16 +101,13 @@ namespace FindingPotato.UI
                             isSelected = true;
                             break;
                         case ConsoleKey.NumPad1:
-                            playerType = 1;
-                            isSelected = true;
+                            selectedLine = 34;
                             break;
                         case ConsoleKey.NumPad2:
-                            playerType = 2;
-                            isSelected = true;
+                            selectedLine = 35;
                             break;
                         case ConsoleKey.NumPad3:
-                            playerType = 3;
-                            isSelected = true;
+                            selectedLine = 36;
                             break;
                     }
                 }
@@ -150,7 +147,7 @@ namespace FindingPotato.UI
                 }
             }
             Console.ResetColor();
-            Console.CursorVisible = false;
+            Console.CursorVisible = true;
             return playerType;
         }
 
