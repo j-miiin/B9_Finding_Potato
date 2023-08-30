@@ -24,13 +24,27 @@ namespace FindingPotato.Item
             Type = ItemType.HealthPotion;
         }
 
-        public void Use(Player player, List<IItem> list)
+        public void Use(Player player)
         {
-            player.CurrentHealth += this.Effect;
-            if (player.CurrentHealth > player.MaxHealth) player.CurrentHealth = player.MaxHealth;
+            if (player.CurrentHealth == player.MaxHealth)
+            {
+                // HealthPotion 체력 최대치일 때 섭취 불가
+                Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11);
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(" 현재 체력이 최대입니다.           ");
+                Console.WriteLine("                                   ");
+                Console.WriteLine("                                   ");
+                Thread.Sleep(2000);
+                Console.ResetColor();
+            }
+            else
+            {
+                player.CurrentHealth += this.Effect;
+                if (player.CurrentHealth > player.MaxHealth) player.CurrentHealth = player.MaxHealth;
 
-            --this.Quantity;
-            if (this.Quantity == 0) list.Remove(this);
+                --this.Quantity;
+                if (this.Quantity == 0) player.PlayerInventory.InventoryItems.Remove(this);
+            }
         }
     }
 }

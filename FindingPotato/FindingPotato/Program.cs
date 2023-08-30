@@ -4,9 +4,9 @@ using FindingPotato.Item;
 using FindingPotato.Stage;
 using System;
 using System.Security.Cryptography;
-using FindingPotato.Inventory;
 using System.Dynamic;
 using System.ComponentModel.Design;
+using FindingPotato.Inventory;
 
 namespace FindingPotato
 {
@@ -47,8 +47,7 @@ public class GameManager
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
 
-
-    Inventory inventory = new Inventory();
+  
   
     static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
     static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
@@ -193,7 +192,7 @@ public class GameManager
                 List<IItem> itemRewards = GetStageRewards(input);
                 stage1 = new StageClass(player, CreateRandomMonsterLineup(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
-                Inventory.PotionEffectReset(player);
+                player.PotionEffectReset();
                 break; 
             }
             else if(input == 2)
@@ -205,7 +204,7 @@ public class GameManager
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, NormalMonsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
-                    Inventory.PotionEffectReset(player);
+                    player.PotionEffectReset();
                     break;
                 }
                 else
@@ -220,8 +219,8 @@ public class GameManager
                 {
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
-                    stage3.Start(); 
-                    Inventory.PotionEffectReset(player);
+                    stage3.Start();
+                    player.PotionEffectReset();
                 }
                 else
                 {
@@ -271,9 +270,11 @@ public class GameManager
         {
             Console.Clear();
 
-            inventory.PrintTitle(false);
-            inventory.PrintItemList(false);
-            inventory.ShowOptions();
+            InventoryClass.PrintTitle(false);
+            player.PlayerInventory.PrintItemList(false);
+
+            Extension.ColorWriteLine("\n1. 아이템 장착 및 소모");
+            Extension.ColorWriteLine("\n0. 나가기");
 
             int input = Extension.GetInput(0, 1);
 
@@ -288,16 +289,16 @@ public class GameManager
         {
             Console.Clear();
 
-            inventory.PrintTitle(true);
-            inventory.PrintItemList(true);
-            inventory.ShowOptions(inventory.InventoryItems);
+            InventoryClass.PrintTitle(true);
+            player.PlayerInventory.PrintItemList(true);
+            player.PlayerInventory.ShowOptions();
 
-            int input = Extension.GetInput(0, inventory.InventoryItems.Count);
+            int input = Extension.GetInput(0, player.PlayerInventory.InventoryItems.Count);
 
             if (input == 0) { break; }
             else
             {
-                inventory.ApplyingItem(inventory.InventoryItems[input - 1], player);
+                player.PlayerInventory.InventoryItems[input - 1].Use(player);
                 ItemManagement();
                 return;
             }
