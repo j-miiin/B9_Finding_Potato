@@ -8,11 +8,11 @@ namespace FindingPotato.Character.Monster
 {
     internal class Watermelon : Monster
     {
-        public Watermelon(string name) : base(name, 75, 2) { }
+        public Watermelon(string name) : base(name, 75,25, 2) { }
 
-        public override void AttackMessage()
+        public override string AttackMessage()
         {
-            Extension.TypeWriting("몸통 박치기!");
+            return "몸통 박치기!";
         }
     }
 }

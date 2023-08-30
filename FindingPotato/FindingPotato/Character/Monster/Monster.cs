@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,6 +9,8 @@ namespace FindingPotato.Character.Monster
 {
     internal class Monster : ICharacter
     {
+        public Random Random = new Random();
+
         private int health;
         public int MaxHealth { get; set; }
         public string Name { get; }
@@ -19,15 +22,17 @@ namespace FindingPotato.Character.Monster
             get => health;
             set => health = Math.Max(value,0);
         }
-        public int Attack => new Random().Next(10, 20); // 공격력은 랜덤
+        public int Attack => Random.Next(10, AttackPower); // 공격력은 랜덤
 
+        public int AttackPower { get; set; }
         public bool IsDead => CurrentHealth <= 0;
 
-        public Monster(string name, int maxHealth, int level)
+        public Monster(string name, int maxHealth, int attackPower, int level)
         {
             Name = name;
             MaxHealth = maxHealth;
             CurrentHealth = maxHealth;
+            AttackPower = attackPower;
             Level = level;
         }
 
@@ -38,14 +43,14 @@ namespace FindingPotato.Character.Monster
             else Extension.TypeWriting($"{Name} 이(가) {damage}의 데미지를 받았습니다.");
         }
 
-        public void Avoid()
+        public virtual void Avoid()
         {
-            Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다.");
+            Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다."); 
         }
 
-        public virtual void AttackMessage()
+        public virtual string AttackMessage()
         {
-            Console.WriteLine("공격!"); 
+            return "공격!"; 
         }
     }
 }
