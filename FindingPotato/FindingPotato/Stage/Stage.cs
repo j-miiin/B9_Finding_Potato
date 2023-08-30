@@ -99,7 +99,7 @@ namespace FindingPotato.Stage
                 else if (input == 0)
                 {
                     //도망가기
-                    break;
+                    if (RunAway()) break;                    
                 }
             }
         }
@@ -329,6 +329,27 @@ namespace FindingPotato.Stage
             Console.WriteLine("0.다음\n");
 
             int input = Extension.GetInput(0, 0);
+        }
+
+        // 도망가기
+        bool RunAway()
+        {
+            bool isSuccess = IsOccur(30);
+
+            if (!isSuccess)     // 도망가기 실패시 문구 출력
+            {
+                Random random = new Random();
+                string[] messages = {"앗! 카트에 치여버렸다! 도망가기 실패.",
+                                 "앗! 자동문이 열리지 않는다...! 도망가기 실패.",
+                                 "앗! 직원이 다시 돌려놓았다! 도망가기 실패."};
+                string message = messages[random.Next(3)];
+                Console.SetCursorPosition(0, Console.CursorTop - 2);
+                Console.WriteLine(message);
+                Console.WriteLine("                                ");
+                Thread.Sleep(2000);
+            }
+            
+            return isSuccess;
         }
         
         //스테이지 클리어 
