@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace FindingPotato.Inventory
 {
-    internal class Inventory
+    internal class InventoryClass
     {
         private static readonly Dictionary<ItemType, string> EffectDictionary = new Dictionary<ItemType, string>
         {
@@ -19,10 +19,15 @@ namespace FindingPotato.Inventory
             { ItemType.Armor, "방어력" }
         };
 
-        public List<IItem> InventoryItems = new List<IItem>();
+
+        public List<IItem> InventoryItems;
+        public InventoryClass()
+        {
+             InventoryItems = new List<IItem>();
+        }
 
         // isManagement는 GameManager의 ItemManagement에서 호출되었을 때  true  전달 
-        public void PrintTitle(bool isManagement)
+        public static void PrintTitle(bool isManagement)
         { 
             if (isManagement)
             {
@@ -40,10 +45,10 @@ namespace FindingPotato.Inventory
             Console.ResetColor();
         }
 
-        public void ShowOptions(List<IItem> list)       
+        public void ShowOptions()       
         {
 
-            switch (list.Count)
+            switch (InventoryItems.Count)
             {
                 case 0:
                     break;
@@ -51,7 +56,7 @@ namespace FindingPotato.Inventory
                     Extension.ColorWriteLine("\n1. 해당 아이템 장착 및 소모");
                     break;
                 default:
-                    Extension.ColorWriteLine($"\n1 ~ {list.Count}. 해당 아이템 장착 및 소모");
+                    Extension.ColorWriteLine($"\n1 ~ {InventoryItems.Count}. 해당 아이템 장착 및 소모");
                     break;
             }
             Extension.ColorWriteLine("\n0. 나가기");
@@ -70,7 +75,7 @@ namespace FindingPotato.Inventory
             {
                 foreach (IItem item in InventoryItems)
                 {
-                    Inventory.PrintItemInfo(item);
+                    PrintItemInfo(item);
                 }
 
                 Console.SetCursorPosition(0, 8);
