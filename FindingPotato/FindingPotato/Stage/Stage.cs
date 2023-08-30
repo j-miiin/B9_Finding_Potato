@@ -64,6 +64,7 @@ namespace FindingPotato.Stage
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaxHealth}");
             Console.WriteLine($"MP {player.CurrentMP}/{player.MaxMP}");
+            Console.WriteLine($"EXP {player.CurrentExp}/{player.MaxiExp}");
             Console.WriteLine();
             Console.WriteLine(str);
             Console.WriteLine();
@@ -395,7 +396,8 @@ namespace FindingPotato.Stage
                 player.CurrentMP = player.MaxMP;
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
+                Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}");
+                Console.WriteLine($"EXP {player.CurrentExp}-> {player.CurrentExp}\n");
                 Console.WriteLine("0.다음\n");
                 
                 int input = Extension.GetInput(0, 0);
