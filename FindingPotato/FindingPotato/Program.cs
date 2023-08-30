@@ -189,21 +189,21 @@ public class GameManager
             Console.WriteLine("0.나가기"); 
 
             int input = Extension.GetInput(0,3);
-            
-            if(input == 1)
+
+            if (input == 1)
             {
                 List<IItem> itemRewards = GetStageRewards(input);
                 stage1 = new StageClass(player, CreateRandomMonsterLineup(EasyMonsters, 3), itemRewards, StageDifficulty.Easy);
                 stage1.Start();
                 player.PotionEffectReset();
-                break; 
+                break;
             }
-            else if(input == 2)
+            else if (input == 2)
             {
                 if (player.CurrentStage >= (int)StageDifficulty.Normal)
                 {
                     List<Monster> monsters = CreateRandomMonsterLineup(NormalMonsters, 3);
-                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2)); 
+                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
                     List<IItem> itemRewards = GetStageRewards(input);
                     stage2 = new StageClass(player, monsters, itemRewards, StageDifficulty.Normal);
                     stage2.Start();
@@ -228,9 +228,10 @@ public class GameManager
                 else
                 {
                     Console.WriteLine("아직 감자 진열대는 보이지 않는다.");
-                    Thread.Sleep(500); 
+                    Thread.Sleep(500);
                 }
             }
+            else break;
         }
     }
 
@@ -244,20 +245,10 @@ public class GameManager
         Console.WriteLine("|");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
         Console.Write($"| 공격력 : {player.AttackPower}");
-        if(player.AddAtk != 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"  + {player.AddAtk}");
-            Console.ResetColor();
-        }
+        if (player.AddAtk != 0) { Extension.ColorWriteLine($"  + {player.AddAtk}", ConsoleColor.Black, ConsoleColor.Green); }
         else { Console.WriteLine(); }
         Console.Write($"| 방어력 : {player.Defense}");
-        if(player.AddDef != 0)
-        {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"  + {player.AddDef}");
-            Console.ResetColor();
-        }
+        if (player.AddDef != 0) { Extension.ColorWriteLine($"  + {player.AddDef}", ConsoleColor.Black, ConsoleColor.Green); }
         else { Console.WriteLine(); }
         Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
         Console.WriteLine($"◇----------◇----------◇----------");
