@@ -39,17 +39,19 @@ public class GameManager
 
     // 아이템 생성
     // 소모 아이템
+    // stage 1
     static IItem water = new HealthPotion("물", 20, "웅덩이에 고여 있던 물.");
-    static IItem nutrient = new HealthPotion("식물 영양제", 50, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 10, "밭에서 챙긴 비료.");
+    // stage 2
+    static IItem nutrient = new HealthPotion("식물 영양제", 50, "오는 길에 훔친 영양제.");
     static IItem pesticide = new StrengthPotion("농약", 20, "각성.");
   
     //장착 아이템
     // stage 1
     static IItem toothpick = new Weapon("이쑤시개", 10, "뾰족하다.");
-    static IItem peeler = new Weapon("감자 필러", 15, "날카롭다.");
-    // stage 2
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
+    // stage 2
+    static IItem peeler = new Weapon("감자 필러", 15, "날카롭다.");
     static IItem styrofoam = new Armor("스티로폼", 10, "충격 완화.");
   
     static List<IItem> ConsumableItemList = new List<IItem>() { water, firtilizer, nutrient,  pesticide };
@@ -302,8 +304,9 @@ public class GameManager
         // 각 스테이지의 보상 아이템들
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
-        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i + curStageNum]);
-        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i + curStageNum]);
+        int startIdx = (curStageNum == 1) ? 0 : 2;
+        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(ConsumableItemList[i]);
+        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(EquipableItemList[i]);
         return stageRewards;
     }
 }
