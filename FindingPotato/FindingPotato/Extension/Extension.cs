@@ -44,4 +44,12 @@ public class Extension
             Console.Write(">> ");
         }
     }
+
+    public static void CenterAlign(string text, ConsoleColor _back = ConsoleColor.Black, ConsoleColor _front = ConsoleColor.White)
+    {
+        int count = text.Count(c => c >= '\uAC00' && c <= '\uD7AF');            // uAC00은 '가', uD7AF는 '힣'을 의미하는 유니코드 범위. 두 범위 사이의 값을 찾는 것 = (완성형) 한글을 찾는 것
+        int len = (150 - (text.Length + count)) / 2;
+        Console.SetCursorPosition(len, Console.CursorTop);
+        Extension.ColorWriteLine(text, _back, _front);
+    }
 }
