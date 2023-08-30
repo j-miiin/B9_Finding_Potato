@@ -263,35 +263,30 @@ namespace FindingPotato.Stage
 
             if (input == 1)
             {
-                AlphaStrikeAttack();
-                EnemyPhase();
+                bool isAttackSuccess = AlphaStrikeAttack();
+                if (isAttackSuccess) EnemyPhase();
             }
             else if (input == 2)
             {
-                DoubleStrikeAttack();
-                EnemyPhase();
+                bool isAttackSuccess = DoubleStrikeAttack();
+                if (isAttackSuccess) EnemyPhase();
             }
 
-            // Player가 죽으면 스테이지 클리어 실패(false)
-            if (player.IsDead)
-            {
-                OnCharacterDeath?.Invoke(false);
-                return;
-            }
             // 공격할 몬스터가 없으면 스테이지 클리어 성공(true)
-            else if (monsters.All(x => x.IsDead))
+            if (monsters.All(x => x.IsDead))
             {
                 OnCharacterDeath?.Invoke(true);
                 return;
             }
         }
 
-        void AlphaStrikeAttack()
+        bool AlphaStrikeAttack()
         {
             if (player.CurrentMP < (int)SkillType.ALPHA)
             {
                 Console.WriteLine("MP가 부족합니다!");
                 Thread.Sleep(1000);
+                return false;
             }
             else
             {
@@ -314,14 +309,16 @@ namespace FindingPotato.Stage
             Console.WriteLine("0.다음\n");
 
             int input = Extension.GetInput(0, 0);
+            return true;
         }
 
-        void DoubleStrikeAttack()
+        bool DoubleStrikeAttack()
         {
             if (player.CurrentMP < (int)SkillType.DOUBLE)
             {
                 Console.WriteLine("MP가 부족합니다!");
                 Thread.Sleep(1000);
+                return false;
             }
             else
             {
@@ -333,6 +330,7 @@ namespace FindingPotato.Stage
             Console.WriteLine("0.다음\n");
 
             int input = Extension.GetInput(0, 0);
+            return true;
         }
 
         // 도망가기
