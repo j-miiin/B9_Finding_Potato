@@ -7,6 +7,7 @@ using System.Security.Cryptography;
 using System.Dynamic;
 using System.ComponentModel.Design;
 using FindingPotato.Inventory;
+using FindingPotato.UI;
 
 namespace FindingPotato
 {
@@ -84,6 +85,9 @@ public class GameManager
         EasyMonsters = new List<Monster> { banana, durian, rambutan, watermelon };
         NormalMonsters = new List<Monster> { beet, paprika, onion };
         HardMonsters = new List<Monster> { customer };
+
+        //UI
+        Console.SetWindowSize(150, 50);
     }
 
     //몬스터 목록에서 랜덤하게 선택된 몬스터 리스트 반환 (중복X) 
@@ -123,21 +127,15 @@ public class GameManager
     // 캐릭터 생성 - 이름, 직업
     public void InitialCharacter()
     {
-        // 이름 설정 - string
-        Extension.TypeWriting("이름 ?\n");
-        Console.Write(">> ");
-        string playerName = Console.ReadLine();
+        StartSceneUI.PrintGameTitleUI();
+        string playerName = StartSceneUI.GetUserName();
 
         // 직업 설정 - enum(int)
-        Extension.TypeWriting("\n정체\n");
+        Console.Clear();
+        StartSceneUI.PrintGameTitleUI();
+        int playerType = StartSceneUI.GetPlayerType();
 
-        Extension.ColorWriteLine("1. 감자");
-        Extension.ColorWriteLine("2. 고구마");
-        Extension.ColorWriteLine("3. 당근");
-
-        int playerType = Extension.GetInput(1, 3);
         player = new Player(playerName, (VegetableType)playerType);
-
     }
 
     // 메인 화면
