@@ -52,8 +52,21 @@ namespace FindingPotato.UI
             Console.WriteLine("└────────────────────────────────────────────┘"); Console.SetCursorPosition(x, y++);
 
             y = 30;
-            Console.SetCursorPosition(x + 15, y + 5);
-            return Console.ReadLine();
+            string playerName = "";
+            while (true)
+            {
+                Console.SetCursorPosition(x + 15, y + 5);
+                playerName = Console.ReadLine();
+                if (playerName.Length == 0)
+                {
+                    Console.SetCursorPosition(x + 10, y + 6);
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("닉네임을 입력해주세요!");
+                    Console.ResetColor();
+                }
+                else break;
+            }
+            return playerName;
         }
 
         public static int GetPlayerType()
@@ -114,34 +127,34 @@ namespace FindingPotato.UI
 
                 if (selectedLine == 34)
                 {
-                    SetSelectedBackground(true);
+                    Extension.SetSelectedBackground(true);
                     Console.WriteLine("1. 감  자");
                     Console.SetCursorPosition(x + 18, y++);
-                    SetSelectedBackground(false);
+                    Extension.SetSelectedBackground(false);
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("2. 고구마");
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("3. 당  근");
                 } else if (selectedLine == 35)
                 {
-                    SetSelectedBackground(false);
+                    Extension.SetSelectedBackground(false);
                     Console.WriteLine("1. 감  자");
                     Console.SetCursorPosition(x + 18, y++);
-                    SetSelectedBackground(true);
+                    Extension.SetSelectedBackground(true);
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("2. 고구마");
-                    SetSelectedBackground(false);
+                    Extension.SetSelectedBackground(false);
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("3. 당  근");
                 } else
                 {
-                    SetSelectedBackground(false);
+                    Extension.SetSelectedBackground(false);
                     Console.WriteLine("1. 감  자");
                     Console.SetCursorPosition(x + 18, y++);
-                    SetSelectedBackground(false);
+                    Extension.SetSelectedBackground(false);
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("2. 고구마");
-                    SetSelectedBackground(true);
+                    Extension.SetSelectedBackground(true);
                     Console.SetCursorPosition(x + 18, y++);
                     Console.WriteLine("3. 당  근");
                 }
@@ -149,19 +162,6 @@ namespace FindingPotato.UI
             Console.ResetColor();
             Console.CursorVisible = true;
             return playerType;
-        }
-
-        private static void SetSelectedBackground(bool isSelected)
-        {
-            if (isSelected)
-            {
-                Console.BackgroundColor = ConsoleColor.Yellow;
-                Console.ForegroundColor = ConsoleColor.Black;
-            } else
-            {
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ForegroundColor = ConsoleColor.Yellow;
-            }
         }
     }
 }

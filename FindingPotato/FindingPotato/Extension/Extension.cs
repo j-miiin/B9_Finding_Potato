@@ -44,4 +44,17 @@ public class Extension
             Console.Write(">> ");
         }
     }
+    public static void SetSelectedBackground(bool isSelected)
+    {
+        if (isSelected)
+        {
+            Console.BackgroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Black;
+        }
+        else
+        {
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+        }
+    }
 }
