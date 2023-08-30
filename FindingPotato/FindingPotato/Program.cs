@@ -221,7 +221,7 @@ public class GameManager
                 if (player.CurrentStage >= (int)StageDifficulty.Hard)
                 {
                     List<IItem> itemRewards = new List<IItem>();
-                    stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Normal);
+                    stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Hard);
                     stage3.Start();
                     player.PotionEffectReset();
                 }
