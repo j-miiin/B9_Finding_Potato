@@ -42,9 +42,10 @@ namespace FindingPotato.Character
 
         public int Attack => new Random().Next(30, AttackPower); // 공격력은 랜덤
 
-        public int CurrentStage { get; set; } = 1; 
+        public int CurrentStage { get; set; } = 1;
 
-
+        public bool hadPotion = false;
+        public int potionEffect = 0;
         public Player(string name, VegetableType type)
         {
             Name = name;

@@ -24,7 +24,7 @@ namespace FindingPotato.Inventory
 
         public List<IItem> InventoryItems = new List<IItem>();
 
-
+        // isManagement는 GameManager의 ItemManagement에서 호출되었을 때  true  전달 
         public void PrintTitle(bool isManagement)
         { 
             if (isManagement)
@@ -132,7 +132,7 @@ namespace FindingPotato.Inventory
             }
             else if (item.Type == ItemType.HealthPotion && player.CurrentHealth == player.MaxHealth)
             {
-                // HealthPotion 최력 최대치일 때 섭취 불가
+                // HealthPotion 체력 최대치일 때 섭취 불가
                 Console.SetCursorPosition(0, InventoryItems.Count + 11);
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(" 현재 체력이 최대입니다.           ");
