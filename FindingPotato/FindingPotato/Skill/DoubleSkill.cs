@@ -17,7 +17,7 @@ namespace FindingPotato.Skill
         public DoubleSkill()
         {
             SkillType = SkillType.DOUBLE;
-            Description = "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n";
+            Description = "더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n";
         }
 
         public void Use(Player player, List<ICharacter> monsterList)
