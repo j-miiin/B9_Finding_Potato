@@ -31,7 +31,16 @@ namespace FindingPotato.Item
             player.AddAtk += this.Effect;
             --this.Quantity;
             if (this.Quantity == 0) player.PlayerInventory.InventoryItems.Remove(this);
+            UseMessage(player);
         }
 
+        public void UseMessage(Player player)
+        {
+            Console.SetCursorPosition(0, player.PlayerInventory.InventoryItems.Count + 11); // 메시지 위치 잡기
+            Extension.ColorWriteLine($" 공격력 + {Effect}이 전투 1회동안 지속됩니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+            Console.WriteLine("                                           ");
+            Console.WriteLine("                                         ");
+            Thread.Sleep(2000);
+        }
     }
 }

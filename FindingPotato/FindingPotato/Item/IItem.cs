@@ -24,5 +24,7 @@ namespace FindingPotato.Item
 
         void Use(Player player);
 
+        void UseMessage(Player player);
+
     }
 }
