@@ -146,21 +146,13 @@ public class GameManager
         while (true)
         {
             Console.Clear();
-            Console.WriteLine("====================================");
-            Extension.TypeWriting($"어서오세요. {player.Name} 님");
-            Extension.TypeWriting("이곳에서 활동을 할 수 있습니다.\n");
 
-            Extension.ColorWriteLine("1. 상태 보기");
-            Extension.ColorWriteLine("2. 인벤토리");
-            Extension.ColorWriteLine("3. 전투 시작");
-            Extension.ColorWriteLine("\n0. 게임 종료");
-
-            int input = Extension.GetInput(0, 3);
+            int input = SelectActivitySceneUI.GetPlayerActivity(player.Name);
 
             if (input == 1) { ShowStatus(); }
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
-            {
+            { 
                 ShowStageSelection(); 
             }
             else return;
@@ -303,9 +295,8 @@ public class GameManager
         // 각 스테이지의 보상 아이템들
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
-        int startIdx = (curStageNum == 1) ? 0 : 2;
-        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(ConsumableItemList[i]);
-        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(EquipableItemList[i]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i + (curStageNum - 1) * 2]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i + (curStageNum - 1) * 2]);
         return stageRewards;
     }
 }
