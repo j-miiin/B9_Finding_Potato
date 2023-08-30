@@ -85,83 +85,11 @@ namespace FindingPotato.UI
             Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
             Console.WriteLine("└────────────────────────────────────────────┘"); Console.SetCursorPosition(x, y++);
 
-            bool isSelected = false;
-            int playerType = 1;
-            int selectedLine = 34;
-            while (!isSelected)
-            {
-                y = 34;
-                Console.CursorVisible = false;
-                Console.SetCursorPosition(x + 18, y);
+            string[] playerTypeStrList = { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 " };
 
-                if (Console.KeyAvailable)
-                {
-                    var key = Console.ReadKey(true).Key;
-                    switch (key)
-                    {
-                        case ConsoleKey.UpArrow:
-                            selectedLine--;
-                            if (selectedLine < 34) selectedLine = 34;
-                            break;
-                        case ConsoleKey.DownArrow:
-                            selectedLine++;
-                            if (selectedLine > 36) selectedLine = 36;
-                            break;
-                        case ConsoleKey.Enter:
-                            if (selectedLine == 34) playerType = 1;
-                            else if (selectedLine == 35) playerType = 2;
-                            else playerType = 3;
-                            isSelected = true;
-                            break;
-                        case ConsoleKey.NumPad1:
-                            selectedLine = 34;
-                            break;
-                        case ConsoleKey.NumPad2:
-                            selectedLine = 35;
-                            break;
-                        case ConsoleKey.NumPad3:
-                            selectedLine = 36;
-                            break;
-                    }
-                }
+            x = 68; y = 34;
 
-                if (selectedLine == 34)
-                {
-                    Extension.SetSelectedBackground(true);
-                    Console.WriteLine("1. 감  자");
-                    Console.SetCursorPosition(x + 18, y++);
-                    Extension.SetSelectedBackground(false);
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("2. 고구마");
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("3. 당  근");
-                } else if (selectedLine == 35)
-                {
-                    Extension.SetSelectedBackground(false);
-                    Console.WriteLine("1. 감  자");
-                    Console.SetCursorPosition(x + 18, y++);
-                    Extension.SetSelectedBackground(true);
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("2. 고구마");
-                    Extension.SetSelectedBackground(false);
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("3. 당  근");
-                } else
-                {
-                    Extension.SetSelectedBackground(false);
-                    Console.WriteLine("1. 감  자");
-                    Console.SetCursorPosition(x + 18, y++);
-                    Extension.SetSelectedBackground(false);
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("2. 고구마");
-                    Extension.SetSelectedBackground(true);
-                    Console.SetCursorPosition(x + 18, y++);
-                    Console.WriteLine("3. 당  근");
-                }
-            }
-            Console.ResetColor();
-            Console.CursorVisible = true;
-            return playerType;
+            return UIExtension.GetPlayerSelectFromUI(x, y, 1, playerTypeStrList);
         }
     }
 }
