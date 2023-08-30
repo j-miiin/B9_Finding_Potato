@@ -1,6 +1,7 @@
 ﻿using FindingPotato.Character;
 using FindingPotato.Character.Monster;
 using FindingPotato.Item;
+using FindingPotato.Skill;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -93,11 +94,6 @@ namespace FindingPotato.Stage
                 {
                     //스킬
                     UsePlayerSkill();
-                    if (monsters.All(x => x.IsDead)) //몬스터가 전부 죽으면 승리 
-                    {
-                        OnCharacterDeath?.Invoke(true);
-                    }
-                    break;
                 }
                 else if (input == 0)
                 {
@@ -251,8 +247,18 @@ namespace FindingPotato.Stage
             {
                 Console.Clear();
 
-                // 공격할 몬스터가 없으면 break;
-                if (monsters.All(x => x.IsDead)) break;
+                // Player가 죽으면 스테이지 클리어 실패(false)
+                if (player.IsDead)
+                {
+                    OnCharacterDeath?.Invoke(false);
+                    break;
+                }
+                // 공격할 몬스터가 없으면 스테이지 클리어 성공(true)
+                else if (monsters.All(x => x.IsDead))
+                {
+                    OnCharacterDeath?.Invoke(true);
+                    break;
+                } 
 
                 string str = "1. 알파 스트라이크 - MP 10\n   공격력 * 2 로 하나의 적을 공격합니다.\n\n" +
                     "2. 더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n\n0. 취소";
@@ -263,123 +269,67 @@ namespace FindingPotato.Stage
 
                 if (input == 1)
                 {
-                    if (player.CurrentMP < (int)Player.MPAttackType.ALPHA)
-                    {
-                        Console.WriteLine("MP가 부족합니다!");
-                        Thread.Sleep(1000);
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        InfoScreen(true, "");
-                        int monsterIdx = Extension.GetInput(1, monsters.Count) - 1;
-                        if (monsters[monsterIdx].IsDead)
-                        {
-                            Console.WriteLine($"{monsters[monsterIdx].Name} 은(는) 이미 죽었습니다.");
-                            Thread.Sleep(1000);
-                        }
-                        else AlphaStrikeAttack(monsterIdx);
-                    }
+                    AlphaStrikeAttack();
                 }
                 else if (input == 2)
                 {
-                    if (player.CurrentMP < (int)Player.MPAttackType.DOUBLE)
-                    {
-                        Console.WriteLine("MP가 부족합니다!");
-                        Thread.Sleep(1000);
-                    }
-                    else
-                    {
-                        DoubleStrikeAttack();
-                    }
+                    DoubleStrikeAttack();
                 }
                 else break;
+
+                EnemyPhase();
             }
         }
 
-        // 스킬 - 알파 스트라이크
-        private void AlphaStrikeAttack(int monsterIdx)
+        void AlphaStrikeAttack()
         {
-            Console.Clear();
-
-            Extension.TypeWriting("Battle!!\n");
-            Extension.TypeWriting($"{player.Name}의 알파 스트라이크 공격!");
-            Console.WriteLine();
-
-            Monster curMonster = (Monster)monsters[monsterIdx];
-            int monsterPrevHP = curMonster.CurrentHealth;
-
-            curMonster.TakeDamage(player.Attack * 2);  // 공격력 * 2 로 하나의 적 공격
-            player.AttackWithMP(Player.MPAttackType.ALPHA);
-
-            // 알파 스트라이크 결과 출력
-            Console.WriteLine($"Lv.{curMonster.Level} {curMonster.Name}");
-            Console.WriteLine($"HP {monsterPrevHP} -> {curMonster.CurrentHealth}\n");
-
-            Console.WriteLine("0.다음");
-
-            int input = Extension.GetInput(0, 0);
-        }
-
-        // 스킬 - 더블 스트라이크
-        private void DoubleStrikeAttack()
-        {
-            Console.Clear();
-
-            Extension.TypeWriting("Battle!!\n");
-            Extension.TypeWriting($"{player.Name}의 더블 스트라이크 공격!");
-            Console.WriteLine();
-
-            // 살아있는 몬스터의 수
-            int aliveMonster = monsters.Where(m => !m.IsDead).Count();
-
-            // 살아있는 몬스터가 2마리 미만이면 1마리만 공격, 2마리 이상이면 2마리 공격
-            int num = (aliveMonster < 2) ? 1 : 2;
-            List<int> randomIdx = GetRandomIdx(num, 0, monsters.Count);
-
-            // 공격 당하기 전 몬스터 체력을 저장해놓을 배열
-            List<int> monsterPrevHPList = new List<int>();
-
-            foreach (int idx in randomIdx)
+            if (player.CurrentMP < (int)SkillType.ALPHA)
             {
-                if (monsters[idx].IsDead) continue;
-                monsterPrevHPList.Add(monsters[idx].CurrentHealth); // 공격 당하기 전 몬스터 체력 저장
-                monsters[idx].TakeDamage((int)(player.Attack * 1.5));   // 공격력 * 1.5 로 2명의 적을 랜덤 공격
+                Console.WriteLine("MP가 부족합니다!");
+                Thread.Sleep(1000);
             }
-            player.AttackWithMP(Player.MPAttackType.DOUBLE);
-
-            Console.WriteLine();
-
-            // 더블 스트라이크 결과 출력
-            int prevHPidx = 0;
-            foreach (int idx in randomIdx)
+            else
             {
-                Console.WriteLine($"Lv.{monsters[idx].Level} {monsters[idx].Name}");
-                Console.WriteLine($"HP {monsterPrevHPList[prevHPidx++]} -> {monsters[idx].CurrentHealth}\n");
-            }
-           
-            Console.WriteLine("0.다음");
-
-            int input = Extension.GetInput(0, 0);
-        }
-
-        // min 이상 max 미만 사이에서 n개의 랜덤한 숫자를 뽑아서 list에 담아 반환
-        private List<int> GetRandomIdx(int n, int min, int max)
-        {
-            List<int> randomIdx = new List<int>();
-
-            while (randomIdx.Count < n)
-            {
-                int currentNum = new Random().Next(min, max);
-                if (!randomIdx.Contains(currentNum))
+                int monsterIdx = 0;
+                while (true)
                 {
-                    randomIdx.Add(currentNum);
+                    Console.Clear();
+                    InfoScreen(true, "");
+                    monsterIdx = Extension.GetInput(1, monsters.Count) - 1;
+                    if (monsters[monsterIdx].IsDead)
+                    {
+                        Console.WriteLine($"{monsters[monsterIdx].Name} 은(는) 이미 죽었습니다.");
+                        Thread.Sleep(1000);
+                    }
+                    else break;
                 }
+                player.UseSkill(SkillType.ALPHA, new List<ICharacter> { monsters[monsterIdx] });
             }
 
-            return randomIdx;
+            Console.WriteLine("0.다음\n");
+
+            int input = Extension.GetInput(0, 0);
         }
 
+        void DoubleStrikeAttack()
+        {
+            if (player.CurrentMP < (int)SkillType.DOUBLE)
+            {
+                Console.WriteLine("MP가 부족합니다!");
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                List<ICharacter> monsterList = new List<ICharacter>();
+                foreach (ICharacter monster in monsters) monsterList.Add(monster);
+                player.UseSkill(SkillType.DOUBLE, monsterList);
+            }
+
+            Console.WriteLine("0.다음\n");
+
+            int input = Extension.GetInput(0, 0);
+        }
+        
         //스테이지 클리어 
         void StageClear(bool isPlayerWin)
         {
@@ -444,6 +394,23 @@ namespace FindingPotato.Stage
             Console.WriteLine($"{consumableItemReward.Name} - 1");
             Console.WriteLine($"{equipableItemReward.Name} - 1");
             Console.WriteLine();
+        }
+
+        // min 이상 max 미만 사이에서 n개의 랜덤한 숫자를 뽑아서 list에 담아 반환
+        private List<int> GetRandomIdx(int n, int min, int max)
+        {
+            List<int> randomIdx = new List<int>();
+
+            while (randomIdx.Count < n)
+            {
+                int currentNum = new Random().Next(min, max);
+                if (!randomIdx.Contains(currentNum))
+                {
+                    randomIdx.Add(currentNum);
+                }
+            }
+
+            return randomIdx;
         }
     }
 }   
