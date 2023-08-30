@@ -38,7 +38,7 @@ namespace FindingPotato.UI
 
             x = 65; y = 20;
 
-            return UIExtension.GetPlayerSelectFromUI(x, y, 4, activityStrList);
+            return UIExtension.GetPlayerSelectFromUI(x, y, 4, activityStrList, true);
         }
     }
 }

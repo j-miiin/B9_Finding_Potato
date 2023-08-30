@@ -13,14 +13,17 @@ namespace FindingPotato.UI
         // y : UI를 출력할 y 좌표
         // interval : 출력 간격 (1줄에 하나 출력이면 1, 메뉴 창처럼 위아래 padding, margin 줄거면 4)
         // selectStrList : 출력할 string 리스트 (맨 끝에는 "0번 나가기" 넣어야 함)
-        public static int GetPlayerSelectFromUI(int x, int y, int interval, string[] selectStrList)
+        // isPossibleToExit : 0번으로 나가기/취소 가능하다면 true, 아니라면 false
+        public static int GetPlayerSelectFromUI(int x, int y, int interval, string[] selectStrList, bool isPossibleToExit)
         {
             bool isSelected = false;
             int playerSelect = 1;
             int selectedLine = y;
 
+            int listLength = (isPossibleToExit) ? selectStrList.Length : selectStrList.Length - 1;
+
             int minLine = y;
-            int maxLine = y + interval * selectStrList.Length - 1;
+            int maxLine = y + interval * listLength - 1;
 
             while (!isSelected)
             {
@@ -42,7 +45,7 @@ namespace FindingPotato.UI
                             selectedLine = Math.Min(selectedLine, maxLine);
                             break;
                         case ConsoleKey.Enter:
-                            for (int i = 0; i < selectStrList.Length; i++)
+                            for (int i = 0; i < listLength; i++)
                             {
                                 if (selectedLine == (minLine + interval * i))
                                 {
@@ -55,7 +58,7 @@ namespace FindingPotato.UI
                         default:
                             int pivotKeyInt = 97;
                             int curKeyInt = (int)key;
-                            if ((curKeyInt >= pivotKeyInt) && curKeyInt - pivotKeyInt + 1 <= selectStrList.Length)
+                            if ((curKeyInt >= pivotKeyInt) && curKeyInt - pivotKeyInt + 1 <= listLength)
                             {
                                 selectedLine = minLine + interval * (curKeyInt - pivotKeyInt);
                             }
@@ -72,7 +75,7 @@ namespace FindingPotato.UI
                     else emptyStr += " ";
                 }
 
-                for (int i = 0; i < selectStrList.Length; i++)
+                for (int i = 0; i < listLength; i++)
                 {
                     if (i == (selectedLine - minLine) / interval) Extension.SetSelectedBackground(true);
                     else Extension.SetSelectedBackground(false);
