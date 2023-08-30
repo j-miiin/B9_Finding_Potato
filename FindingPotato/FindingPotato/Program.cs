@@ -38,18 +38,24 @@ public class GameManager
     Customer customer;
 
     // 아이템 생성 (효과 수치는 조정 예정)
+    // 소모 아이템
+    // stage 1
     static IItem water = new HealthPotion("물", 5, "웅덩이에 고여 있던 물.");
-    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem firtilizer = new StrengthPotion("비료", 5, "밭에서 챙긴 비료.");
+    // stage 2
+    static IItem nutrient = new HealthPotion("식물 영양제", 5, "오는 길에 훔친 영양제.");
     static IItem pesticide = new StrengthPotion("농약", 5, "각성.");
 
+    // 장착 아이템
+    // stage 1
     static IItem toothpick = new Weapon("이쑤시개", 5, "뾰족하다.");
-    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem plastic = new Armor("비닐", 5, "얇지만 유용하다.");
+    // stage 2
+    static IItem peeler = new Weapon("감자 필러", 5, "날카롭다.");
     static IItem styrofoam = new Armor("스티로폼", 5, "충격 완화.");
   
-    static List<IItem> ConsumableItemList = new List<IItem>() { water, nutrient, firtilizer, pesticide };
-    static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, peeler, plastic, styrofoam };
+    static List<IItem> ConsumableItemList = new List<IItem>() { water, firtilizer, nutrient,  pesticide };
+    static List<IItem> EquipableItemList = new List<IItem>() {  toothpick, plastic, peeler, styrofoam };
 
     // 몬스터 리스트
     List<Monster> EasyMonsters = new List<Monster>();
@@ -307,8 +313,8 @@ public class GameManager
         // 각 스테이지의 보상 아이템들
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
-        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i * curStageNum]);
-        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i * curStageNum]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i + curStageNum]);
+        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i + curStageNum]);
         return stageRewards;
     }
 }
