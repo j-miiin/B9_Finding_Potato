@@ -4,6 +4,7 @@ using FindingPotato.Item;
 using FindingPotato.Skill;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Dynamic;
 using System.Linq;
@@ -145,7 +146,7 @@ namespace FindingPotato.Stage
                 Console.Clear();
 
                 //플레이어의 데미지
-                int damage = player.Attack;
+                int damage = player.Attack + player.AddAtk;
 
                 //몬스터의 이전 체력
                 int previousHP = monster.CurrentHealth;
