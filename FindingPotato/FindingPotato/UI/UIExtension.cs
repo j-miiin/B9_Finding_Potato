@@ -103,7 +103,7 @@ namespace FindingPotato.UI
             return playerSelect;
         }
 
-
+        //image는 ICharacter.Image를 넣으면 됩니다. ex) DrawCharacter(player.Image, 23, 20);
         public static void DrawCharacter(string image, int posX, int posY)
         {
             string[] imageLines = image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);

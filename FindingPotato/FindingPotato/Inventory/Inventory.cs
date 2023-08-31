@@ -1,5 +1,6 @@
 ﻿using FindingPotato.Character;
 using FindingPotato.Item;
+using FindingPotato.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,60 +66,95 @@ namespace FindingPotato.Inventory
             Extension.ColorWriteLine("0. 나가기");
         }
 
-        public void PrintItemList(bool isManagement)
+        public int PrintItemList(bool isManagement)
         {
-
-            Console.SetCursorPosition(0, 12);
-            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------");
+            int input;
+            Console.SetCursorPosition(0, 14);
+            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
             Console.WriteLine("\n");
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
                 Console.WriteLine("\n");
                 Extension.CenterAlign("보유 중인 아이템이 없습니다.", ConsoleColor.Black, ConsoleColor.DarkGray);
-                Console.WriteLine("\n");
+                Console.WriteLine("\n\n");
+                Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+                PrintBoarder();
+                input = 0;
+                
             }
             else
             {
-                foreach (IItem item in InventoryItems)
-                {
-                    PrintItemInfo(item);
-                }
+                Console.SetCursorPosition(9, 19 + InventoryItems.Count);
+                Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+                PrintBoarder();
 
-                Console.SetCursorPosition(0, Console.CursorTop - InventoryItems.Count);
-                // 리스트 앞 기호 출력
-                for (int i = 1; i < InventoryItems.Count + 1; i++)
+                if (!isManagement)
                 {
-                    Console.SetCursorPosition(0, Console.CursorTop);
-                    Console.WriteLine(isManagement ? $" {i}." : " -");
+                    Console.SetCursorPosition(0, 17);
+                    foreach (IItem item in InventoryItems)
+                    {
+                        Extension.CenterAlign(PrintItemInfo(item));
+                    }
+                    input = 1;
                 }
+                else
+                {
+                    string[] items = new string[InventoryItems.Count + 1];
+
+                    for (int i = 0; i < InventoryItems.Count; i++)
+                    {
+                        items[i] = PrintItemInfo(InventoryItems[i]);
+                    }
+
+                    string exit = "    나가기";
+                    items[InventoryItems.Count] = exit.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+                    int x = 15; int y = 17;
+
+                    input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true);
+                }
+                
             }
-            Console.WriteLine("\n");
-            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------");
-            Console.WriteLine();
-
+            return input;
         }
 
 
-        private static void PrintItemInfo(IItem item)
+        private static string PrintItemInfo(IItem item)
         {
             //리스트 출력 내용 하나도 합치기
-            string equipMark = (item is IEquipable equipable) ? "[E] " : "    ";
+            string equipMark = (item is IEquipable equipable && equipable.IsEquipped) ? "[E] " : "    ";
             string itemName = item.Name.PadRight(13 - item.Name.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
             string itemType = item.Type.ToString().PadRight(18);
             string itemEffect = "";
             string effect;
             if (EffectDictionary.TryGetValue(item.Type , out effect)) { itemEffect = effect.PadRight(12 - effect.Count(c => c >= '\uAC00' && c <= '\uD7AF')) + string.Format($" + {item.Effect}").PadRight(6); }
             string itemDesc = item.Desc.PadRight(38 - item.Desc.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
-            string itemCount = item is IConsumable consumable ? string.Format($"보유 중 : {consumable.Quantity.ToString()} 개") : "";
+            string itemCount = item is IConsumable consumable ? string.Format($"보유 중 : {consumable.Quantity.ToString()} 개") : " ";
+            string endPart = itemCount.PadRight(18 - itemCount.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
 
-            string itemInfo = string.Format($"   {equipMark}{itemName}|  {itemType}|  {itemEffect}|  {itemDesc}|  {itemCount}");
-            Console.WriteLine(itemInfo);
+            string itemInfo = string.Format($"{equipMark}{itemName}|  {itemType}|  {itemEffect}|  {itemDesc}|  {endPart}");
+            return itemInfo;
         }
 
         private static void WriteAtPosition(string text, int position, int line)
         {
             Console.SetCursorPosition(position, line);
             Console.Write(text);
+        }
+
+        public static void PrintBoarder()
+        {
+            Console.SetCursorPosition(10, 1);
+            string horizontal = new string('─', 128);
+            Console.WriteLine($"◈{horizontal}◈");
+            for (int i = 0; i < 42; i++)
+            {
+                Console.SetCursorPosition(10, Console.CursorTop);
+                Console.Write("│");
+                Console.SetCursorPosition(140, Console.CursorTop);
+                Console.WriteLine("│");
+            }
+            Console.SetCursorPosition(10, Console.CursorTop);
+            Console.WriteLine($"◈{horizontal}◈");
         }
     }
 }

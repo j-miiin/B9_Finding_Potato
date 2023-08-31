@@ -1,4 +1,5 @@
 ﻿using FindingPotato.Character;
+using FindingPotato.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,14 +34,12 @@ namespace FindingPotato.Item
 
             if (foundItem != null)
             {
-                Console.SetCursorPosition(52, 27);
-                Console.WriteLine($"현재 {foundItem.Name}을/를 장착 중입니다. {Name}으로 교체하시겠습니까?");
-                Console.SetCursorPosition(52, Console.CursorTop);
-                Extension.ColorWriteLine("1. 교체하기");
-                Console.SetCursorPosition(52, Console.CursorTop);
-                Extension.ColorWriteLine("0. 취소             ");
+                Console.SetCursorPosition(0, 30);
+                Extension.CenterAlign($"현재 {foundItem.Name}을/를 장착 중입니다. {Name}으로 교체하시겠습니까?");
 
-                int input = Extension.GetInput(0, 1);
+                string[] options = { "  1. 교체하기         ", "  0. 취소             " };
+
+                int input = UIExtension.GetPlayerSelectFromUI(63, 33, 4, options, true);
 
                 if (input == 0) { return; }
                 else { foundItem.IsEquipped = false; }
@@ -56,21 +55,18 @@ namespace FindingPotato.Item
 
         public void UseMessage(Player player)
         {
-            Console.SetCursorPosition(52, 27);
+            Console.SetCursorPosition(0, 30);
             if (IsEquipped)
             {
-                Extension.ColorWriteLine($"{Name} 을/를 장착했습니다.                                          ", ConsoleColor.Black, ConsoleColor.Green);
-                Console.SetCursorPosition(52, Console.CursorTop);
-                Extension.ColorWriteLine($"공격력이 + {Effect} 증가합니다.", ConsoleColor.Black, ConsoleColor.Green);
+                Extension.CenterAlign($"                     {Name} 을/를 장착했습니다.                     ", ConsoleColor.Black, ConsoleColor.Green);
+                Extension.CenterAlign($"공격력이 + {Effect} 증가합니다.", ConsoleColor.Black, ConsoleColor.Green);
             }
             else
             {
-                Extension.ColorWriteLine($"{Name}을/를 장착 해제 했습니다.           ", ConsoleColor.Black, ConsoleColor.Green);
-                Console.SetCursorPosition(52, Console.CursorTop);
-                Console.WriteLine("                                         ");
+                Extension.CenterAlign($"      {Name}을/를 장착 해제 했습니다.     ", ConsoleColor.Black, ConsoleColor.Green);
+                Extension.CenterAlign("                                         ");
             }
-            Console.SetCursorPosition(52, Console.CursorTop);
-            Console.WriteLine("                                         ");
+            Extension.CenterAlign("                                         ");
             Thread.Sleep(2000);
         }
     }
