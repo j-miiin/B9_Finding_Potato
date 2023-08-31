@@ -1,4 +1,5 @@
 ﻿using FindingPotato.Character;
+using FindingPotato.Character.Monster;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,6 +124,72 @@ namespace FindingPotato.UI
             return selectedNum;
         }
 
+        public static int GetPlayerSelectFromUI(int x, int y, int interval, string[] selectStrList, bool isPossibleToExit, bool[] isLimited, List<string>[] imageList)
+        {
+            bool isSelected = false;
+            int selectedNum = 1;
+            int listLength = (isPossibleToExit) ? selectStrList.Length : selectStrList.Length - 1;
+            int minLine = y;
+
+            int prevSelect = 0;
+            int prevIdx = 0;
+
+            while (!isSelected)
+            {
+                y = minLine;
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(x, y);
+
+                if (prevSelect != selectedNum)
+                {
+                    prevSelect = selectedNum;
+                    if (selectedNum != listLength)
+                    {
+                        int monsterX = 85; int monsterY = 20;
+                        prevIdx = DrawRandomCharacterWithColor(imageList[selectedNum - 1], monsterX, monsterY, prevIdx);
+                    }
+                }
+
+                int[] inputArr = GetInputKey(selectedNum, listLength, isPossibleToExit, isLimited);
+                isSelected = (inputArr[0] == 0) ? false : true;
+                selectedNum = inputArr[1];
+
+                string emptyStr = GetPaddingStr(selectStrList);
+                for (int i = 0; i < listLength; i++)
+                {
+                    if (i == (selectedNum - 1)) SetSelectedBackground(true);
+                    else SetSelectedBackground(false);
+
+                    if (!isPossibleToExit || i != (listLength - 1))
+                    {
+                        if (isLimited[i + 1]) Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+
+                    if (interval == 4)
+                    {
+                        Console.SetCursorPosition(x, y++);
+                        Console.WriteLine(emptyStr);
+                    }
+                    Console.SetCursorPosition(x, y++);
+                    string curStr = selectStrList[i];
+                    while (GetByteLength(curStr) < emptyStr.Length) curStr += " ";
+                    Console.WriteLine(curStr);
+                    if (interval == 4)
+                    {
+                        Console.SetCursorPosition(x, y++);
+                        Console.WriteLine(emptyStr);
+                    }
+                    if (interval == 4) y++;
+                }
+                Console.ResetColor();
+            }
+            Console.ResetColor();
+            Console.CursorVisible = true;
+
+            if (isPossibleToExit && selectedNum == listLength) selectedNum = 0;
+            return selectedNum;
+        }
+
         // 사용자의 방향키 및 키패드 숫자와 엔터 입력을 받아옴
         // GetInputKey()[0] == isSelected의 true(1)/false(0) 여부 (사용자가 Enter 했는지 안 했는지)
         // GetInputKey()[1] == 선택한 아이템 번호
@@ -143,7 +210,7 @@ namespace FindingPotato.UI
                         break;
                     case ConsoleKey.DownArrow:
                         do selectedNum++;
-                        while (isLimited[selectedNum]);
+                        while (selectedNum < isLimited.Length && isLimited[selectedNum]);
                         selectedNum = Math.Min(selectedNum, maxIdx);
                         break;
                     case ConsoleKey.Enter:
@@ -153,7 +220,8 @@ namespace FindingPotato.UI
                         int pivotKeyInt = (int)ConsoleKey.NumPad0;
                         int curKeyInt = (int)key;
                         if (curKeyInt == pivotKeyInt && isPossibleToExit) selectedNum = maxIdx;
-                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx)
+                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx 
+                            && !isLimited[curKeyInt - pivotKeyInt])
                         {
                             selectedNum = curKeyInt - pivotKeyInt;
                         }
@@ -187,6 +255,16 @@ namespace FindingPotato.UI
                 else length++;
             }
             return length;
+        }
+
+
+        private static int DrawRandomCharacterWithColor(List<string> imageList, int x, int y, int prevIdx)
+        {
+            ClearCharacter(x, y);
+            int randomImageIdx = 0;
+            while (randomImageIdx == prevIdx) randomImageIdx = new Random().Next(0, imageList.Count);
+            DrawCharacter(imageList[randomImageIdx], x, y);
+            return randomImageIdx;
         }
 
         //image는 ICharacter.Image를 넣으면 됩니다. ex) DrawCharacter(player.Image, 23, 20);
@@ -230,6 +308,18 @@ namespace FindingPotato.UI
             Console.ResetColor();
         }
 
+        public static void ClearCharacter(int x, int y)
+        {
+            string clearStr = "";
+            for (int i = 0; i < 30; i++) clearStr += " ";
+            Console.SetCursorPosition(x, y);
+            for (int i = y; i < y + clearStr.Length; i++)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(clearStr);
+            }
+        }
+
         public static void PrintSuperMarketFrame(int x, int y)
         {
             string supermarketFrameStr = "               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n"
@@ -251,7 +341,7 @@ namespace FindingPotato.UI
             }
             y += supermarketFrameStrArr.Length;
             Console.SetCursorPosition(x, y);
-            for (int i = 0; i < 25; i++)
+            for (int i = 0; i <= 30; i++)
             {
                 Console.SetCursorPosition(x, Console.CursorTop);
                 Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
