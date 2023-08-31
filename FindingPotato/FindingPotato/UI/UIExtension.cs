@@ -74,6 +74,7 @@ namespace FindingPotato.UI
         {
             bool isSelected = false;
             int selectedNum = 1;
+            while (isLimited[selectedNum] == true) selectedNum++;
             int listLength = (isPossibleToExit) ? selectStrList.Length : selectStrList.Length - 1;
             int minLine = y;
 
@@ -196,6 +197,8 @@ namespace FindingPotato.UI
         // GetInputKey()[1] == 선택한 아이템 번호
         private static int[] GetInputKey(int curNum, int maxIdx, bool isPossibleToExit, bool[] isLimited)
         {
+            int minAvailableIdx = 1;
+            while (isLimited[minAvailableIdx]) minAvailableIdx++;
             int selectedNum = curNum;
             bool isSelected = false;
 
@@ -207,7 +210,7 @@ namespace FindingPotato.UI
                     case ConsoleKey.UpArrow:
                         do selectedNum--;
                         while (isLimited[selectedNum]);
-                        selectedNum = Math.Max(selectedNum, 1);
+                        selectedNum = Math.Max(selectedNum, minAvailableIdx);
                         break;
                     case ConsoleKey.DownArrow:
                         do selectedNum++;
