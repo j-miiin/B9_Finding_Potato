@@ -36,7 +36,6 @@ namespace FindingPotato.Inventory
                 Console.SetCursorPosition(0, 7);
                 Extension.CenterAlign(" - 아이템 장착 및 소모 -", ConsoleColor.Black, ConsoleColor.DarkGray);
             }
-
             Console.SetCursorPosition(0, 3);
 
             Extension.CenterAlign("▣==============▣  ", ConsoleColor.Black, ConsoleColor.Cyan);
@@ -106,8 +105,9 @@ namespace FindingPotato.Inventory
                         items[i] = PrintItemInfo(InventoryItems[i]);
                     }
 
-                    string exit = "    나가기";
-                    items[InventoryItems.Count] = exit.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+                    string star = new string('*',  52);
+                    string exit = string.Format($"{star}    나가기    {star}");
+                    items[InventoryItems.Count] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
                     int x = 15; int y = 17;
 
                     input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true);
@@ -169,5 +169,6 @@ namespace FindingPotato.Inventory
             Extension.CenterAlign("└──────────────────────────────────────────────────────────────────────────┘");
 
         }
+       
     }
 }
