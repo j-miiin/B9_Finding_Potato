@@ -168,5 +168,37 @@ namespace FindingPotato.Character
             AddAtk -= potionEffect;
             potionEffect = 0;
         }
+
+
+        // 경험치 관리 메서드
+        public void UpdateExp(int totalExp)
+        {
+            CurrentExp += totalExp;
+        }
+
+        // 레벨업 관리 메서드
+        public void UpdateLevel()
+        {
+            if (CurrentExp >= 0 && CurrentExp < 10)
+            {
+                Level = 1;
+            }
+            else if (CurrentExp >= 10 && CurrentExp < 35)
+            {
+                Level = 2;
+            }
+            else if (CurrentExp >= 35 && CurrentExp < 65)
+            {
+                Level = 3;
+            }
+            else if (CurrentExp >= 65 && CurrentExp < 100)
+            {
+                Level = 4;
+            }
+            else if (CurrentExp >= 100)
+            {
+                Level = 5;
+            }
+        }
     }
 }

@@ -54,7 +54,6 @@ namespace FindingPotato.Stage
             {
                 if (monsters[i].IsDead)
                     Extension.ColorWriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}", ConsoleColor.Black, ConsoleColor.DarkGray);
-
                 else
                     Console.WriteLine($"{(bNum ? (i + 1) + "." : "")} Lv.{monsters[i].Level} {monsters[i].Name}  {(monsters[i].IsDead ? "Dead" : "HP " + monsters[i].CurrentHealth)}");
 
@@ -385,6 +384,7 @@ namespace FindingPotato.Stage
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
                     if (Difficulty != StageDifficulty.Hard) GiveRewards();
+                    CalculateExp(monsters); // 경험치 계산 호출
                 }
                 else //몬스터 승리 
                 {
@@ -446,7 +446,6 @@ namespace FindingPotato.Stage
                     randomIdx.Add(currentNum);
                 }
             }
-
             return randomIdx;
         }
 
@@ -459,5 +458,17 @@ namespace FindingPotato.Stage
             Console.ReadKey();
             Environment.Exit(0);
         }
+
+        // 경험치 계산, 스테이지에서 획득한 경험치 UpdateExp로 전달
+        void CalculateExp(List<Monster> monsters)
+        {
+            int totalExp = 0;
+            foreach (Monster mon in monsters)
+            {
+                totalExp += mon.Level;
+            }
+            player.UpdateExp(totalExp);
+        }
+
     }
 }   
