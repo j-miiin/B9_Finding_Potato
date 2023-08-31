@@ -149,7 +149,7 @@ public class GameManager
 
             int input = SelectActivitySceneUI.GetPlayerActivity(player.Name);
             
-            if (input == 1) { ShowStatus(); }
+            if (input == 1) { StatusUI.ShowStatus(player); }
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
 
@@ -220,29 +220,6 @@ public class GameManager
         }
     }
 
-    // 상태 보기
-    public void ShowStatus()
-    {
-        Console.Clear();
-        Console.WriteLine($"◇----------◇----------◇----------");
-        Console.WriteLine($"| {player.Name}      ({player.Type})");
-        Console.WriteLine($"| Lv. {player.Level}");
-        Console.WriteLine("|");
-        Console.WriteLine($"| 경험치 : {player.CurrentExp}/{player.MaxExp}");
-        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
-        Console.Write($"| 공격력 : {player.AttackPower}");
-        if (player.AddAtk != 0) { Extension.ColorWriteLine($"  + {player.AddAtk}", ConsoleColor.Black, ConsoleColor.Green); }
-        else { Console.WriteLine(); }
-        Console.Write($"| 방어력 : {player.Defense}");
-        if (player.AddDef != 0) { Extension.ColorWriteLine($"  + {player.AddDef}", ConsoleColor.Black, ConsoleColor.Green); }
-        else { Console.WriteLine(); }
-        Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
-        Console.WriteLine($"◇----------◇----------◇----------");
-
-        Extension.ColorWriteLine("\n0. 나가기");
-
-        _ = Extension.GetInput(0, 0);
-    }
 
     public void ShowInventory()
     {
@@ -253,7 +230,7 @@ public class GameManager
             InventoryClass.PrintTitle(false);
             player.PlayerInventory.PrintItemList(false);
 
-            string[] options = { " 1. 아이템 장착 및 소모 ", " 0. 나가기              " };
+            string[] options = { " 1. 아이템 장착 및 소모 ", " 0.     나  가  기      " };
 
             int x = 63; int y = 33;
 
