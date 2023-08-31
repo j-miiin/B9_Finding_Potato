@@ -20,7 +20,7 @@ namespace FindingPotato.Skill
             Description = "알파 스트라이크(MP 10) 공격력 * 2 로 하나의 적 공격";
         }
 
-        public void Use(Player player, List<ICharacter> monsterList)
+        public List<int> Use(Player player, List<ICharacter> monsterList)
         {
            
             Console.SetCursorPosition(53, 33);
@@ -41,6 +41,8 @@ namespace FindingPotato.Skill
             Console.SetCursorPosition(53, Console.CursorTop);
             Console.WriteLine($"HP {monsterPrevHP} -> {curMonster.CurrentHealth}\n");
             Console.WriteLine();
+
+            return new List<int>();
         }
     }
 }

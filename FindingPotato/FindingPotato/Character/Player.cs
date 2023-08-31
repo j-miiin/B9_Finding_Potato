@@ -133,19 +133,19 @@ namespace FindingPotato.Character
         }
 
         // Player가 스킬을 사용할 때 실행
-        public void UseSkill(SkillType type, List<ICharacter> monsterList)
+        public List<int> UseSkill(SkillType type, List<ICharacter> monsterList)
         {
             if (type == SkillType.ALPHA)
             {
                 CurrentMP -= (int)SkillType.ALPHA;
                 int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.ALPHA);
-                SkillList[skillIdx].Use(this, monsterList);
+                return SkillList[skillIdx].Use(this, monsterList);
             }
             else
             {
                 CurrentMP -= (int)SkillType.DOUBLE;
                 int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.DOUBLE);
-                SkillList[skillIdx].Use(this, monsterList);
+                return SkillList[skillIdx].Use(this, monsterList);
             }
         }
 

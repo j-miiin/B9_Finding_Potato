@@ -20,7 +20,7 @@ namespace FindingPotato.Skill
             Description = "더블 스트라이크(MP 15) 공격력 * 1.5 로 2명의 적을 랜덤 공격";
         }
 
-        public void Use(Player player, List<ICharacter> monsterList)
+        public List<int> Use(Player player, List<ICharacter> monsterList)
         {
             Console.SetCursorPosition(53, 33);
             Extension.TypeWriting($"{player.Name}의 더블 스트라이크 공격!");
@@ -51,6 +51,8 @@ namespace FindingPotato.Skill
                 Console.SetCursorPosition(53, Console.CursorTop);
                 Console.WriteLine($"HP {targetMonsterPrevHP[prevHpIdx++]} -> {monsterList[idx].CurrentHealth}\n");
             }
+
+            return targetMonsterIdxList;
         }
 
         // Monster 배열을 받아서 살아있는 몬스터 중 랜덤으로 2마리를 뽑고, 그 몬스터의 인덱스를 리스트에 담아 반환
