@@ -21,6 +21,35 @@ namespace FindingPotato.Character
         public string Name { get; }
         public VegetableType Type { get; }
         public int Level { get; set; }
+        public int CurrentExp { get; set; } // player 현재 경험치
+        public int MaxExp // player 레벨업에 필요한 경험치
+        {
+            get
+            {
+                switch (Level)
+                {
+                    case 1:
+                        return 9;
+                        break;
+                    case 2:
+                        return 34;
+                        break;
+                    case 3:
+                        return 64;
+                        break;
+                    case 5:
+                        return 100;
+                        break;
+                    default:
+                        return 0;
+                        break;
+                }
+            }
+            set
+            {
+
+            }
+        }
         public int MaxHealth { get; set; }  // Player가 가질 수 있는 최대 체력 값
         public int CurrentHealth    // Player 현재 체력 값
         {
@@ -136,6 +165,37 @@ namespace FindingPotato.Character
             hadPotion = false;
             AddAtk -= potionEffect;
             potionEffect = 0;
+        }
+
+        // 경험치 관리 메서드
+        public void ExpUpdate(int totalExp)
+        {
+            CurrentExp += totalExp;
+        }
+
+        // 레벨업 관리 메서드
+        public void LevelUpdate()
+        {
+            if (CurrentExp >= 0 && CurrentExp < 10)
+            {
+                Level = 1;
+            }
+            else if (CurrentExp >= 10 && CurrentExp < 35)
+            {
+                Level = 2;
+            }
+            else if (CurrentExp >= 35 && CurrentExp < 65)
+            {
+                Level = 3;
+            }
+            else if (CurrentExp >= 65 && CurrentExp < 99)
+            {
+                Level = 4;
+            }
+            else
+            {
+                Level = 5;
+            }
         }
     }
 }
