@@ -23,26 +23,14 @@ namespace FindingPotato.UI
             string[] stageStrList = { " 1. 과  일  코  너 (Easy) ",
                                       " 2. 야  채  코  너 (Normal) ",
                                       " 3. 감 자 진 열 대 (Hard) ", 
-                                      " 0. 게  임  종  료 " };
+                                      " 0. 전  투  종  료 " };
 
             x = 35; y = 20;
-            return UIExtension.GetPlayerSelectFromUI(x, y, 4, stageStrList, true);
+            bool[] isLimited = new bool[stageStrList.Length + 1];
+            for (int i = stageState + 1; i < isLimited.Length - 1; i++) isLimited[i] = true;
+            return UIExtension.GetPlayerSelectFromUI(x, y, 4, stageStrList, true, isLimited);
         }
     }
 }
 
-
-//Console.WriteLine("");
-
-//if (player.CurrentStage >= (int)StageDifficulty.Normal)
-//    Console.WriteLine("");
-//else
-//    Extension.ColorWriteLine("2.야채코너 (Normal)", ConsoleColor.Black, ConsoleColor.DarkGray);
-
-//if (player.CurrentStage >= (int)StageDifficulty.Hard)
-//    Console.WriteLine("");
-//else
-//    Extension.ColorWriteLine("3.감자 진열대 (Hard)", ConsoleColor.Black, ConsoleColor.DarkGray);
-
-//Console.WriteLine("0.나가기");
 
