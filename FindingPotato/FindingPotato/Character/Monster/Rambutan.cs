@@ -8,7 +8,8 @@ namespace FindingPotato.Character.Monster
 {
     internal class Rambutan :Monster
     {
-        public Rambutan(string name) : base(name, 60, 20,2) { }
+        static string image = "  \r\n  \r\n  \r\n  \r\n  \r\n  ~,--♨--,~\r\n ~/         \\~\r\n~│ #＞目＜# │~\r\n ~\\+       +/~\r\n   ~`--+--'~\r\n";
+        public Rambutan(string name) : base(name, 60, 20, 2, image) { }
 
         public override string AttackMessage()
         {

@@ -25,14 +25,16 @@ namespace FindingPotato.Character.Monster
         public int Attack => Random.Next(AttackPower-10, AttackPower+5);
         public int AttackPower { get; set; }
         public bool IsDead => CurrentHealth <= 0;
+        public string Image { get; set; }
 
-        public Monster(string name, int maxHealth, int attackPower, int level)
+        public Monster(string name, int maxHealth, int attackPower, int level, string image)
         {
             Name = name;
             MaxHealth = maxHealth;
             CurrentHealth = maxHealth;
             AttackPower = attackPower;
             Level = level;
+            Image = image;
         }
 
         public void TakeDamage(int damage)

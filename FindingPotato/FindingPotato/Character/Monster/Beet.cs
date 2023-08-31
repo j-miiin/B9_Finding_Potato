@@ -8,7 +8,8 @@ namespace FindingPotato.Character.Monster
 {
     internal class Beet :Monster
     {
-        public Beet(string name) : base(name, 70,25, 3) { }
+        static string image = "   \r\n  \r\n  \r\n  \r\n      \r\n    __\\|/__\r\n  /         \\ \r\n │   ￣Д￣ │ \r\n /\\         /\\ \r\n/  \\______ /  \\\r\n      / \\\r\n";
+        public Beet(string name) : base(name, 70,25, 3, image) { }
 
         public override string AttackMessage()
         {

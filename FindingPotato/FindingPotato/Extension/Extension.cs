@@ -29,8 +29,15 @@ public class Extension
     // 사용자 입력 받기 (min <= input <= max 값만 받도록)
     public static int GetInput(int _min, int _max)
     {
-        Console.WriteLine("\n원하시는 행동을 입력해주세요.");
-        Console.Write(">> ");
+        Console.SetCursorPosition(0, 35);
+        CenterAlign("┌──────────────────────────────────────────────┐  ");
+        for (int i = 0; i < 7; i++) CenterAlign("│                                              │  ");
+        CenterAlign("└──────────────────────────────────────────────┘  ");
+
+        Console.SetCursorPosition(0, 38);
+        CenterAlign("원하시는 행동을 입력해주세요 >>");
+        Console.SetCursorPosition(73, 40);
+        Console.CursorVisible = true;
 
         while (true)
         {
@@ -40,23 +47,13 @@ public class Extension
                     return input;
             }
 
-            Console.WriteLine("\n잘못된 입력입니다. 다시 입력해주세요.");
-            Console.Write(">> ");
+            Console.SetCursorPosition(0, 38);
+            CenterAlign("잘못된 입력입니다. 다시 입력해주세요 >>");
+            Console.WriteLine();
+            CenterAlign("                     ");
+            Console.SetCursorPosition(73, 40);
         }
-    }
-
-    public static void SetSelectedBackground(bool isSelected)
-    {
-        if (isSelected)
-        {
-            Console.BackgroundColor = ConsoleColor.Yellow;
-            Console.ForegroundColor = ConsoleColor.Black;
-        }
-        else
-        {
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.Yellow;
-        }
+        Console.CursorVisible= false;
     }
 
     public static void CenterAlign(string text, ConsoleColor _back = ConsoleColor.Black, ConsoleColor _front = ConsoleColor.White)
@@ -66,4 +63,5 @@ public class Extension
         Console.SetCursorPosition(len, Console.CursorTop);
         Extension.ColorWriteLine(text, _back, _front);
     }
+
 }
