@@ -74,6 +74,7 @@ namespace FindingPotato.UI
         {
             bool isSelected = false;
             int selectedNum = 1;
+            while (isLimited[selectedNum] == true) selectedNum++;
             int listLength = (isPossibleToExit) ? selectStrList.Length : selectStrList.Length - 1;
             int minLine = y;
 
@@ -124,7 +125,8 @@ namespace FindingPotato.UI
             return selectedNum;
         }
 
-        public static int GetPlayerSelectFromUI(int x, int y, int interval, string[] selectStrList, bool isPossibleToExit, bool[] isLimited, List<string>[] imageList)
+        public static int GetPlayerSelectFromUI(int x, int y, int interval, string[] selectStrList, 
+            bool isPossibleToExit, bool[] isLimited, List<ICharacter>[] imageList)
         {
             bool isSelected = false;
             int selectedNum = 1;
@@ -146,7 +148,7 @@ namespace FindingPotato.UI
                     if (selectedNum != listLength)
                     {
                         int monsterX = 85; int monsterY = 20;
-                        prevIdx = DrawRandomCharacterWithColor(imageList[selectedNum - 1], monsterX, monsterY, prevIdx);
+                        prevIdx = DrawRandomCharacterAndDesc(imageList[selectedNum - 1], monsterX, monsterY, prevIdx);
                     }
                 }
 
@@ -195,6 +197,8 @@ namespace FindingPotato.UI
         // GetInputKey()[1] == 선택한 아이템 번호
         private static int[] GetInputKey(int curNum, int maxIdx, bool isPossibleToExit, bool[] isLimited)
         {
+            int minAvailableIdx = 1;
+            while (isLimited[minAvailableIdx]) minAvailableIdx++;
             int selectedNum = curNum;
             bool isSelected = false;
 
@@ -206,7 +210,7 @@ namespace FindingPotato.UI
                     case ConsoleKey.UpArrow:
                         do selectedNum--;
                         while (isLimited[selectedNum]);
-                        selectedNum = Math.Max(selectedNum, 1);
+                        selectedNum = Math.Max(selectedNum, minAvailableIdx);
                         break;
                     case ConsoleKey.DownArrow:
                         do selectedNum++;
@@ -258,12 +262,13 @@ namespace FindingPotato.UI
         }
 
 
-        private static int DrawRandomCharacterWithColor(List<string> imageList, int x, int y, int prevIdx)
+        private static int DrawRandomCharacterAndDesc(List<ICharacter> monsterList, int x, int y, int prevIdx)
         {
             ClearCharacter(x, y);
             int randomImageIdx = 0;
-            while (randomImageIdx == prevIdx) randomImageIdx = new Random().Next(0, imageList.Count);
-            DrawCharacter(imageList[randomImageIdx], x, y);
+            while (randomImageIdx == prevIdx) randomImageIdx = new Random().Next(0, monsterList.Count);
+            Monster curMonster = (Monster)monsterList[randomImageIdx];
+            curMonster.PrintMonsterImage(x, y);
             return randomImageIdx;
         }
 
@@ -311,11 +316,11 @@ namespace FindingPotato.UI
         public static void ClearCharacter(int x, int y)
         {
             string clearStr = "";
-            for (int i = 0; i < 30; i++) clearStr += " ";
-            Console.SetCursorPosition(x, y);
-            for (int i = y; i < y + clearStr.Length; i++)
+            for (int i = 0; i < 45; i++) clearStr += " ";
+            Console.SetCursorPosition(x - 10, y);
+            for (int i = y; i < y + 30; i++)
             {
-                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.SetCursorPosition(x - 10, Console.CursorTop);
                 Console.WriteLine(clearStr);
             }
         }

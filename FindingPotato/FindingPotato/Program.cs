@@ -152,7 +152,7 @@ public class GameManager
 
             int input = SelectActivitySceneUI.GetPlayerActivity(player.Name);
             
-            if (input == 1) { ShowStatus(); }
+            if (input == 1) { StatusUI.ShowStatus(player); }
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
 
@@ -170,11 +170,12 @@ public class GameManager
         {
             Console.Clear();
 
-            List<string>[] monsterImageList = new List<string>[3];
-            for (int i = 0; i < monsterImageList.Length; i++) monsterImageList[i] = new List<string>();
-            foreach (Monster monster in EasyMonsters) monsterImageList[0].Add(monster.Image);
-            foreach (Monster monster in NormalMonsters) monsterImageList[1].Add(monster.Image);
-            foreach (Monster monster in HardMonsters) monsterImageList[2].Add(monster.Image);
+            List<ICharacter>[] monsterImageList = new List<ICharacter>[3];
+            for (int i = 0; i < monsterImageList.Length; i++) monsterImageList[i] = new List<ICharacter>();
+            foreach (Monster monster in EasyMonsters) monsterImageList[0].Add(monster);
+            foreach (Monster monster in NormalMonsters) monsterImageList[1].Add(monster);
+            foreach (Monster monster in HardMonsters) monsterImageList[2].Add(monster);
+
             int input = SelectStageScene.GetStageSelect(player.CurrentStage, monsterImageList);
 
             if (input == 1)
@@ -222,28 +223,6 @@ public class GameManager
         }
     }
 
-    // 상태 보기
-    public void ShowStatus()
-    {
-        Console.Clear();
-        Console.WriteLine($"◇----------◇----------◇----------");
-        Console.WriteLine($"| {player.Name}      ({player.Type})");
-        Console.WriteLine($"| Lv. {player.Level}");
-        Console.WriteLine("|");
-        Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
-        Console.Write($"| 공격력 : {player.AttackPower}");
-        if (player.AddAtk != 0) { Extension.ColorWriteLine($"  + {player.AddAtk}", ConsoleColor.Black, ConsoleColor.Green); }
-        else { Console.WriteLine(); }
-        Console.Write($"| 방어력 : {player.Defense}");
-        if (player.AddDef != 0) { Extension.ColorWriteLine($"  + {player.AddDef}", ConsoleColor.Black, ConsoleColor.Green); }
-        else { Console.WriteLine(); }
-        Console.WriteLine($"| 마  력 : {player.CurrentMP}/{player.MaxMP}");
-        Console.WriteLine($"◇----------◇----------◇----------");
-
-        Extension.ColorWriteLine("\n0. 나가기");
-
-        _ = Extension.GetInput(0, 0);
-    }
 
     public void ShowInventory()
     {
@@ -254,7 +233,7 @@ public class GameManager
             InventoryClass.PrintTitle(false);
             player.PlayerInventory.PrintItemList(false);
 
-            string[] options = { " 1. 아이템 장착 및 소모 ", " 0. 나가기              " };
+            string[] options = { " 1. 아이템 장착 및 소모 ", " 0.     나  가  기      " };
 
             int x = 63; int y = 33;
 

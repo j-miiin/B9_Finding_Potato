@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindingPotato.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace FindingPotato.UI
 {
     internal class SelectStageScene
     {
-        public static int GetStageSelect(int stageState, List<string>[] imageList)
+        public static int GetStageSelect(int stageState, List<ICharacter>[] imageList)
         {
             int x = 5, y = 3;
 
