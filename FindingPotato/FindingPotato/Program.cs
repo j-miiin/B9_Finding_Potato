@@ -153,7 +153,7 @@ public class GameManager
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
             { 
-                ShowStageSelection(); 
+                ShowStageSelection();
             }
             else return;
         }
@@ -164,6 +164,8 @@ public class GameManager
         while(true)
         {
             Console.Clear();
+            SelectStageScene.GetStageSelect(player.CurrentStage);
+
             Console.WriteLine("감자를 구하러 가려면 과일코너에서  채소코너를 지나감자 진열대 까지 가야해 !\n");
 
             Console.WriteLine("1.과일 코너 (Easy)");
