@@ -96,15 +96,34 @@ namespace FindingPotato.UI
 
 
                                                           내 친구 감자를 구했다!!
+
+
 ";
 
 
             Console.WriteLine(str);
 
             UIExtension.DrawCharacter(player.Image, 48, 23);
-            UIExtension.DrawCharacter(Image, 71, 23);
+            UIExtension.DrawCharacter(Image, 71, 24);
 
-            Console.ReadKey(); 
+            string floor = new string('_', 150);
+
+            Console.SetCursorPosition(0, 33);
+            Console.WriteLine(floor);
+            Console.SetCursorPosition(22, 33);
+            Console.WriteLine("\\|/");
+            Console.SetCursorPosition(38, 33);
+            Console.WriteLine("\\|/");
+            Console.SetCursorPosition(88, 33);
+            Console.WriteLine("\\|/");
+
+
+
+            Console.SetCursorPosition(65, Console.CursorTop + 3);
+            Console.WriteLine("아무키나 눌러서 종료...");
+            Console.ReadKey();
+            Environment.Exit(0);
+
         }
 
         public static void DeadScene(Player player)
@@ -112,7 +131,7 @@ namespace FindingPotato.UI
             string str = @"
 
 
-                                   ====================
+                                    〓〓〓〓〓〓〓〓〓〓〓〓〓
 
                                     ■     ■  ■■■   ■    ■    ■■■■    ■■■■■  ■■■■■  ■■■■    
                                      ■   ■  ■    ■  ■    ■    ■      ■      ■      ■          ■      ■            
@@ -121,7 +140,7 @@ namespace FindingPotato.UI
                                        ■     ■    ■  ■    ■    ■      ■      ■      ■          ■      ■      
                                        ■      ■■■    ■■■     ■■■■    ■■■■■  ■■■■■  ■■■■              
 
-                                                                                              ====================
+                                                                                              〓〓〓〓〓〓〓〓〓〓〓〓〓
 
 
 
@@ -157,7 +176,10 @@ namespace FindingPotato.UI
                     break;
             }
 
+            Console.SetCursorPosition(65, Console.CursorTop+3); 
+            Console.WriteLine("아무키나 눌러서 종료...");
             Console.ReadKey();
+            Environment.Exit(0);
         }
     }
 }
