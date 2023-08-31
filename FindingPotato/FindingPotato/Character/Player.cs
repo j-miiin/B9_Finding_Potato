@@ -174,6 +174,8 @@ namespace FindingPotato.Character
         {
             TotalExp += totalExp; // 스테이지 클리어 Before Exp적용 용도 TotalExp 값 저장
             CurrentExp += totalExp; // 현재 경험치 변경 용도
+
+            LevelUpdate();
         }
 
         // 레벨업 관리 메서드 -- 기능 구현 가능하도록 추가 필요
