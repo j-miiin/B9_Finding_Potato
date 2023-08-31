@@ -103,6 +103,7 @@ namespace FindingPotato.UI
             return playerSelect;
         }
 
+
         public static void DrawCharacter(string image, int posX, int posY)
         {
             string[] imageLines = image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -141,6 +142,45 @@ namespace FindingPotato.UI
             DrawCharacter(character.Image, posX, posY);
         
             Console.ResetColor();
+
+        private static int GetByteLength(string str)
+        {
+            int length = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] >= '\uAC00' && str[i] <= '\uD7AF') length += 2;
+                else length++;
+            }
+            return length;
+        }
+
+        public static void PrintSuperMarketFrame(int x, int y)
+        {
+            string supermarketFrameStr = "               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n"
+                                  + "              *                                                                                                             *\r\n"
+                                  + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
+                                  + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
+                                  + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
+                                  + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
+                                  + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
+                                  + "        *                                                                                                                         *\r\n"
+                                  + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
+
+            string[] supermarketFrameStrArr = supermarketFrameStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Console.SetCursorPosition(x, y);
+            foreach (string str in supermarketFrameStrArr)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(str);
+            }
+            y += supermarketFrameStrArr.Length;
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < 25; i++)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
+            }
+
         }
     }
 }

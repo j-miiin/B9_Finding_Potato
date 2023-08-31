@@ -152,8 +152,10 @@ public class GameManager
             if (input == 1) { ShowStatus(); }
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
-            {
-                ShowStageSelection(); 
+
+            { 
+                ShowStageSelection();
+
             }
             else return;
         }
