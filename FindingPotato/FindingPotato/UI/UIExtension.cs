@@ -140,10 +140,11 @@ namespace FindingPotato.UI
             ShakeCharacter(character.Image, posX, posY);
             Thread.Sleep(50);
             DrawCharacter(character.Image, posX, posY);
-        
-            Console.ResetColor();
 
-        private static int GetByteLength(string str)
+            Console.ResetColor();
+        }
+
+        public static int GetByteLength(string str)
         {
             int length = 0;
             for (int i = 0; i < str.Length; i++)
@@ -157,14 +158,14 @@ namespace FindingPotato.UI
         public static void PrintSuperMarketFrame(int x, int y)
         {
             string supermarketFrameStr = "               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n"
-                                  + "              *                                                                                                             *\r\n"
-                                  + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
-                                  + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
-                                  + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
-                                  + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
-                                  + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
-                                  + "        *                                                                                                                         *\r\n"
-                                  + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
+                                    + "              *                                                                                                             *\r\n"
+                                    + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
+                                    + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
+                                    + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
+                                    + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
+                                    + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
+                                    + "        *                                                                                                                         *\r\n"
+                                    + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
 
             string[] supermarketFrameStrArr = supermarketFrameStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             Console.SetCursorPosition(x, y);
@@ -182,5 +183,6 @@ namespace FindingPotato.UI
             }
 
         }
-    }
+        
+    } 
 }
