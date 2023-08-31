@@ -83,7 +83,7 @@ namespace FindingPotato.Inventory
             }
             else
             {
-                Console.SetCursorPosition(9, 19 + InventoryItems.Count);
+                Console.SetCursorPosition(9, 20 + InventoryItems.Count);
                 Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
                 PrintBoarder();
 
