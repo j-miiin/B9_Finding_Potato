@@ -16,7 +16,6 @@ namespace FindingPotato.UI
             Console.SetCursorPosition(30, 31);
             string[] selectMain = { "1.공    격", "2.스    킬", "0.도망가기" };
 
-
             string[] next = { "0.다음" };
 
             switch (mode)
