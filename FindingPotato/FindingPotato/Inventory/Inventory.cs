@@ -77,7 +77,7 @@ namespace FindingPotato.Inventory
                 Extension.CenterAlign("보유 중인 아이템이 없습니다.", ConsoleColor.Black, ConsoleColor.DarkGray);
                 Console.WriteLine("\n\n");
                 Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
-                PrintBoarder();
+                PrintBorder();
                 input = 0;
                 
             }
@@ -85,7 +85,7 @@ namespace FindingPotato.Inventory
             {
                 Console.SetCursorPosition(9, 20 + InventoryItems.Count);
                 Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
-                PrintBoarder();
+                PrintBorder();
 
                 if (!isManagement)
                 {
@@ -99,19 +99,26 @@ namespace FindingPotato.Inventory
                 else
                 {
                     string[] items = new string[InventoryItems.Count + 2];
+                    bool[] isLimited = new bool[InventoryItems.Count + 3];
 
                     for (int i = 0; i < InventoryItems.Count; i++)
                     {
                         items[i] = PrintItemInfo(InventoryItems[i]);
+                        if (i != 0) isLimited[i] = false;
                     }
 
                     string star = new string('*',  50);
                     string exit = string.Format($"    {star}    나가기    {star}");
-                    items[InventoryItems.Count + 1] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+
                     items[InventoryItems.Count] = "";
+                    items[InventoryItems.Count + 1] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+                    isLimited[InventoryItems.Count] = false;
+                    isLimited[InventoryItems.Count + 1] = true;
+                    isLimited[InventoryItems.Count + 2] = false;
+
                     int x = 15; int y = 17; 
 
-                    input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true);
+                    input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true, isLimited);
                 }
                 
             }
@@ -121,7 +128,7 @@ namespace FindingPotato.Inventory
 
         private static string PrintItemInfo(IItem item)
         {
-            //리스트 출력 내용 하나도 합치기
+            //리스트 출력 내용 하나로 합치기
             string equipMark = (item is IEquipable equipable && equipable.IsEquipped) ? "[E] " : "    ";
             string itemName = item.Name.PadRight(13 - item.Name.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
             string itemType = item.Type.ToString().PadRight(18);
@@ -136,13 +143,8 @@ namespace FindingPotato.Inventory
             return itemInfo;
         }
 
-        private static void WriteAtPosition(string text, int position, int line)
-        {
-            Console.SetCursorPosition(position, line);
-            Console.Write(text);
-        }
 
-        public static void PrintBoarder()
+        public static void PrintBorder()
         {
             Console.SetCursorPosition(10, 1);
             string horizontal = new string('─', 128);
