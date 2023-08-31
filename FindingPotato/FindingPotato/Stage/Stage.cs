@@ -460,6 +460,7 @@ namespace FindingPotato.Stage
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
+                Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"EXP {player.CurrentExp}-> {player.CurrentExp}\n");
                 //Console.WriteLine("0.다음\n");
 
