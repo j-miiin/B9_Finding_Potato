@@ -313,6 +313,24 @@ namespace FindingPotato.UI
             Console.ResetColor();
         }
 
+        public static string FlipImage(string input)
+        {
+            string[] lines = input.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                char[] charArray = lines[i].ToCharArray();
+                Array.Reverse(charArray);
+                lines[i] = new string(charArray);
+                lines[i] = lines[i].Replace('/', 'a').Replace('\\', '/').Replace('a', '\\');
+            }
+
+            string result = string.Join("\r\n", lines);
+
+            return result;
+        }
+
+
         public static void ClearCharacter(int x, int y)
         {
             string clearStr = "";

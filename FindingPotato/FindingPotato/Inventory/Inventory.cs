@@ -69,14 +69,14 @@ namespace FindingPotato.Inventory
         {
             int input;
             Console.SetCursorPosition(0, 14);
-            Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+            Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
             Console.WriteLine("\n");
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
                 Console.WriteLine("\n");
                 Extension.CenterAlign("보유 중인 아이템이 없습니다.", ConsoleColor.Black, ConsoleColor.DarkGray);
                 Console.WriteLine("\n\n");
-                Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+                Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
                 PrintBoarder();
                 input = 0;
                 
@@ -84,7 +84,7 @@ namespace FindingPotato.Inventory
             else
             {
                 Console.SetCursorPosition(9, 19 + InventoryItems.Count);
-                Extension.CenterAlign("----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------         ");
+                Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
                 PrintBoarder();
 
                 if (!isManagement)
@@ -98,17 +98,18 @@ namespace FindingPotato.Inventory
                 }
                 else
                 {
-                    string[] items = new string[InventoryItems.Count + 1];
+                    string[] items = new string[InventoryItems.Count + 2];
 
                     for (int i = 0; i < InventoryItems.Count; i++)
                     {
                         items[i] = PrintItemInfo(InventoryItems[i]);
                     }
 
-                    string star = new string('*',  52);
-                    string exit = string.Format($"{star}    나가기    {star}");
-                    items[InventoryItems.Count] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
-                    int x = 15; int y = 17;
+                    string star = new string('*',  50);
+                    string exit = string.Format($"    {star}    나가기    {star}");
+                    items[InventoryItems.Count + 1] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+                    items[InventoryItems.Count] = "";
+                    int x = 15; int y = 17; 
 
                     input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true);
                 }
