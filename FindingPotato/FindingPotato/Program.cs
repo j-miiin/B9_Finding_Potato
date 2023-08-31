@@ -235,6 +235,7 @@ public class GameManager
         Console.WriteLine($"| {player.Name}      ({player.Type})");
         Console.WriteLine($"| Lv. {player.Level}");
         Console.WriteLine("|");
+        Console.WriteLine($"| 경험치 : {player.CurrentExp}/{player.MaxExp}");
         Console.WriteLine($"| 체  력 : {player.CurrentHealth}/{player.MaxHealth}");
         Console.Write($"| 공격력 : {player.AttackPower}");
         if (player.AddAtk != 0) { Extension.ColorWriteLine($"  + {player.AddAtk}", ConsoleColor.Black, ConsoleColor.Green); }
