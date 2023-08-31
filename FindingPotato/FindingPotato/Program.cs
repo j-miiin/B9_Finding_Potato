@@ -188,36 +188,20 @@ public class GameManager
             }
             else if (input == 2)
             {
-                if (player.CurrentStage >= (int)StageDifficulty.Normal)
-                {
-                    List<Monster> monsters = CreateRandomMonsterLineup(NormalMonsters, 3);
-                    monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
-                    List<IItem> itemRewards = GetStageRewards(input);
-                    stage2 = new StageClass(player, monsters, itemRewards, StageDifficulty.Normal);
-                    stage2.Start();
-                    player.PotionEffectReset();
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("아직 채소 코너는 보이지 않는다.");
-                    Thread.Sleep(500);
-                }
+                List<Monster> monsters = CreateRandomMonsterLineup(NormalMonsters, 3);
+                monsters.AddRange(CreateRandomMonsterLineup(EasyMonsters, 2));
+                List<IItem> itemRewards = GetStageRewards(input);
+                stage2 = new StageClass(player, monsters, itemRewards, StageDifficulty.Normal);
+                stage2.Start();
+                player.PotionEffectReset();
+                break;
             }
             else if (input == 3)
             {
-                if (player.CurrentStage >= (int)StageDifficulty.Hard)
-                {
-                    List<IItem> itemRewards = new List<IItem>();
-                    stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Hard);
-                    stage3.Start();
-                    player.PotionEffectReset();
-                }
-                else
-                {
-                    Console.WriteLine("아직 감자 진열대는 보이지 않는다.");
-                    Thread.Sleep(500);
-                }
+                List<IItem> itemRewards = new List<IItem>();
+                stage3 = new StageClass(player, HardMonsters, itemRewards, StageDifficulty.Hard);
+                stage3.Start();
+                player.PotionEffectReset();
             }
             else break;
         }
