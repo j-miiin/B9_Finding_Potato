@@ -111,7 +111,7 @@ namespace FindingPotato.UI
 
 
 
-        public static void VictoryScene()
+        public static void VictoryScene(VegetableType type)
         {
             string str = @"
 

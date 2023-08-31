@@ -17,14 +17,16 @@ namespace FindingPotato.Skill
         public DoubleSkill()
         {
             SkillType = SkillType.DOUBLE;
-            Description = "더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n";
+            //Description = "더블 스트라이크 - MP 15\n   공격력 * 1.5 로 2명의 적을 랜덤으로 공격합니다.\n";
+            Description = "더블 스트라이크(MP 15) 공격력 * 1.5 로 2명의 적을 랜덤 공격";
         }
 
         public void Use(Player player, List<ICharacter> monsterList)
         {
-            Console.Clear();
+            //Console.Clear();
 
-            Extension.TypeWriting("Battle!!\n");
+            //Extension.TypeWriting("Battle!!\n");
+            Console.SetCursorPosition(30, 32);
             Extension.TypeWriting($"{player.Name}의 더블 스트라이크 공격!");
             Console.WriteLine();
 
@@ -37,6 +39,7 @@ namespace FindingPotato.Skill
             {
                 Monster curMonster = (Monster)monsterList[idx];
                 targetMonsterPrevHP.Add(curMonster.CurrentHealth);
+                Console.SetCursorPosition(30, Console.CursorTop);
                 curMonster.TakeDamage(damage);
             }
             
@@ -46,7 +49,10 @@ namespace FindingPotato.Skill
             // 더블 스트라이크 결과 출력
             foreach (int idx in targetMonsterIdxList)
             {
+                Console.SetCursorPosition(30, Console.CursorTop);
                 Console.WriteLine($"Lv.{monsterList[idx].Level} {monsterList[idx].Name}");
+
+                Console.SetCursorPosition(30, Console.CursorTop);
                 Console.WriteLine($"HP {targetMonsterPrevHP[prevHpIdx++]} -> {monsterList[idx].CurrentHealth}\n");
             }
         }
