@@ -12,8 +12,21 @@ namespace FindingPotato.UI
         public static int GetPlayerActivity(string playerName)
         {
             int x = 5, y = 3;
-
-            UIExtension.PrintSuperMarketFrame(x, y);
+            Console.SetCursorPosition(x, y++);
+            Console.WriteLine("               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("              *                                                                                                             *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("        *                                                                                                                         *"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *"); Console.SetCursorPosition(x, y++);
+            for (int i = 0; i < 25; i++) {
+                Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
+            }
+            Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
 
             x = 60; y = 15;
             Console.SetCursorPosition(x + 5, y++);

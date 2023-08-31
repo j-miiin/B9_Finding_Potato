@@ -19,12 +19,12 @@ namespace FindingPotato.UI
         {
             bool isSelected = false;
             int playerSelect = 1;
-            int selectedItemIdx = 1;
+            int selectedLine = y;
 
             int listLength = (isPossibleToExit) ? selectStrList.Length : selectStrList.Length - 1;
 
             int minLine = y;
-            //int maxLine = y + interval * listLength - 1;
+            int maxLine = y + interval * listLength - 1;
 
             while (!isSelected)
             {
@@ -38,48 +38,47 @@ namespace FindingPotato.UI
                     switch (key)
                     {
                         case ConsoleKey.UpArrow:
-                            selectedItemIdx--;
-                            selectedItemIdx = Math.Max(selectedItemIdx, 0);
+                            selectedLine -= interval;
+                            selectedLine = Math.Max(selectedLine, minLine);
                             break;
                         case ConsoleKey.DownArrow:
-                            selectedItemIdx++;
-                            selectedItemIdx = Math.Min(selectedItemIdx, listLength);
+                            selectedLine += interval;
+                            selectedLine = Math.Min(selectedLine, maxLine);
                             break;
                         case ConsoleKey.Enter:
                             for (int i = 0; i < listLength; i++)
                             {
-                                if (i == (selectedItemIdx - 1))
+                                if (selectedLine == (minLine + interval * i))
                                 {
-                                    playerSelect = selectedItemIdx;
+                                    playerSelect = i + 1;
                                     break;
                                 }
                             }
                             isSelected = true;
                             break;
                         default:
-                            int pivotKeyInt = (int)ConsoleKey.NumPad0;
+                            int pivotKeyInt = 97;
                             int curKeyInt = (int)key;
-                            if (curKeyInt == pivotKeyInt && isPossibleToExit) selectedItemIdx = listLength;
-                            else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= listLength)
+                            if ((curKeyInt >= pivotKeyInt) && curKeyInt - pivotKeyInt + 1 <= listLength)
                             {
-                                selectedItemIdx = curKeyInt - pivotKeyInt;
+                                selectedLine = minLine + interval * (curKeyInt - pivotKeyInt);
                             }
+                            else if (curKeyInt == 96) selectedLine = maxLine - interval + 1;
                             break;
                     }
                 }
 
                 // 위아래 padding에 넣을 공백 길이 계산
                 string emptyStr = "";
-                int maxLength = selectStrList.Max(str => str.Length);
-                string longestStr = selectStrList.First(str => str.Length == maxLength);
-
-                int maxByteLength = GetByteLength(longestStr);
-
-                for (int i = 0; i < maxByteLength; i++) emptyStr += " ";
+                for (int i = 0; i < selectStrList[0].Length; i++)
+                {
+                    if (selectStrList[0][i] >= '\uAC00' && selectStrList[0][i] <= '\uD7AF') emptyStr += "  ";
+                    else emptyStr += " ";
+                }
 
                 for (int i = 0; i < listLength; i++)
                 {
-                    if (i == (selectedItemIdx - 1)) Extension.SetSelectedBackground(true);
+                    if (i == (selectedLine - minLine) / interval) Extension.SetSelectedBackground(true);
                     else Extension.SetSelectedBackground(false);
 
                     if (interval == 4)
@@ -88,9 +87,7 @@ namespace FindingPotato.UI
                         Console.WriteLine(emptyStr);
                     }
                     Console.SetCursorPosition(x, y++);
-                    string curStr = selectStrList[i];
-                    while (GetByteLength(curStr) < maxByteLength) curStr += " ";
-                    Console.WriteLine(curStr);
+                    Console.WriteLine(selectStrList[i]);
                     if (interval == 4)
                     {
                         Console.SetCursorPosition(x, y++);
@@ -102,7 +99,7 @@ namespace FindingPotato.UI
             Console.ResetColor();
             Console.CursorVisible = true;
 
-            if (isPossibleToExit && playerSelect == listLength) playerSelect = 0;
+            if (playerSelect == selectStrList.Length) playerSelect = 0;
             return playerSelect;
         }
 
@@ -143,10 +140,11 @@ namespace FindingPotato.UI
             ShakeCharacter(character.Image, posX, posY);
             Thread.Sleep(50);
             DrawCharacter(character.Image, posX, posY);
-        
-            Console.ResetColor();
 
-        private static int GetByteLength(string str)
+            Console.ResetColor();
+        }
+
+        public static int GetByteLength(string str)
         {
             int length = 0;
             for (int i = 0; i < str.Length; i++)
@@ -160,14 +158,14 @@ namespace FindingPotato.UI
         public static void PrintSuperMarketFrame(int x, int y)
         {
             string supermarketFrameStr = "               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n"
-                                  + "              *                                                                                                             *\r\n"
-                                  + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
-                                  + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
-                                  + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
-                                  + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
-                                  + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
-                                  + "        *                                                                                                                         *\r\n"
-                                  + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
+                                    + "              *                                                                                                             *\r\n"
+                                    + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
+                                    + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
+                                    + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
+                                    + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
+                                    + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
+                                    + "        *                                                                                                                         *\r\n"
+                                    + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
 
             string[] supermarketFrameStrArr = supermarketFrameStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             Console.SetCursorPosition(x, y);
@@ -185,5 +183,6 @@ namespace FindingPotato.UI
             }
 
         }
-    }
+        
+    } 
 }

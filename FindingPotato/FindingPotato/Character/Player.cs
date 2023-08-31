@@ -68,7 +68,7 @@ namespace FindingPotato.Character
                 Defense = 10;
                 AttackPower = 50;
                 MaxMP = 50;
-                Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\   /\r\n \r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
+                Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\  /\r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
             }
             else if (type == VegetableType.고구마)
             {
@@ -76,7 +76,7 @@ namespace FindingPotato.Character
                 Defense = 20;
                 AttackPower = 40;
                 MaxMP = 20;
-                Image = "   \r\n           ______  \r\n          /      \\\r\n         |        |\r\n         |        |\r\n       \\ |  ⊙ ⊙ | / \r\n       \\|    ^    |/\r\n          |    V    |\r\n           \\_____/\r\n \r\n              / \\\r\n             /   \\";
+                Image = "   \r\n           ______  \r\n          /      \\\r\n         |        |\r\n       \\ |  ⊙ ⊙ | / \r\n        \\|    ^   |/\r\n         |    V   |\r\n          \\______/\r\n             / \\\r\n            /   \\";
             }
             else // 당근
             {
@@ -84,7 +84,7 @@ namespace FindingPotato.Character
                 Defense = 5;
                 AttackPower = 60;
                 MaxMP = 30;
-                Image = "       \\ | /\r\n       _\\|/__  \r\n      /        \\\r\n   \\ |  ⊙ ⊙ | / \r\n    \\|     ^    |/\r\n      \\   V   / \r\n        \\     /\r\n         \\   / \r\n       / \\ / \\\r\n      /        \\";
+                Image = "       \\ | /\r\n       _\\|/__  \r\n      /      \\\r\n   \\ │  ⊙ ⊙│ / \r\n    \\│    ^  │/\r\n      \\   V  / \r\n       \\    /\r\n        \\  / \r\n       / \\/ \\\r\n      /      \\";
             }
 
             CurrentHealth = MaxHealth;

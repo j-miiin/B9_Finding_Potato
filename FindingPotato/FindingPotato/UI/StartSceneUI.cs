@@ -13,34 +13,26 @@ namespace FindingPotato.UI
         {
             int x = 25;
             int y = 5;
-
-            string gameTitleStr = "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\r\n"
-                + " \r\n"
-                + "■■■■   ■   ■■      ■   ■■■      ■   ■■      ■      ■■■■\r\n"
-                + "■         ■   ■ ■     ■   ■   ■     ■   ■ ■     ■     ■\r\n"
-                + "■■■■   ■   ■  ■    ■   ■    ■    ■   ■  ■    ■    ■\r\n"
-                + "■         ■   ■   ■   ■   ■     ■   ■   ■   ■   ■   ■      ■■\r\n"
-                + "■         ■   ■    ■  ■   ■    ■    ■   ■    ■  ■    ■        ■\r\n"
-                + "■         ■   ■     ■ ■   ■   ■     ■   ■     ■ ■     ■      ■\r\n"
-                + "■         ■   ■      ■■   ■■■      ■   ■      ■■       ■■■\r\n"
-                + " \r\n"
-                + "                  ■■■■       ■■■     ■■■■■       ■       ■■■■■     ■■■\r\n"
-                + "                  ■      ■   ■      ■       ■          ■■          ■       ■      ■\r\n"
-                + "                  ■      ■   ■      ■       ■         ■  ■         ■       ■      ■\r\n"
-                + "                  ■■■■     ■      ■       ■        ■ ■ ■        ■       ■      ■\r\n"
-                + "                  ■           ■      ■       ■       ■      ■       ■       ■      ■\r\n"
-                + "                  ■           ■      ■       ■      ■        ■      ■       ■      ■\r\n"
-                + "                  ■             ■■■         ■     ■          ■     ■         ■■■\r\n"
-                + " \r\n"
-                + "                                               〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\r\n";
-
-            string[] gameTitleStrArr = gameTitleStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-            Console.SetCursorPosition(x, y);
-            foreach (string str in gameTitleStrArr)
-            {
-                Console.SetCursorPosition(x, Console.CursorTop);
-                Console.WriteLine(str);
-            }
+            Console.SetCursorPosition(x - 5, y++);
+            Console.WriteLine("〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine(); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■■■■   ■   ■■      ■   ■■■      ■   ■■      ■      ■■■■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■         ■   ■ ■     ■   ■   ■     ■   ■ ■     ■     ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■■■■   ■   ■  ■    ■   ■    ■    ■   ■  ■    ■    ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■         ■   ■   ■   ■   ■     ■   ■   ■   ■   ■   ■      ■■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■         ■   ■    ■  ■   ■    ■    ■   ■    ■  ■    ■        ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■         ■   ■     ■ ■   ■   ■     ■   ■     ■ ■     ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("■         ■   ■      ■■   ■■■      ■   ■      ■■       ■■■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine(); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■■■■       ■■■     ■■■■■       ■       ■■■■■     ■■■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■      ■   ■      ■       ■          ■■          ■       ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■      ■   ■      ■       ■         ■  ■         ■       ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■■■■     ■      ■       ■        ■ ■ ■        ■       ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■           ■      ■       ■       ■      ■       ■       ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■           ■      ■       ■      ■        ■      ■       ■      ■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                  ■             ■■■         ■     ■          ■     ■         ■■■"); Console.SetCursorPosition(x, y++);
+            Console.WriteLine(); Console.SetCursorPosition(x, y++);
+            Console.WriteLine("                                               〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓"); Console.SetCursorPosition(x, y++);
         }
 
         public static string GetUserName()
