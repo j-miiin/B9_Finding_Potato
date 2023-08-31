@@ -13,53 +13,69 @@ namespace FindingPotato.UI
         {
             int x = 25;
             int y = 5;
-            Console.SetCursorPosition(x - 5, y++);
-            Console.WriteLine("〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine(); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■■■■   ■   ■■      ■   ■■■      ■   ■■      ■      ■■■■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■         ■   ■ ■     ■   ■   ■     ■   ■ ■     ■     ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■■■■   ■   ■  ■    ■   ■    ■    ■   ■  ■    ■    ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■         ■   ■   ■   ■   ■     ■   ■   ■   ■   ■   ■      ■■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■         ■   ■    ■  ■   ■    ■    ■   ■    ■  ■    ■        ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■         ■   ■     ■ ■   ■   ■     ■   ■     ■ ■     ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("■         ■   ■      ■■   ■■■      ■   ■      ■■       ■■■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine(); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■■■■       ■■■     ■■■■■       ■       ■■■■■     ■■■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■      ■   ■      ■       ■          ■■          ■       ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■      ■   ■      ■       ■         ■  ■         ■       ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■■■■     ■      ■       ■        ■ ■ ■        ■       ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■           ■      ■       ■       ■      ■       ■       ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■           ■      ■       ■      ■        ■      ■       ■      ■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                  ■             ■■■         ■     ■          ■     ■         ■■■"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine(); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("                                               〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓"); Console.SetCursorPosition(x, y++);
+
+            string gameTitleStr = "〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\r\n"
+                                + " \r\n"
+                                + "■■■■   ■   ■■      ■   ■■■      ■   ■■      ■      ■■■■\r\n"
+                                + "■         ■   ■ ■     ■   ■   ■     ■   ■ ■     ■     ■\r\n"
+                                + "■■■■   ■   ■  ■    ■   ■    ■    ■   ■  ■    ■    ■\r\n"
+                                + "■         ■   ■   ■   ■   ■     ■   ■   ■   ■   ■   ■      ■■\r\n"
+                                + "■         ■   ■    ■  ■   ■    ■    ■   ■    ■  ■    ■        ■\r\n"
+                                + "■         ■   ■     ■ ■   ■   ■     ■   ■     ■ ■     ■      ■\r\n"
+                                + "■         ■   ■      ■■   ■■■      ■   ■      ■■       ■■■\r\n"
+                                + " \r\n"
+                                + "                  ■■■■       ■■■     ■■■■■       ■       ■■■■■     ■■■\r\n"
+                                + "                  ■      ■   ■      ■       ■          ■■          ■       ■      ■\r\n"
+                                + "                  ■      ■   ■      ■       ■         ■  ■         ■       ■      ■\r\n"
+                                + "                  ■■■■     ■      ■       ■        ■ ■ ■        ■       ■      ■\r\n"
+                                + "                  ■           ■      ■       ■       ■      ■       ■       ■      ■\r\n"
+                                + "                  ■           ■      ■       ■      ■        ■      ■       ■      ■\r\n"
+                                + "                  ■             ■■■         ■     ■          ■     ■         ■■■\r\n"
+                                + " \r\n"
+                                + "                                               〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓〓\r\n";
+
+            string[] gameTitleStrArr = gameTitleStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Console.SetCursorPosition(x, y);
+            foreach (string str in gameTitleStrArr)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(str);
+            }
         }
 
         public static string GetUserName()
         {
             int x = 50;
             int y = 30;
-            Console.SetCursorPosition(x, y++);
-            Console.WriteLine("┌────────────────────────────────────────────┐"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│  Enter Your Name >>                        │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("└────────────────────────────────────────────┘"); Console.SetCursorPosition(x, y++);
 
-            y = 30;
+            string inputUserNameBoxStr = "┌────────────────────────────────────────────┐\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│  Enter Your Name >>                        │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "└────────────────────────────────────────────┘\r\n";
+
+            string[] inputUserNameBoxStrArr = inputUserNameBoxStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Console.SetCursorPosition(x, y);
+            foreach (string str in inputUserNameBoxStrArr)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(str);
+            }
+
+            x = 62; y = 35;
             string playerName = "";
             while (true)
             {
-                Console.SetCursorPosition(x + 18, y + 5);
+                Console.SetCursorPosition(x + 6, y);
                 playerName = Console.ReadLine();
                 if (playerName.Length == 0)
                 {
-                    Console.SetCursorPosition(x + 12, y + 6);
+                    Console.SetCursorPosition(x, y + 1);
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("닉네임을 입력해주세요!");
                     Console.ResetColor();
@@ -73,17 +89,25 @@ namespace FindingPotato.UI
         {
             int x = 50;
             int y = 30;
-            Console.SetCursorPosition(x, y++);
-            Console.WriteLine("┌────────────────────────────────────────────┐"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│          ★ 직업을 선택하세요 ★           │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("│                                            │"); Console.SetCursorPosition(x, y++);
-            Console.WriteLine("└────────────────────────────────────────────┘"); Console.SetCursorPosition(x, y++);
+
+            string inputPlayerTypeBoxStr = "┌────────────────────────────────────────────┐\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│          ★ 직업을 선택하세요 ★           │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "│                                            │\r\n"
+                                       + "└────────────────────────────────────────────┘\r\n";
+
+            string[] inputPlayerTypeBoxStrArr = inputPlayerTypeBoxStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Console.SetCursorPosition(x, y);
+            foreach (string str in inputPlayerTypeBoxStrArr)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(str);
+            }
 
             string[] playerTypeStrList = { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 ", "0" };
 

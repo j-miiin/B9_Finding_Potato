@@ -9,7 +9,11 @@ namespace FindingPotato.Character.Monster
     internal class Customer : Monster
     {
         static string image = "\r\n⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀\r\n⠀⠀⠀⠑⡀⠀⠀⠀오늘 저녁은 감자전이다    ⠀⡔⠁⠀⠀⠀\r\n⠀⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⠀⠀⠀⠘⣀⠄⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⢀⣴⠶⠿⠟⠛⠻⠛⠳⠶⣄⡀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⣠⣶⣿⣿⣿⣶⣖⠶⢶⣤⡀⠀⠈⢿⣆⠀⠀⠀⠀⠀\r\n⢀⣴⣿⠋⠉⠉⠀⠀⠈⠉⠛⠿⢿⣷⡀⠀⠈⢷⡀⠀⠀⠀\r\n⡾⠉⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢦⡀⠘⣷⡀⠀⠀\r\n⣷⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡀⢸⡇⠀⠀\r\n⢻⠠⣤⢤⠤⣤⣤⣤⡤⠤⣤⢤⠤⣤⣤⣤⡤⣇⢸⣇⠀⠀\r\n⢈⣧⠉⠪⣒⣝⣿⡿⠃⠀⠛⢮⣒⣝⡿⠟⠁⣻⠿⣷⠀\r\n⢸⡵⣿  ⠉⠉⠉⠁⠀⠀⠀⠈⠉⠉⠁⠀⠀⢻⣇⡟⠀\r\n⠘⢧⣿⡀      ⠀⢧⣤⣤⣶⠀⠀⠀⠀⠀   ⣽⠁⠀\r\n⠀⠈⢿⣧⠀⠀⠀⠀⢀⣄⣠⡀          ⢠⡟⠁⠀⠀\r\n⠀⠀⠀⠘⣇⠀  ⢲⣭⣉⣉⣭⡖⠀⠀   ⣼⡅\r\n⠀⠀⠀⠀⠹⣦⡀  ⠉⠉⠉⠉⠀⠀⠀⣠⠏⢻⣤⡀⠀\r\n⠀⠀⠀⠀⠀⢹⡷⢦⣄⣀⣀⣀⣀⣤⣴⡾⠃⠀⠘⡿⠙⢶\r\n⠀⠀⠀⠀⠀⢨⡷⣤⡀⠈⠉⠉⢁⡴⠋⠀⠀⠀⣸⠃⠀";
-        public Customer(string name) : base(name, 300, 70, 5, image) { }
+
+        static string desc = "오늘 저녁은 감자전이다";
+        static ConsoleColor color = ConsoleColor.Yellow;
+
+        public Customer(string name) : base(name, 300, 70, 5, image, desc, color) { }
 
         public override void Avoid()
         {
@@ -55,6 +59,16 @@ namespace FindingPotato.Character.Monster
             }
 
             return message;
+        }
+
+        public override void PrintMonsterImage(int x, int y)
+        {
+            base.PrintMonsterImage(x, y);
+            y += 15;
+            Console.SetCursorPosition(x, y++);
+            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(desc);
         }
     }
 }
