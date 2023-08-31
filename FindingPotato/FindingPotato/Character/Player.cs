@@ -23,7 +23,7 @@ namespace FindingPotato.Character
         public int Level { get; set; }
         public int MaxHealth { get; set; }  // Player가 가질 수 있는 최대 체력 값
         public int CurrentHealth    // Player 현재 체력 값
-        { 
+        {
             get => currentHealth;
             set => currentHealth = Math.Max(0, Math.Min(value, MaxHealth));
         }
@@ -41,6 +41,8 @@ namespace FindingPotato.Character
         }
 
         public bool IsDead => CurrentHealth <= 0;
+
+        public string Image { get; set; }
 
         public int Attack => new Random().Next(AttackPower-5, AttackPower+5); 
         // 공격력은 랜덤
@@ -66,6 +68,7 @@ namespace FindingPotato.Character
                 Defense = 10;
                 AttackPower = 50;
                 MaxMP = 50;
+                Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\   /\r\n \r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
             }
             else if (type == VegetableType.고구마)
             {
@@ -73,6 +76,7 @@ namespace FindingPotato.Character
                 Defense = 20;
                 AttackPower = 40;
                 MaxMP = 20;
+                Image = "   \r\n           ______  \r\n          /      \\\r\n         |        |\r\n         |        |\r\n       \\ |  ⊙ ⊙ | / \r\n       \\|    ^    |/\r\n          |    V    |\r\n           \\_____/\r\n \r\n              / \\\r\n             /   \\";
             }
             else // 당근
             {
@@ -80,6 +84,7 @@ namespace FindingPotato.Character
                 Defense = 5;
                 AttackPower = 60;
                 MaxMP = 30;
+                Image = "       \\ | /\r\n       _\\|/__  \r\n      /        \\\r\n   \\ |  ⊙ ⊙ | / \r\n    \\|     ^    |/\r\n      \\   V   / \r\n        \\     /\r\n         \\   / \r\n       / \\ / \\\r\n      /        \\";
             }
 
             CurrentHealth = MaxHealth;

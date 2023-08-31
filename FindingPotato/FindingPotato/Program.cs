@@ -276,9 +276,21 @@ public class GameManager
         {
             Console.Clear();
 
-            InventoryClass.PrintTitle(true);
-            player.PlayerInventory.PrintItemList(true);
-            player.PlayerInventory.ShowOptions(true);
+            UIExtension.DrawCharacter(durian.Image, 10, 10);
+            UIExtension.DrawCharacter(onion.Image, 28, 10);
+            UIExtension.DrawCharacter(beet.Image, 46, 10);
+            UIExtension.DrawCharacter(banana.Image, 64, 10);
+            UIExtension.DrawCharacter(paprika.Image, 82, 10);
+            UIExtension.DrawCharacter(rambutan.Image, 100, 10);
+            UIExtension.DrawCharacter(watermelon.Image, 118, 10);
+            UIExtension.DrawCharacter(player.Image, 50, 23);
+
+
+
+
+
+
+
 
             int input = Extension.GetInput(0, player.PlayerInventory.InventoryItems.Count);
 

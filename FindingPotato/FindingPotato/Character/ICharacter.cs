@@ -15,6 +15,8 @@ namespace FindingPotato.Character
         public int AttackPower { get; set; }
         int Level { get; set; }
         bool IsDead { get; }
+
+        public string Image { get; set; }
         void TakeDamage(int damage);
     }
 }
