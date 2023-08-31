@@ -109,7 +109,7 @@ namespace FindingPotato.UI
             UIExtension.PrintFloor(33); 
 
 
-            Console.SetCursorPosition(65, Console.CursorTop + 3);
+            Console.SetCursorPosition(63, Console.CursorTop + 3);
             Console.WriteLine("아무키나 눌러서 종료...");
             Console.ReadKey();
             Environment.Exit(0);
