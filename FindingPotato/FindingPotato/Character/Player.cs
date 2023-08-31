@@ -64,7 +64,7 @@ namespace FindingPotato.Character
 
             if (type == VegetableType.감자)
             {
-                MaxHealth = 120;
+                MaxHealth = 1;
                 Defense = 10;
                 AttackPower = 50;
                 MaxMP = 50;

@@ -17,9 +17,12 @@ namespace FindingPotato
         {
             Console.WindowHeight = 50;
             Console.WindowWidth = 150;
-            GameManager GM = new GameManager();
-            GM.InitialCharacter();
-            GM.GameMain();
+
+            Player player = new Player("dd",VegetableType.고구마);
+            EndingScene.VictoryScene(player);
+            //GameManager GM = new GameManager();
+            //GM.InitialCharacter();
+            //GM.GameMain();
         }
     }
 }

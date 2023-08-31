@@ -10,46 +10,7 @@ namespace FindingPotato.UI
 {
     internal class EndingScene
     {
-        static string victoryCarrot = @"
-
-                                             \ | /
-                                             _\|/__                    
-                                            /      \
-                                         \ |  ⊙ ⊙ | /           
-                                          \|    ^   |/
-                                            \   V   / 
-                                             \     /
-                                              \   / 
-                                            /  \ / \
-                                           /        \ ";
-
-
-
-        static string victoryPotato = @"
-
-                                         ____
-                                       /      \                   
-                                    \ |  ⊙ ⊙ | /
-                                     \|    ^   |/
-                                      \    V   /                 
-                                       \______/                                                                       
-                                          / \
-                                         /   \";
-
-        static string victorySweetPotato = @"   
-
-      ____                    
-    /      \
-   |        |
- \ |   O O  | /           
-  \|    ∆   |/
-   |    V   |
-    \       / 
-     \_____/
-       / \
-      /   \
-";
-
+       
         static string deadPotatoStr = @"
 
                                                                       ______
@@ -57,7 +18,7 @@ namespace FindingPotato.UI
                                                                     |  ⊙ ⊙ | 
                                                                     |    ^   |
                                                                    /\   --   /\                 
-                                                                  /  \______/  \                                                                  
+                                                                  /  \______/  \                                                              
                                                                         / \
                                                                        /   \";
 
@@ -88,6 +49,8 @@ namespace FindingPotato.UI
                                                                         /  \ / \
                                                                        /        \ ";
 
+        static string Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\  /\r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
+
         static string[] potatoRecipe = {"<감자전 조리법>",
                                         "1.감자를 씻어 껍질을 벗겨 준 후, 깍둑썰기로 썰어 믹서기에 넣어줍니다" ,
                                         "2.물을 조금 넣고 갈아준 감자는 채반에 15분정도 두어 전분과 물을 빼줍니다",
@@ -111,34 +74,40 @@ namespace FindingPotato.UI
 
 
 
-        public static void VictoryScene(VegetableType type)
+        public static void VictoryScene(Player player)
         {
             string str = @"
 
-        ====================
 
-         ■■■■■■■ ■          ■  ■■■■■■■   ■■■■■■■  ■■      ■  ■■■■■
-               ■       ■          ■  ■               ■              ■ ■     ■  ■        ■
-               ■       ■          ■  ■               ■              ■  ■    ■  ■          ■
-               ■       ■■■■■■■  ■■■■■■■   ■■■■■■■  ■   ■   ■  ■          ■
-               ■       ■          ■  ■               ■              ■    ■  ■  ■          ■
-               ■       ■          ■  ■               ■              ■     ■ ■  ■        ■
-               ■       ■          ■  ■■■■■■■   ■■■■■■■  ■      ■■  ■■■■■
 
-                                                                                    ====================
+ 
+                             〓〓〓〓〓〓〓〓〓〓
 
-                                           내 친구 감자를 구했다!!
+                             ■■■■■■■ ■          ■  ■■■■■■■   ■■■■■■■  ■■      ■  ■■■■■
+                                   ■       ■          ■  ■               ■              ■ ■     ■  ■        ■
+                                   ■       ■          ■  ■               ■              ■  ■    ■  ■          ■
+                                   ■       ■■■■■■■  ■■■■■■■   ■■■■■■■  ■   ■   ■  ■          ■
+                                   ■       ■          ■  ■               ■              ■    ■  ■  ■          ■
+                                   ■       ■          ■  ■               ■              ■     ■ ■  ■        ■
+                                   ■       ■          ■  ■■■■■■■   ■■■■■■■  ■      ■■  ■■■■■
+
+                                                                                                       〓〓〓〓〓〓〓〓〓〓
+
+
+
+                                                          내 친구 감자를 구했다!!
 ";
 
 
             Console.WriteLine(str);
-            
-            Console.WriteLine(victoryPotato);
+
+            UIExtension.DrawCharacter(player.Image, 48, 23);
+            UIExtension.DrawCharacter(Image, 71, 23);
 
             Console.ReadKey(); 
         }
 
-        public static void DeadScene(VegetableType type)
+        public static void DeadScene(Player player)
         {
             string str = @"
 
@@ -159,7 +128,7 @@ namespace FindingPotato.UI
 ";
 
             Console.WriteLine(str);
-            switch(type)
+            switch(player.Type)
             {
                 case VegetableType.감자:
                     for(int i = 0; i<potatoRecipe.Length; i++)
