@@ -81,7 +81,15 @@ namespace FindingPotato.UI
             Console.SetCursorPosition(47, Console.CursorTop + 1);
             Extension.ColorWriteLine($" Lv. {player.Level}");
 
-            Console.SetCursorPosition(33, Console.CursorTop + 4);
+
+            Console.SetCursorPosition(46, Console.CursorTop + 1);
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+            Console.Write("( ");
+            Console.Write(player.CurrentExp.ToString());
+            Console.WriteLine($" / {player.MaxExp} )");
+            Console.ResetColor();
+
+            Console.SetCursorPosition(33, Console.CursorTop + 2);
             Console.Write(" 체  력 : ");
             if(player.CurrentHealth >= player.CurrentHealth / 2) { Console.ForegroundColor = ConsoleColor.Green; }
             else { Console.ForegroundColor= ConsoleColor.Red; }
