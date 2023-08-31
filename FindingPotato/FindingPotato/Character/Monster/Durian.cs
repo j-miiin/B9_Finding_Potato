@@ -10,7 +10,7 @@ namespace FindingPotato.Character.Monster
     {
         static string image = "   \r\n  \r\n  \r\n  \r\n       ___\r\n    ____|____\r\n   / \\/\\ /\\/ \\ \r\n  │  ㅡωㅡ  │ \r\n  /\\/ \\ /\\/ \\/\\   \r\n /  \\/_\\_/_\\/  \\  \r\n       / \\\r\n";
 
-        static string desc = "아이디어 고갈";
+        static string desc = "우리 두리안~";
         static ConsoleColor color = ConsoleColor.DarkGreen;
 
         public Durian(string name) : base(name, 50,20, 1, image, desc, color) { }

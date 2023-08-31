@@ -15,11 +15,11 @@ namespace FindingPotato.UI
 
             UIExtension.DrawCharacter(player.Image, 99, 24);
 
-            PrintCloud();
+            UIExtension.PrintCloud();
             PrintTitle(player);
             PrintStatusBox();
             StatusContents(player);
-            PrintFloor();
+            UIExtension.PrintFloor(33);
 
             string[] option = { "    0.  나가기      " };
             UIExtension.GetPlayerSelectFromUI(63, 38, 4, option, true);
@@ -113,31 +113,6 @@ namespace FindingPotato.UI
             Console.Write(player.CurrentMP);
             Console.ResetColor();
             Console.Write($" / {player.MaxMP}");
-
-        }
-
-        static void PrintFloor()
-        {
-            string floor = new string('_', 150);
-
-            Console.SetCursorPosition(0, 33);
-            Console.WriteLine(floor);
-            Console.SetCursorPosition(22, 33);
-            Console.WriteLine("\\|/");
-            Console.SetCursorPosition(38, 33);
-            Console.WriteLine("\\|/");
-            Console.SetCursorPosition(88, 33);
-            Console.WriteLine("\\|/");
-        }
-
-        static void PrintCloud()
-        {
-            string cloud = ("                  ■■■                \r\n                ■      ■              \r\n              ■          ■■          \r\n            ■              ▒▒■        \r\n        ■■▒▒                ■        \r\n  ■■■      ▒▒            ▒▒▒▒■■    \r\n■▒▒            ▒▒        ▒▒      ▒▒■  \r\n■▒▒▒▒        ▒▒▒▒▒▒▒▒▒▒▒▒          ▒▒■\r\n  ■▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒■\r\n    ■■■■▒■■■■■■■■■■■■  \r\n");
-
-            Console.ForegroundColor= ConsoleColor.Cyan;
-            UIExtension.DrawCharacter(cloud, 100, 3);
-            UIExtension.DrawCharacter(cloud, 7, 20);
-            Console.ResetColor();
 
         }
     }

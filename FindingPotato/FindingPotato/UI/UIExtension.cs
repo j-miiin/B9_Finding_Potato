@@ -318,7 +318,7 @@ namespace FindingPotato.UI
             string clearStr = "";
             for (int i = 0; i < 45; i++) clearStr += " ";
             Console.SetCursorPosition(x - 10, y);
-            for (int i = y; i < y + 30; i++)
+            for (int i = y; i < y + 20; i++)
             {
                 Console.SetCursorPosition(x - 10, Console.CursorTop);
                 Console.WriteLine(clearStr);
@@ -344,14 +344,17 @@ namespace FindingPotato.UI
                 Console.SetCursorPosition(x, Console.CursorTop);
                 Console.WriteLine(str);
             }
+            x += 16;
             y += supermarketFrameStrArr.Length;
             Console.SetCursorPosition(x, y);
             for (int i = 0; i <= 30; i++)
             {
                 Console.SetCursorPosition(x, Console.CursorTop);
-                Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
+                Console.WriteLine("|                                                                                                   |"); Console.SetCursorPosition(x, y++);
             }
-
+            x -= 16; y -= 2;
+            Console.SetCursorPosition(x, y);
+            PrintFloor(y);
         }
 
         public static void SetSelectedBackground(bool isSelected)
@@ -367,6 +370,28 @@ namespace FindingPotato.UI
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
         }
+        public static void PrintFloor(int y)
+        {
+            string floor = new string('_', 150);
 
+            Console.SetCursorPosition(0, y);
+            Console.WriteLine(floor);
+            Console.SetCursorPosition(22, y);
+            Console.WriteLine("\\|/");
+            Console.SetCursorPosition(38, y);
+            Console.WriteLine("\\|/");
+            Console.SetCursorPosition(88, y);
+            Console.WriteLine("\\|/");
+        }
+
+        public static void PrintCloud()
+        {
+            string cloud = ("                  ■■■                \r\n                ■      ■              \r\n              ■          ■■          \r\n            ■              ▒▒■        \r\n        ■■▒▒                ■        \r\n  ■■■      ▒▒            ▒▒▒▒■■    \r\n■▒▒            ▒▒        ▒▒      ▒▒■  \r\n■▒▒▒▒        ▒▒▒▒▒▒▒▒▒▒▒▒          ▒▒■\r\n  ■▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒■\r\n    ■■■■▒■■■■■■■■■■■■  \r\n");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            DrawCharacter(cloud, 100, 3);
+            DrawCharacter(cloud, 7, 20);
+            Console.ResetColor();
+        }
     } 
 }
