@@ -238,7 +238,7 @@ public class GameManager
             int input = player.PlayerInventory.PrintItemList(true);
 
             if (input == 0) { break; }
-            else
+            else if (input != player.PlayerInventory.InventoryItems.Count + 1) 
             {
                 player.PlayerInventory.InventoryItems[input - 1].Use(player);
                 ItemManagement();
