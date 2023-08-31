@@ -91,7 +91,7 @@ namespace FindingPotato.UI
 
             Console.SetCursorPosition(33, Console.CursorTop + 2);
             Console.Write(" 체  력 : ");
-            if(player.CurrentHealth >= player.CurrentHealth / 2) { Console.ForegroundColor = ConsoleColor.Green; }
+            if(player.CurrentHealth >= player.MaxHealth / 2) { Console.ForegroundColor = ConsoleColor.Green; }
             else { Console.ForegroundColor= ConsoleColor.Red; }
             Console.Write(player.CurrentHealth.ToString());
             Console.ResetColor();
