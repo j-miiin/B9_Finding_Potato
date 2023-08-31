@@ -187,11 +187,7 @@ public class GameManager
                     player.PotionEffectReset();
                     break;
                 }
-                else
-                {
-                    Console.WriteLine("아직 채소 코너는 보이지 않는다.");
-                    Thread.Sleep(500);
-                }
+
             }
             else if (input == 3)
             {
