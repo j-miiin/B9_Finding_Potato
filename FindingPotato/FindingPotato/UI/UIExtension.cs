@@ -143,7 +143,7 @@ namespace FindingPotato.UI
                         break;
                     case ConsoleKey.DownArrow:
                         do selectedNum++;
-                        while (isLimited[selectedNum]);
+                        while (selectedNum < isLimited.Length && isLimited[selectedNum]);
                         selectedNum = Math.Min(selectedNum, maxIdx);
                         break;
                     case ConsoleKey.Enter:
@@ -153,7 +153,8 @@ namespace FindingPotato.UI
                         int pivotKeyInt = (int)ConsoleKey.NumPad0;
                         int curKeyInt = (int)key;
                         if (curKeyInt == pivotKeyInt && isPossibleToExit) selectedNum = maxIdx;
-                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx)
+                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx 
+                            && !isLimited[curKeyInt - pivotKeyInt])
                         {
                             selectedNum = curKeyInt - pivotKeyInt;
                         }
