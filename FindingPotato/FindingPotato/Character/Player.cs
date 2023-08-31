@@ -50,6 +50,8 @@ namespace FindingPotato.Character
 
             }
         }
+
+        public int TotalExp { get; set; } // 스테이지에서 획득한 경험치의 합
         public int MaxHealth { get; set; }  // Player가 가질 수 있는 최대 체력 값
         public int CurrentHealth    // Player 현재 체력 값
         {
@@ -170,10 +172,13 @@ namespace FindingPotato.Character
         // 경험치 관리 메서드
         public void ExpUpdate(int totalExp)
         {
-            CurrentExp += totalExp;
+            TotalExp += totalExp; // 스테이지 클리어 Before Exp적용 용도 TotalExp 값 저장
+            CurrentExp += totalExp; // 현재 경험치 변경 용도
+
+            LevelUpdate();
         }
 
-        // 레벨업 관리 메서드
+        // 레벨업 관리 메서드 -- 기능 구현 가능하도록 추가 필요
         public void LevelUpdate()
         {
             if (CurrentExp >= 0 && CurrentExp < 10)

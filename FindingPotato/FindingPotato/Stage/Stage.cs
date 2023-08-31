@@ -460,7 +460,8 @@ namespace FindingPotato.Stage
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
-                Console.WriteLine($"EXP {player.CurrentExp}-> {player.CurrentExp}\n");
+                Console.SetCursorPosition(48, Console.CursorTop);
+                Console.WriteLine($"EXP {player.CurrentExp-player.TotalExp}-> {player.CurrentExp}\n");
                 //Console.WriteLine("0.다음\n");
 
                 string[] next = { "0.다음" };
@@ -528,6 +529,12 @@ namespace FindingPotato.Stage
             Environment.Exit(0);
         }
 
+        // 경험치 반영 전 후 출력을 도와줄 메서드
+        void BeforeExp()
+        {
+
+        }
+   
         // 경험치 계산, 몬스터 레벨 * 몬스터 마리수(1), 레벨값만 추가
         void CalculationExp(List<Monster> monsters)
         {

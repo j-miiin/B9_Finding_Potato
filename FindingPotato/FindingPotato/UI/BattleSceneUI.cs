@@ -36,13 +36,13 @@ namespace FindingPotato.UI
         {
             string[] box = {
                          "◈─────────────────────────────────────────────────────◈" ,
-                         "│                                                     │" ,
+                         "│                                                      │" ,
                          "◈─────────────────────────────────────────────────────◈" };
 
             
             Console.SetCursorPosition(43, 4);
             Console.WriteLine(box[0]);
-            for(int i=0; i<20; i++)
+            for(int i=0; i<22; i++)
             {
                 Console.SetCursorPosition(43, Console.CursorTop);
                 Console.WriteLine(box[1]);

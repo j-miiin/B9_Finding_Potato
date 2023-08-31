@@ -134,7 +134,7 @@ namespace FindingPotato.UI
             int minLine = y;
 
             int prevSelect = 0;
-            int prevIdx = 0;
+            int[] prevIdxList = new int[listLength];
 
             while (!isSelected)
             {
@@ -148,7 +148,7 @@ namespace FindingPotato.UI
                     if (selectedNum != listLength)
                     {
                         int monsterX = 85; int monsterY = 20;
-                        prevIdx = DrawRandomCharacterAndDesc(imageList[selectedNum - 1], monsterX, monsterY, prevIdx);
+                        prevIdxList[selectedNum - 1] = DrawRandomCharacterAndDesc(imageList[selectedNum - 1], monsterX, monsterY, prevIdxList[selectedNum - 1]);
                     }
                 }
 
