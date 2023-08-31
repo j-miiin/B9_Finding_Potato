@@ -46,6 +46,7 @@ namespace FindingPotato.Character.Monster
 
         public virtual void Avoid()
         {
+            Console.SetCursorPosition(30, Console.CursorTop);
             Console.WriteLine($"Lv.{Level} {Name} 을(를) 공격했지만 아무 일도 일어나지 않았습니다."); 
         }
 
