@@ -36,10 +36,15 @@ namespace FindingPotato.UI
 
             string[] gameTitleStrArr = gameTitleStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             Console.SetCursorPosition(x, y);
+            
+            int idx = 0;
             foreach (string str in gameTitleStrArr)
             {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                if (idx == 0 || idx == gameTitleStrArr.Length - 1) Console.ResetColor();
                 Console.SetCursorPosition(x, Console.CursorTop);
                 Console.WriteLine(str);
+                idx++;
             }
         }
 
