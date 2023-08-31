@@ -13,15 +13,15 @@ namespace FindingPotato.UI
         {
             Console.Clear();
 
-            string[] option = { "    0.  나가기      " };
-
             UIExtension.DrawCharacter(player.Image, 99, 24);
+
+            PrintCloud();
             PrintTitle(player);
             PrintStatusBox();
             StatusContents(player);
             PrintFloor();
-            
 
+            string[] option = { "    0.  나가기      " };
             UIExtension.GetPlayerSelectFromUI(63, 38, 4, option, true);
         }
 
@@ -64,18 +64,18 @@ namespace FindingPotato.UI
         static void StatusContents(Player player)
         {
             Console.SetCursorPosition(36, 6);
-            Extension.ColorWriteLine("▣===========================▣", ConsoleColor.Black, ConsoleColor.DarkCyan);
+            Console.WriteLine("▣===========================▣");
             for (int i = 0;i < 3; i++)
             {
                 Console.SetCursorPosition(36, Console.CursorTop);
-                Extension.ColorWriteLine("||                           ||", ConsoleColor.Black, ConsoleColor.DarkCyan);
+                Console.WriteLine("||                           ||");
             }
             Console.SetCursorPosition(40, 8);
             Console.Write(player.Name);
             Console.SetCursorPosition(55, Console.CursorTop);
             Console.WriteLine($"({player.Type})");
             Console.SetCursorPosition(36, Console.CursorTop + 1);
-            Extension.ColorWriteLine("▣===========================▣", ConsoleColor.Black, ConsoleColor.DarkCyan);
+            Console.WriteLine("▣===========================▣");
 
 
             Console.SetCursorPosition(47, Console.CursorTop + 1);
@@ -120,6 +120,17 @@ namespace FindingPotato.UI
             Console.WriteLine("\\|/");
             Console.SetCursorPosition(88, 33);
             Console.WriteLine("\\|/");
+        }
+
+        static void PrintCloud()
+        {
+            string cloud = ("                  ■■■                \r\n                ■      ■              \r\n              ■          ■■          \r\n            ■              ▒▒■        \r\n        ■■▒▒                ■        \r\n  ■■■      ▒▒            ▒▒▒▒■■    \r\n■▒▒            ▒▒        ▒▒      ▒▒■  \r\n■▒▒▒▒        ▒▒▒▒▒▒▒▒▒▒▒▒          ▒▒■\r\n  ■▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒■\r\n    ■■■■▒■■■■■■■■■■■■  \r\n");
+
+            Console.ForegroundColor= ConsoleColor.Cyan;
+            UIExtension.DrawCharacter(cloud, 100, 3);
+            UIExtension.DrawCharacter(cloud, 7, 20);
+            Console.ResetColor();
+
         }
     }
 
