@@ -69,11 +69,12 @@ namespace FindingPotato.UI
 
                 // 위아래 padding에 넣을 공백 길이 계산
                 string emptyStr = "";
-                for (int i = 0; i < selectStrList[0].Length; i++)
-                {
-                    if (selectStrList[0][i] >= '\uAC00' && selectStrList[0][i] <= '\uD7AF') emptyStr += "  ";
-                    else emptyStr += " ";
-                }
+                int maxLength = selectStrList.Max(str => str.Length);
+                string longestStr = selectStrList.First(str => str.Length == maxLength);
+
+                int maxByteLength = GetByteLength(longestStr);
+
+                for (int i = 0; i < maxByteLength; i++) emptyStr += " ";
 
                 for (int i = 0; i < listLength; i++)
                 {
@@ -86,7 +87,9 @@ namespace FindingPotato.UI
                         Console.WriteLine(emptyStr);
                     }
                     Console.SetCursorPosition(x, y++);
-                    Console.WriteLine(selectStrList[i]);
+                    string curStr = selectStrList[i];
+                    while (GetByteLength(curStr) < maxByteLength) curStr += " ";
+                    Console.WriteLine(curStr);
                     if (interval == 4)
                     {
                         Console.SetCursorPosition(x, y++);
@@ -100,6 +103,45 @@ namespace FindingPotato.UI
 
             if (isPossibleToExit && playerSelect == listLength) playerSelect = 0;
             return playerSelect;
+        }
+
+        private static int GetByteLength(string str)
+        {
+            int length = 0;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] >= '\uAC00' && str[i] <= '\uD7AF') length += 2;
+                else length++;
+            }
+            return length;
+        }
+
+        public static void PrintSuperMarketFrame(int x, int y)
+        {
+            string supermarketFrameStr = "               * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n"
+                                  + "              *                                                                                                             *\r\n"
+                                  + "             *       ■■■ ■    ■ ■■■ ■■■ ■■■     ■■      ■■     ■     ■■■ ■    ■ ■■■ ■■■        *\r\n"
+                                  + "            *        ■     ■    ■ ■  ■ ■     ■  ■     ■ ■    ■ ■    ■■    ■  ■ ■  ■   ■       ■           *\r\n"
+                                  + "           *         ■■■ ■    ■ ■■■ ■■■ ■■■     ■  ■  ■  ■   ■■■   ■■■ ■■     ■■■   ■            *\r\n"
+                                  + "          *              ■ ■    ■ ■     ■     ■ ■      ■   ■■   ■  ■    ■  ■ ■  ■  ■   ■       ■             *\r\n"
+                                  + "         *           ■■■ ■■■■ ■     ■■■ ■   ■    ■    ■    ■ ■      ■ ■   ■■    ■ ■■■   ■              *\r\n"
+                                  + "        *                                                                                                                         *\r\n"
+                                  + "       * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *\r\n";
+
+            string[] supermarketFrameStrArr = supermarketFrameStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            Console.SetCursorPosition(x, y);
+            foreach (string str in supermarketFrameStrArr)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine(str);
+            }
+            y += supermarketFrameStrArr.Length;
+            Console.SetCursorPosition(x, y);
+            for (int i = 0; i < 25; i++)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
+            }
         }
     }
 }
