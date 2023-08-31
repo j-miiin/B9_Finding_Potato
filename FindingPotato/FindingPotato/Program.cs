@@ -167,11 +167,12 @@ public class GameManager
         {
             Console.Clear();
 
-            List<string>[] monsterImageList = new List<string>[3];
-            for (int i = 0; i < monsterImageList.Length; i++) monsterImageList[i] = new List<string>();
-            foreach (Monster monster in EasyMonsters) monsterImageList[0].Add(monster.Image);
-            foreach (Monster monster in NormalMonsters) monsterImageList[1].Add(monster.Image);
-            foreach (Monster monster in HardMonsters) monsterImageList[2].Add(monster.Image);
+            List<ICharacter>[] monsterImageList = new List<ICharacter>[3];
+            for (int i = 0; i < monsterImageList.Length; i++) monsterImageList[i] = new List<ICharacter>();
+            foreach (Monster monster in EasyMonsters) monsterImageList[0].Add(monster);
+            foreach (Monster monster in NormalMonsters) monsterImageList[1].Add(monster);
+            foreach (Monster monster in HardMonsters) monsterImageList[2].Add(monster);
+
             int input = SelectStageScene.GetStageSelect(player.CurrentStage, monsterImageList);
 
             if (input == 1)
