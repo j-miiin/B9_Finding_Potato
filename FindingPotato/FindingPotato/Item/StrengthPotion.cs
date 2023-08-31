@@ -1,4 +1,5 @@
 ﻿using FindingPotato.Character;
+using FindingPotato.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,12 +37,12 @@ namespace FindingPotato.Item
 
         public void UseMessage(Player player)
         {
-            Console.SetCursorPosition(52, 27);
-            Extension.ColorWriteLine($"공격력 + {Effect}이 전투 1회동안 지속됩니다.           ", ConsoleColor.Black, ConsoleColor.Green);
-            Console.SetCursorPosition(52, Console.CursorTop);
-            Console.WriteLine("                                           ");
-            Console.SetCursorPosition(52, Console.CursorTop);
-            Console.WriteLine("                                         ");
+            InventoryClass.PrintWarningBox();
+
+            Console.SetCursorPosition(0, 30);
+            Extension.CenterAlign($"     공격력 + {Effect}이 전투 1회동안 지속됩니다.      ", ConsoleColor.Black, ConsoleColor.Green);
+            Extension.CenterAlign("                                           ");
+            Extension.CenterAlign("                                         ");
             Thread.Sleep(2000);
         }
     }

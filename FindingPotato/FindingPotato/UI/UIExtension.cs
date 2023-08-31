@@ -257,6 +257,7 @@ namespace FindingPotato.UI
             return length;
         }
 
+
         private static int DrawRandomCharacterWithColor(List<string> imageList, int x, int y, int prevIdx)
         {
             ClearCharacter(x, y);
@@ -266,6 +267,7 @@ namespace FindingPotato.UI
             return randomImageIdx;
         }
 
+        //image는 ICharacter.Image를 넣으면 됩니다. ex) DrawCharacter(player.Image, 23, 20);
         public static void DrawCharacter(string image, int posX, int posY)
         {
             string[] imageLines = image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
