@@ -106,17 +106,7 @@ namespace FindingPotato.UI
             UIExtension.DrawCharacter(player.Image, 48, 23);
             UIExtension.DrawCharacter(Image, 71, 24);
 
-            string floor = new string('_', 150);
-
-            Console.SetCursorPosition(0, 33);
-            Console.WriteLine(floor);
-            Console.SetCursorPosition(22, 33);
-            Console.WriteLine("\\|/");
-            Console.SetCursorPosition(38, 33);
-            Console.WriteLine("\\|/");
-            Console.SetCursorPosition(88, 33);
-            Console.WriteLine("\\|/");
-
+            UIExtension.PrintFloor(33); 
 
 
             Console.SetCursorPosition(65, Console.CursorTop + 3);
