@@ -63,8 +63,8 @@ namespace FindingPotato.Character.Monster
 
         public override void PrintMonsterImage(int x, int y)
         {
-            base.PrintMonsterImage(x, y);
-            y += 15;
+            base.PrintMonsterImage(x - 5, y - 3);
+            y += 17;
             Console.SetCursorPosition(x, y++);
             Console.WriteLine($"Lv.{base.Level} {base.Name}");
             Console.SetCursorPosition(x, y);
