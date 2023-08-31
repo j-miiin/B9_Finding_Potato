@@ -151,10 +151,11 @@ namespace FindingPotato.UI
                         prevIdxList[selectedNum - 1] = DrawRandomCharacterAndDesc(imageList[selectedNum - 1], monsterX, monsterY, prevIdxList[selectedNum - 1]);
                     }
                 }
-
+                
                 int[] inputArr = GetInputKey(selectedNum, listLength, isPossibleToExit, isLimited);
                 isSelected = (inputArr[0] == 0) ? false : true;
                 selectedNum = inputArr[1];
+                
 
                 string emptyStr = GetPaddingStr(selectStrList);
                 for (int i = 0; i < listLength; i++)
@@ -232,7 +233,6 @@ namespace FindingPotato.UI
                         break;
                 }
             }
-
             return new int[] { (isSelected) ? 1 : 0, selectedNum };
         }
 
@@ -261,12 +261,14 @@ namespace FindingPotato.UI
             return length;
         }
 
-
         private static int DrawRandomCharacterAndDesc(List<ICharacter> monsterList, int x, int y, int prevIdx)
         {
             ClearCharacter(x, y);
             int randomImageIdx = 0;
-            while (randomImageIdx == prevIdx) randomImageIdx = new Random().Next(0, monsterList.Count);
+            if (monsterList.Count > 1)
+            {
+                while (randomImageIdx == prevIdx) randomImageIdx = new Random().Next(0, monsterList.Count);
+            }
             Monster curMonster = (Monster)monsterList[randomImageIdx];
             curMonster.PrintMonsterImage(x, y);
             return randomImageIdx;
@@ -313,12 +315,30 @@ namespace FindingPotato.UI
             Console.ResetColor();
         }
 
+        public static string FlipImage(string input)
+        {
+            string[] lines = input.Split(new string[] { "\r\n" }, StringSplitOptions.None);
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                char[] charArray = lines[i].ToCharArray();
+                Array.Reverse(charArray);
+                lines[i] = new string(charArray);
+                lines[i] = lines[i].Replace('/', 'a').Replace('\\', '/').Replace('a', '\\');
+            }
+
+            string result = string.Join("\r\n", lines);
+
+            return result;
+        }
+
+
         public static void ClearCharacter(int x, int y)
         {
             string clearStr = "";
             for (int i = 0; i < 45; i++) clearStr += " ";
-            Console.SetCursorPosition(x - 10, y);
-            for (int i = y; i < y + 20; i++)
+            Console.SetCursorPosition(x - 10, y - 5);
+            for (int i = y; i < y + 25; i++)
             {
                 Console.SetCursorPosition(x - 10, Console.CursorTop);
                 Console.WriteLine(clearStr);

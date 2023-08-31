@@ -8,7 +8,7 @@ namespace FindingPotato.Character.Monster
 {
     internal class Customer : Monster
     {
-        static string image = "\r\n⠀⠘⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡜⠀⠀⠀\r\n⠀⠀⠀⠑⡀⠀⠀⠀오늘 저녁은 감자전이다    ⠀⡔⠁⠀⠀⠀\r\n⠀⠀⠀⠀⠈⠢⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⠴⠊⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⠀⢀⣀⣀⣀⣀⣀⡀⠤⠄⠒⠈⠀⠀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⠀⠀⠀⠘⣀⠄⠊⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⠀⠀⢀⣴⠶⠿⠟⠛⠻⠛⠳⠶⣄⡀⠀⠀⠀⠀⠀⠀\r\n⠀⠀⣠⣶⣿⣿⣿⣶⣖⠶⢶⣤⡀⠀⠈⢿⣆⠀⠀⠀⠀⠀\r\n⢀⣴⣿⠋⠉⠉⠀⠀⠈⠉⠛⠿⢿⣷⡀⠀⠈⢷⡀⠀⠀⠀\r\n⡾⠉⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠙⢦⡀⠘⣷⡀⠀⠀\r\n⣷⢰⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⡀⢸⡇⠀⠀\r\n⢻⠠⣤⢤⠤⣤⣤⣤⡤⠤⣤⢤⠤⣤⣤⣤⡤⣇⢸⣇⠀⠀\r\n⢈⣧⠉⠪⣒⣝⣿⡿⠃⠀⠛⢮⣒⣝⡿⠟⠁⣻⠿⣷⠀\r\n⢸⡵⣿  ⠉⠉⠉⠁⠀⠀⠀⠈⠉⠉⠁⠀⠀⢻⣇⡟⠀\r\n⠘⢧⣿⡀      ⠀⢧⣤⣤⣶⠀⠀⠀⠀⠀   ⣽⠁⠀\r\n⠀⠈⢿⣧⠀⠀⠀⠀⢀⣄⣠⡀          ⢠⡟⠁⠀⠀\r\n⠀⠀⠀⠘⣇⠀  ⢲⣭⣉⣉⣭⡖⠀⠀   ⣼⡅\r\n⠀⠀⠀⠀⠹⣦⡀  ⠉⠉⠉⠉⠀⠀⠀⣠⠏⢻⣤⡀⠀\r\n⠀⠀⠀⠀⠀⢹⡷⢦⣄⣀⣀⣀⣀⣤⣴⡾⠃⠀⠘⡿⠙⢶\r\n⠀⠀⠀⠀⠀⢨⡷⣤⡀⠈⠉⠉⢁⡴⠋⠀⠀⠀⣸⠃⠀";
+        static string image = "     ────────       ────           \r\n    /          \\   /       \\       \r\n   /            ──          \\      \r\n  /                        ──      \r\n /         ────      ───           \r\n/        ─       ───               \r\n             ────      ────        \r\n           ─────      ── ──   ─    \r\n                                   \r\n            \\    ■     \\   ■     \r\n             ─────      ──────     \r\n                              \\    \r\n                               \\   \r\n         ─                   /     \r\n       /     ──────────────        \r\n       \\     ────────────────  /   \r\n         ──────────────────── /    \r\n                             /     \r\n       ────────────────────        ";
 
         static string desc = "오늘 저녁은 감자전이다";
         static ConsoleColor color = ConsoleColor.Yellow;
@@ -63,8 +63,8 @@ namespace FindingPotato.Character.Monster
 
         public override void PrintMonsterImage(int x, int y)
         {
-            base.PrintMonsterImage(x, y);
-            y += 15;
+            base.PrintMonsterImage(x - 5, y - 3);
+            y += 17;
             Console.SetCursorPosition(x, y++);
             Console.WriteLine($"Lv.{base.Level} {base.Name}");
             Console.SetCursorPosition(x, y);
