@@ -467,9 +467,7 @@ namespace FindingPotato.Stage
                 }
                 else //몬스터 승리 
                 {
-                    Console.WriteLine("YOU DIED\n");
                     EndingScene.DeadScene(player); 
-                    
                 }
 
                 // 스테이지 종료 후 MP 회복
