@@ -2,6 +2,7 @@
 using FindingPotato.Character.Monster;
 using FindingPotato.Item;
 using FindingPotato.Skill;
+using FindingPotato.UI;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -68,6 +69,16 @@ namespace FindingPotato.Stage
             Console.WriteLine();
             Console.WriteLine(str);
             Console.WriteLine();
+
+        }
+
+        void BattleScreen()
+        {
+            Console.SetCursorPosition(30, 4);
+            Console.WriteLine("=======================================================================================");//88
+
+            Console.SetCursorPosition(30, 31);
+            Console.WriteLine("=======================================================================================");
         }
 
         // 스테이지 시작 
@@ -83,9 +94,12 @@ namespace FindingPotato.Stage
                 else if (monsters.All(x => x.IsDead))
                     break;
 
-                InfoScreen(false, "0.도망가기 1.공격 2.스킬");
+                //InfoScreen(false, "0.도망가기 1.공격 2.스킬");
+                //int input = Extension.GetInput(0, 2);
 
-                int input = Extension.GetInput(0, 2);
+                BattleScreen(); 
+
+                int input = BattleSceneUI.GetPlayerSelect(1); 
 
                 if (input == 1)
                 {
@@ -112,14 +126,26 @@ namespace FindingPotato.Stage
             {
                 Console.Clear();
 
-                InfoScreen(true, "0.취소");
+                // InfoScreen(true, "0.취소");
 
-                int input = Extension.GetInput(0, monsters.Count);
+                //int input = Extension.GetInput(0, monsters.Count);
+
+                BattleScreen();
+
+                string[] monsterName = new string[monsters.Count+2];
+                for (int i = 0; i < monsters.Count(); i++)
+                {
+                    monsterName[i] = $"{i + 1}." + monsters[i].Name;
+                }
+                monsterName[monsters.Count] = "0.취소";
+
+                int input = UIExtension.GetPlayerSelectFromUI(106, 30 - monsters.Count, 1, monsterName, true);
 
                 if (input > 0 && input <= monsters.Count())
                 {
                     if (monsters[input - 1].IsDead) // 죽은 몬스터는 선택 X
                     {
+                        Console.SetCursorPosition(30, 32);
                         Console.WriteLine($"{monsters[input-1].Name}은(는) 이미 죽었습니다.");
                         Thread.Sleep(500);
                     }
@@ -145,39 +171,50 @@ namespace FindingPotato.Stage
             {
                 Console.Clear();
 
+                BattleScreen();
+
                 //플레이어의 데미지
                 int damage = player.Attack + player.AddAtk;
 
                 //몬스터의 이전 체력
                 int previousHP = monster.CurrentHealth;
 
-                Console.WriteLine("Battle!!\n");
+                //Console.WriteLine("Battle!!\n");
+
+                Console.SetCursorPosition(30, Console.CursorTop); 
                 Extension.TypeWriting($"{player.Name}의 공격!");
 
                 // 10% 의 확률로 플레이어의 공격을 회피
                 if (IsOccur(10)) monster.Avoid();
                 else
                 {
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.Write($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.");
                     // 15% 의 확률로 치명타 공격
                     if (IsOccur(15))
                     {
                         damage = (int)(damage * 1.6);
+                      
                         Console.WriteLine($" [ 데미지 : {damage} ] - 치명타 공격!!");
                     }
-                    else Console.WriteLine($" [ 데미지 : {damage} ]");
+                    else 
+                    {
+                       
+                        Console.WriteLine($" [ 데미지 : {damage} ]"); 
+                    }
                     Console.WriteLine();
 
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     monster.TakeDamage(damage);
                     Console.WriteLine();
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.WriteLine($"Lv.{monster.Level} {monster.Name}");
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.WriteLine($"HP {previousHP} -> {monster.CurrentHealth}\n");
                 }
 
-                Console.WriteLine();
-                Console.WriteLine("0.다음");
 
-                int input = Extension.GetInput(0, 0);
+                int input = BattleSceneUI.GetPlayerSelect(2); 
 
                 if(input == 0)
                 {
@@ -204,7 +241,8 @@ namespace FindingPotato.Stage
         {
             for(int i = 0; i<monsters.Count; i++) // 배열에 있는 몬스터들이 공격
             {
-                Console.Clear(); 
+                Console.Clear();
+                BattleScreen();
                 if (!monsters[i].IsDead) //죽은 몬스터는 공격 X
                 {
                     //몬스터 데미지
@@ -214,20 +252,26 @@ namespace FindingPotato.Stage
                     //플레이어 이전 체력
                     int previousHP = player.CurrentHealth;
 
-                    Console.WriteLine("Battle!!\n");
+                    // Console.WriteLine("Battle!!\n");
+
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.Write($"Lv.{monsters[i].Level} {monsters[i].Name}의 ");
                     Extension.TypeWriting(monsters[i].AttackMessage());
+
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     player.TakeDamage(damage);
                     Console.WriteLine();
-
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.WriteLine($"Lv.{player.Level} {player.Name}");
+
+                    Console.SetCursorPosition(30, Console.CursorTop);
                     Console.WriteLine($"HP {previousHP} -> {player.CurrentHealth}");
 
                     Console.WriteLine();
 
-                    Console.WriteLine("0.다음");
+                    //Console.WriteLine("0.다음");
 
-                    int input = Extension.GetInput(0, 0); 
+                    int input = BattleSceneUI.GetPlayerSelect(2); 
                     
                     if(input == 0)
                     {
@@ -247,19 +291,26 @@ namespace FindingPotato.Stage
         {
             Console.Clear();
 
-                
 
-            string str = "";
-            int idx = 1;
-            foreach (ISkill skill in player.SkillList)
+            BattleScreen();
+            ////string str = "";
+            //int idx = 1;
+            //foreach (ISkill skill in player.SkillList)
+            //{
+            //    str += idx++ + ". " + skill.Description +"\n";
+            //}
+            //str += "0. 취소\n";
+
+            string[] skillName = new string[player.SkillList.Count+2];
+            for(int i = 0; i<player.SkillList.Count; i++)
             {
-                str += idx++ + ". " + skill.Description + "\n";
+                skillName[i] = $"{i+1}."+player.SkillList[i].Description; 
             }
-            str += "0. 취소\n";
+            skillName[player.SkillList.Count] = "0.취소"; 
+            //InfoScreen(false, str);
 
-            InfoScreen(false, str);
-
-            int input = Extension.GetInput(0, 2);
+            //int input = Extension.GetInput(0, 2);
+            int input = UIExtension.GetPlayerSelectFromUI(55, 28,1,skillName, true);
 
             if (input == 1)
             {
@@ -284,6 +335,7 @@ namespace FindingPotato.Stage
         {
             if (player.CurrentMP < (int)SkillType.ALPHA)
             {
+                Console.SetCursorPosition(30, 32);
                 Console.WriteLine("MP가 부족합니다!");
                 Thread.Sleep(1000);
                 return false;
@@ -294,10 +346,24 @@ namespace FindingPotato.Stage
                 while (true)
                 {
                     Console.Clear();
-                    InfoScreen(true, "");
-                    monsterIdx = Extension.GetInput(1, monsters.Count) - 1;
+                    //InfoScreen(true, "");
+
+
+                    BattleScreen();
+
+                    string[] monsterName = new string[monsters.Count+1];
+                    for(int i = 0; i< monsters.Count; i++)
+                    {
+                        monsterName[i] = $"{i+1}" + monsters[i].Name;
+                    }
+                    monsterName[monsters.Count-1] = "0.취소"; 
+
+                    //monsterIdx = Extension.GetInput(1, monsters.Count) - 1;
+                    monsterIdx = UIExtension.GetPlayerSelectFromUI(106, 30-monsters.Count, 1, monsterName, true)-1;
+
                     if (monsters[monsterIdx].IsDead)
                     {
+                        Console.SetCursorPosition(30, 32);
                         Console.WriteLine($"{monsters[monsterIdx].Name} 은(는) 이미 죽었습니다.");
                         Thread.Sleep(1000);
                     }
@@ -306,9 +372,8 @@ namespace FindingPotato.Stage
                 player.UseSkill(SkillType.ALPHA, new List<ICharacter> { monsters[monsterIdx] });
             }
 
-            Console.WriteLine("0.다음\n");
-
-            int input = Extension.GetInput(0, 0);
+            //Console.WriteLine("0.다음\n");
+            int input = BattleSceneUI.GetPlayerSelect(2); 
             return true;
         }
 
@@ -316,6 +381,7 @@ namespace FindingPotato.Stage
         {
             if (player.CurrentMP < (int)SkillType.DOUBLE)
             {
+                Console.SetCursorPosition(30, 32);
                 Console.WriteLine("MP가 부족합니다!");
                 Thread.Sleep(1000);
                 return false;
@@ -327,9 +393,10 @@ namespace FindingPotato.Stage
                 player.UseSkill(SkillType.DOUBLE, monsterList);
             }
 
-            Console.WriteLine("0.다음\n");
+            //Console.WriteLine("0.다음\n");
+            string[] next = { "0.다음" };
 
-            int input = Extension.GetInput(0, 0);
+            int input = UIExtension.GetPlayerSelectFromUI(30, Console.CursorTop, 1, next, true);
             return true;
         }
 
@@ -345,9 +412,10 @@ namespace FindingPotato.Stage
                                  "앗! 자동문이 열리지 않는다...! 도망가기 실패.",
                                  "앗! 직원이 다시 돌려놓았다! 도망가기 실패."};
                 string message = messages[random.Next(3)];
-                Console.SetCursorPosition(0, Console.CursorTop - 2);
+                //Console.SetCursorPosition(0, Console.CursorTop - 2);
+                Console.SetCursorPosition(30, 32);
                 Console.WriteLine(message);
-                Console.WriteLine("                                ");
+                //Console.WriteLine("                                ");
                 Thread.Sleep(2000);
             }
             
@@ -360,48 +428,57 @@ namespace FindingPotato.Stage
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Battle!! - Result\n");
+                //Console.WriteLine("Battle!! - Result\n");
+               
                 if (isPlayerWin) //플레이어 승리 
                 {
+           
+                    BattleSceneUI.GetResultBox();
+                    Console.SetCursorPosition(48,7); 
                     Extension.TypeWriting("VICTORY");
                     switch(Difficulty)
                     {
                         case StageDifficulty.Easy:
+                            Console.SetCursorPosition(48, 9);
                             Extension.TypeWriting($"나를 막던 과일들이 포장 되었다!\n");
+                            Console.SetCursorPosition(48, Console.CursorTop);
                             Extension.TypeWriting($"과일 코너를 지나갔다!");
                             break;
 
                         case StageDifficulty.Normal:
+                            Console.SetCursorPosition(48, 9);
                             Extension.TypeWriting($"나를 막던 채소들이 판매 되었다!\n");
+                            Console.SetCursorPosition(48, Console.CursorTop);
                             Extension.TypeWriting($"채소 코너를 지나갔다!");
                             break;
 
                         case StageDifficulty.Hard:
-                            Thread.Sleep(1000); 
-                            EndingScreen(); 
+                            Thread.Sleep(1000);
+                            EndingScene.VictoryScene(player.Type);  
                              break;
                     }
-                    player.CurrentStage = player.CurrentStage == (int)Difficulty ? player.CurrentStage+1 : player.CurrentStage;
+                    player.CurrentStage = player.CurrentStage == (int)Difficulty ?player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
                     if (Difficulty != StageDifficulty.Hard) GiveRewards();
                 }
                 else //몬스터 승리 
                 {
                     Console.WriteLine("YOU DIED\n");
-                    Extension.TypeWriting("직원의 손에 이끌려 포장되었다...\n"); 
-                    Console.WriteLine("아무키나 눌러서 종료."); 
-                    Console.ReadKey(); 
-                    Environment.Exit(0);
+                    EndingScene.DeadScene(player.Type); 
+                    
                 }
 
                 // 스테이지 종료 후 MP 회복
                 player.CurrentMP = player.MaxMP;
-
+                Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
-                Console.WriteLine("0.다음\n");
-                
-                int input = Extension.GetInput(0, 0);
+                //Console.WriteLine("0.다음\n");
+
+                string[] next = { "0.다음" };
+
+                int input = UIExtension.GetPlayerSelectFromUI(48, Console.CursorTop,1, next, true);
 
                 if (input == 0)
                 {
@@ -425,9 +502,15 @@ namespace FindingPotato.Stage
             player.GetReward(equipableItemReward);
             rewards.Remove(equipableItemReward);
 
+            Console.SetCursorPosition(48, Console.CursorTop);
             Console.WriteLine("[ 획득 아이템 ]");
+
+            Console.SetCursorPosition(48, Console.CursorTop);
             Console.WriteLine($"{consumableItemReward.Name} - 1");
+
+            Console.SetCursorPosition(48, Console.CursorTop);
             Console.WriteLine($"{equipableItemReward.Name} - 1");
+
             Console.WriteLine();
         }
 
