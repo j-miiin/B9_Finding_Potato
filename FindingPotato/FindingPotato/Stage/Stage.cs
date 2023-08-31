@@ -386,11 +386,8 @@ namespace FindingPotato.Stage
                     monsterList.Add(monster);
                 }
 
-                //player.UseSkill(SkillType.DOUBLE, monsterList);
-               
                 foreach (int idx in player.UseSkill(SkillType.DOUBLE, monsterList))
                 {
-                    //Console.Clear();
                     BattleScreen(false, monsters[idx]);
                 }
             }
@@ -483,7 +480,7 @@ namespace FindingPotato.Stage
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
                 Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"EXP {player.CurrentExp-player.TotalExp}-> {player.CurrentExp}\n");
-                //Console.WriteLine("0.다음\n");
+                
 
                 string[] next = { "0.다음" };
 
@@ -539,23 +536,7 @@ namespace FindingPotato.Stage
 
             return randomIdx;
         }
-
-        void EndingScreen()
-        {
-            Console.Clear();
-            Console.WriteLine("-The End-\n");
-            Extension.TypeWriting($"내 친구 감자를 구했다!!\n");
-            Console.WriteLine("아무키나 눌러서 종료.\n");
-            Console.ReadKey();
-            Environment.Exit(0);
-        }
-
-        // 경험치 반영 전 후 출력을 도와줄 메서드
-        void BeforeExp()
-        {
-
-        }
-   
+       
         // 경험치 계산, 몬스터 레벨 * 몬스터 마리수(1), 레벨값만 추가
         void CalculationExp(List<Monster> monsters)
         {
