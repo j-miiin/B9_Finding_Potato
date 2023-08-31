@@ -66,6 +66,7 @@ namespace FindingPotato.Stage
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaxHealth}");
             Console.WriteLine($"MP {player.CurrentMP}/{player.MaxMP}");
+            Console.WriteLine($"EXP {player.CurrentExp}/{player.MaxExp}");
             Console.WriteLine();
             Console.WriteLine(str);
             Console.WriteLine();
@@ -460,6 +461,7 @@ namespace FindingPotato.Stage
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ?player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
                     if (Difficulty != StageDifficulty.Hard) GiveRewards();
+                    CalculationExp(monsters); // 경험치 계산 호출
                 }
                 else //몬스터 승리 
                 {
@@ -474,6 +476,7 @@ namespace FindingPotato.Stage
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.SetCursorPosition(48, Console.CursorTop);
                 Console.WriteLine($"HP {player.MaxHealth}-> {player.CurrentHealth}\n");
+                Console.WriteLine($"EXP {player.CurrentExp}-> {player.CurrentExp}\n");
                 //Console.WriteLine("0.다음\n");
 
                 string[] next = { "0.다음" };
@@ -539,6 +542,17 @@ namespace FindingPotato.Stage
             Console.WriteLine("아무키나 눌러서 종료.\n");
             Console.ReadKey();
             Environment.Exit(0);
+        }
+
+        // 경험치 계산, 몬스터 레벨 * 몬스터 마리수(1), 레벨값만 추가
+        void CalculationExp(List<Monster> monsters)
+        {
+            int totalExp = 0;
+            foreach (Monster monster in monsters)
+            {
+                totalExp += monster.Level;
+            }
+            player.ExpUpdate(totalExp); 
         }
     }
 }   
