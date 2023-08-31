@@ -148,10 +148,11 @@ public class GameManager
             Console.Clear();
 
             int input = SelectActivitySceneUI.GetPlayerActivity(player.Name);
-
+            
             if (input == 1) { ShowStatus(); }
             else if (input == 2) { ShowInventory(); }
             else if(input == 3)
+
             { 
                 ShowStageSelection();
             }
@@ -261,9 +262,11 @@ public class GameManager
             InventoryClass.PrintTitle(false);
             player.PlayerInventory.PrintItemList(false);
 
-            player.PlayerInventory.ShowOptions(false);
+            string[] options = { " 1. 아이템 장착 및 소모 ", " 0. 나가기              " };
 
-            int input = Extension.GetInput(0, 1);
+            int x = 63; int y = 33;
+
+            int input = UIExtension.GetPlayerSelectFromUI(x, y, 4, options, true);
 
             if (input == 0) break;
             else { ItemManagement(); }
@@ -276,9 +279,21 @@ public class GameManager
         {
             Console.Clear();
 
-            InventoryClass.PrintTitle(true);
-            player.PlayerInventory.PrintItemList(true);
-            player.PlayerInventory.ShowOptions(true);
+            UIExtension.DrawCharacter(durian.Image, 10, 10);
+            UIExtension.DrawCharacter(onion.Image, 28, 10);
+            UIExtension.DrawCharacter(beet.Image, 46, 10);
+            UIExtension.DrawCharacter(banana.Image, 64, 10);
+            UIExtension.DrawCharacter(paprika.Image, 82, 10);
+            UIExtension.DrawCharacter(rambutan.Image, 100, 10);
+            UIExtension.DrawCharacter(watermelon.Image, 118, 10);
+            UIExtension.DrawCharacter(player.Image, 50, 23);
+
+
+
+
+
+
+
 
             int input = Extension.GetInput(0, player.PlayerInventory.InventoryItems.Count);
 
@@ -297,8 +312,9 @@ public class GameManager
         // 각 스테이지의 보상 아이템들
         List<IItem> stageRewards = new List<IItem>();
         // 리스트 앞부분 절반에는 소모 가능한 아이템, 뒷부분 절반에는 착용 가능한 아이템을 담음
-        for (int i = 0; i < 2; i++) stageRewards.Add(ConsumableItemList[i + (curStageNum - 1) * 2]);
-        for (int i = 0; i < 2; i++) stageRewards.Add(EquipableItemList[i + (curStageNum - 1) * 2]);
+        int startIdx = (curStageNum == 1) ? 0 : 2;
+        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(ConsumableItemList[i]);
+        for (int i = startIdx; i < startIdx + 2; i++) stageRewards.Add(EquipableItemList[i]);
         return stageRewards;
     }
 }

@@ -36,9 +36,11 @@ namespace FindingPotato.Item
 
         public void UseMessage(Player player)
         {
-            Console.SetCursorPosition(15, 24); // 메시지 위치 잡기
+            Console.SetCursorPosition(52, 27);
             Extension.ColorWriteLine($"공격력 + {Effect}이 전투 1회동안 지속됩니다.           ", ConsoleColor.Black, ConsoleColor.Green);
+            Console.SetCursorPosition(52, Console.CursorTop);
             Console.WriteLine("                                           ");
+            Console.SetCursorPosition(52, Console.CursorTop);
             Console.WriteLine("                                         ");
             Thread.Sleep(2000);
         }

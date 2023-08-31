@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FindingPotato.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -105,6 +106,46 @@ namespace FindingPotato.UI
             return playerSelect;
         }
 
+
+        public static void DrawCharacter(string image, int posX, int posY)
+        {
+            string[] imageLines = image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.SetCursorPosition(posX, posY);
+            foreach (string line in imageLines)
+            {
+                Console.SetCursorPosition(posX, Console.CursorTop);
+                Console.WriteLine($"{line}   ");
+            }
+        }
+
+        public static void ShakeCharacter(string image, int posX, int posY)
+        {
+            string[] imageLines = image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.SetCursorPosition(posX, posY);
+            foreach (string line in imageLines)
+            {
+                Console.SetCursorPosition(posX, Console.CursorTop);
+                Console.WriteLine($"  {line}");
+            }
+        }
+
+        public static void DrawHit(ICharacter character, int posX, int posY)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;     // 일단은 빨간색으로 했습니다.
+
+            Thread.Sleep(50);
+            ShakeCharacter(character.Image, posX, posY);
+            Thread.Sleep(50);
+            DrawCharacter(character.Image, posX, posY);
+            Thread.Sleep(50);
+            ShakeCharacter(character.Image, posX, posY);
+            Thread.Sleep(50);
+            DrawCharacter(character.Image, posX, posY);
+        
+            Console.ResetColor();
+
         private static int GetByteLength(string str)
         {
             int length = 0;
@@ -142,6 +183,7 @@ namespace FindingPotato.UI
                 Console.SetCursorPosition(x, Console.CursorTop);
                 Console.WriteLine("                   |                                                                                                   |"); Console.SetCursorPosition(x, y++);
             }
+
         }
     }
 }
