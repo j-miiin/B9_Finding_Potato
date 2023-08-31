@@ -166,23 +166,8 @@ public class GameManager
         while(true)
         {
             Console.Clear();
-            Console.WriteLine("감자를 구하러 가려면 과일코너에서  채소코너를 지나감자 진열대 까지 가야해 !\n");
 
-            Console.WriteLine("1.과일 코너 (Easy)");
-
-            if (player.CurrentStage >= (int)StageDifficulty.Normal)
-                Console.WriteLine("2.야채코너 (Normal)");
-            else
-                Extension.ColorWriteLine("2.야채코너 (Normal)", ConsoleColor.Black,ConsoleColor.DarkGray);
-
-            if (player.CurrentStage >= (int)StageDifficulty.Hard)
-                Console.WriteLine("3.감자 진열대 (Hard)");
-            else
-                Extension.ColorWriteLine("3.감자 진열대 (Hard)", ConsoleColor.Black, ConsoleColor.DarkGray);
-
-            Console.WriteLine("0.나가기"); 
-
-            int input = Extension.GetInput(0,3);
+            int input = SelectStageScene.GetStageSelect(player.CurrentStage);
 
             if (input == 1)
             {
