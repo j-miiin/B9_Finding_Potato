@@ -48,7 +48,7 @@ namespace FindingPotato.Stage
 
         }
 
-        //전투화면 Hit 0 : player 공격 받았을 때 , Hit 1 : 몬스터 공격 받았을 때 
+        //전투화면 isHit : player가 공격 받았는지 monster: 공격 받는 몬스터  
         void BattleScreen(bool isHit = false, Monster? monster = null)
         {
             Console.SetCursorPosition(15, 1);
@@ -69,10 +69,20 @@ namespace FindingPotato.Stage
                 else
                     Console.Write($"Lv.{monsters[i].Level} {monsters[i].Name} HP {monsters[i].CurrentHealth}");
 
-                if(monster == monsters[i]) //몬스터 공격 받았을 때 
-                    UIExtension.DrawHit(monsters[i], 20 + (i * 24), 8);
+                if (StageDifficulty.Hard == Difficulty)
+                {
+                    if (monster == monsters[i]) //몬스터 공격 받았을 때 
+                        UIExtension.DrawHit(monsters[i], 60 + (i * 24), 8);
+                    else
+                        UIExtension.DrawCharacter(UIExtension.FlipImage(monsters[i].Image), 60 + (i * 24), 8);
+                }
                 else
-                    UIExtension.DrawCharacter(monsters[i].Image, 20 + (i * 24), 8);
+                {
+                    if (monster == monsters[i]) //몬스터 공격 받았을 때 
+                        UIExtension.DrawHit(monsters[i], 20 + (i * 24), 8);
+                    else
+                        UIExtension.DrawCharacter(monsters[i].Image, 20 + (i * 24), 8);
+                }
             }
             for (int i = 0; i < 15; i++)
             {
@@ -424,9 +434,14 @@ namespace FindingPotato.Stage
                 if (isPlayerWin) //플레이어 승리 
                 {
            
-                    BattleSceneUI.GetResultBox();
-                    Console.SetCursorPosition(48,7); 
-                    Extension.TypeWriting("VICTORY");
+                   
+                    if(StageDifficulty.Hard != Difficulty)
+                    {
+                        BattleSceneUI.GetResultBox();
+                        Console.SetCursorPosition(48, 7);
+                        Extension.TypeWriting("VICTORY");
+                    }
+                   
                     switch(Difficulty)
                     {
                         case StageDifficulty.Easy:
@@ -446,7 +461,7 @@ namespace FindingPotato.Stage
                         case StageDifficulty.Hard:
                             Thread.Sleep(1000);
                             EndingScene.VictoryScene(player);  
-                             break;
+                            break;
                     }
                     player.CurrentStage = player.CurrentStage == (int)Difficulty ?player.CurrentStage+1 : player.CurrentStage;
                     Console.WriteLine();
