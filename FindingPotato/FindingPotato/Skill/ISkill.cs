@@ -14,6 +14,6 @@ namespace FindingPotato.Skill
 
         string Description { get; }
 
-        void Use(Player player, List<ICharacter> monsterList);
+        List<int> Use(Player player, List<ICharacter> monsterList);
     }
 }
