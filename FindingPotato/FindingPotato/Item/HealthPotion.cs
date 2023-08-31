@@ -1,4 +1,5 @@
 ﻿using FindingPotato.Character;
+using FindingPotato.Inventory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,8 @@ namespace FindingPotato.Item
 
         public void Use(Player player)
         {
+            InventoryClass.PrintWarningBox();
+
             if (player.CurrentHealth == player.MaxHealth)
             {
                 // HealthPotion 체력 최대치일 때 섭취 불가
@@ -48,6 +51,8 @@ namespace FindingPotato.Item
 
         public void UseMessage(Player player)
         {
+            InventoryClass.PrintWarningBox();
+
             Console.SetCursorPosition(0, 30);
             Extension.CenterAlign($"체력을 + {Effect} 회복했습니다.", ConsoleColor.Black, ConsoleColor.Green);
             Extension.CenterAlign("                                           ");

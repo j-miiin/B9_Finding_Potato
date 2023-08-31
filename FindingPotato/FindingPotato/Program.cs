@@ -280,8 +280,7 @@ public class GameManager
 
             InventoryClass.PrintTitle(true);
 
-            int input;
-            int answer = player.PlayerInventory.PrintItemList(true);
+            int input = player.PlayerInventory.PrintItemList(true);
 
             if (input == 0) { break; }
             else

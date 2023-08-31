@@ -156,5 +156,18 @@ namespace FindingPotato.Inventory
             Console.SetCursorPosition(10, Console.CursorTop);
             Console.WriteLine($"◈{horizontal}◈");
         }
+
+        public static void PrintWarningBox()
+        {
+            Console.SetCursorPosition(0, 28);
+            Extension.CenterAlign("┌──────────────────────────────────────────────────────────────────────────┐");
+            Extension.CenterAlign("│                                                                          │");
+            Extension.CenterAlign("│                                                                          │");
+            Extension.CenterAlign("│                                                                          │");
+            Extension.CenterAlign("│                                                                          │");
+            Extension.CenterAlign("│                                                                          │");
+            Extension.CenterAlign("└──────────────────────────────────────────────────────────────────────────┘");
+
+        }
     }
 }
