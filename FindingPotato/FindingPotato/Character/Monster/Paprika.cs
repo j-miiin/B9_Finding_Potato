@@ -9,7 +9,11 @@ namespace FindingPotato.Character.Monster
     internal class Paprika : Monster
     {
         static string image = "    \r\n  \r\n  \r\n  \r\n  \r\n     _  /\\  _\r\n   /   \\/ \\/  \\\r\n  │   \\   /   │ \r\n  /\\    Д    /\\ \r\n /  \\________/  \\   \r\n       / \\\r\n";
-        public Paprika(string name) : base(name, 80,25,4, image) { }
+
+        static string desc = "ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㄱ!!!!!!";
+        static ConsoleColor color = ConsoleColor.Green;
+
+        public Paprika(string name) : base(name, 80,25,4, image, desc, color) { }
 
         public override string AttackMessage()
         {
@@ -26,6 +30,16 @@ namespace FindingPotato.Character.Monster
             }
 
             return message;
+        }
+
+        public override void PrintMonsterImage(int x, int y)
+        {
+            base.PrintMonsterImage(x, y);
+            x -= 10; y += 15;
+            Console.SetCursorPosition(x, y++);
+            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(desc);
         }
     }
 }

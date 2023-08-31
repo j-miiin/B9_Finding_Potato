@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FindingPotato.Character.Monster
 {
@@ -26,8 +27,10 @@ namespace FindingPotato.Character.Monster
         public int AttackPower { get; set; }
         public bool IsDead => CurrentHealth <= 0;
         public string Image { get; set; }
+        public string Desc { get; }
+        public ConsoleColor MonsterColor { get; }
 
-        public Monster(string name, int maxHealth, int attackPower, int level, string image)
+        public Monster(string name, int maxHealth, int attackPower, int level, string image, string desc, ConsoleColor monsterColor)
         {
             Name = name;
             MaxHealth = maxHealth;
@@ -35,6 +38,8 @@ namespace FindingPotato.Character.Monster
             AttackPower = attackPower;
             Level = level;
             Image = image;
+            Desc = desc;
+            MonsterColor = monsterColor;
         }
 
         public void TakeDamage(int damage)
@@ -53,6 +58,21 @@ namespace FindingPotato.Character.Monster
         public virtual string AttackMessage()
         {
             return "공격!"; 
+        }
+
+        public virtual void PrintMonsterImage(int x, int y)
+        {
+            Console.ForegroundColor = MonsterColor;
+
+            string[] imageLines = Image.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+            Console.SetCursorPosition(x, y);
+            foreach (string line in imageLines)
+            {
+                Console.SetCursorPosition(x, Console.CursorTop);
+                Console.WriteLine($"{line}   ");
+            }
+            Console.ResetColor();
         }
     }
 }

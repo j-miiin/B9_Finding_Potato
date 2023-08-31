@@ -9,7 +9,11 @@ namespace FindingPotato.Character.Monster
     internal class Beet :Monster
     {
         static string image = "   \r\n  \r\n  \r\n  \r\n      \r\n    __\\|/__\r\n  /         \\ \r\n │   ￣Д￣ │ \r\n /\\         /\\ \r\n/  \\______ /  \\\r\n      / \\\r\n";
-        public Beet(string name) : base(name, 70,25, 3, image) { }
+
+        static string desc = "줘 근데 할말 있숴요 This is Competition";
+        static ConsoleColor color = ConsoleColor.DarkMagenta;
+
+        public Beet(string name) : base(name, 70,25, 3, image, desc, color) { }
 
         public override string AttackMessage()
         {
@@ -25,6 +29,16 @@ namespace FindingPotato.Character.Monster
             }
 
             return message;
+        }
+
+        public override void PrintMonsterImage(int x, int y)
+        {
+            base.PrintMonsterImage(x, y);
+            x -= 10;  y += 15;
+            Console.SetCursorPosition(x, y++);
+            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.SetCursorPosition(x, y);
+            Console.WriteLine(desc);
         }
     }
 }
