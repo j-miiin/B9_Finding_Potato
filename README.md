@@ -88,6 +88,8 @@
 
 | Class | 기능 |
 | :---: | :---: |
+| Extension | [한 글자씩 타이핑](https://github.com/j-miiin/B9_Finding_Potato/blob/a9b07d81270197ae5d9174052598cbf339b050d5/FindingPotato/FindingPotato/Extension/Extension.cs#L9-L18) |
+| | [한글 가운데 정렬 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/a9b07d81270197ae5d9174052598cbf339b050d5/FindingPotato/FindingPotato/Extension/Extension.cs#L59-L65) |
 | UIExtension | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력<br>- 선택지에 제한 사항 X](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L14-L65) |
 | | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력<br>- 선택지에 제한 사항 O ](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L67-L126) |
 | | [사용자 입력 키보드로 받기](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L196-L237) |
