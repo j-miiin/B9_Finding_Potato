@@ -85,6 +85,7 @@
 <br>
 
 - Extension
+
 | Class | 기능 |
 | :---: | :---: |
 | UIExtension | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력 - 선택지에 제한 사항 X](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L14-L65) |
