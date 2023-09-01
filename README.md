@@ -1,7 +1,23 @@
 ## FINDING POTATO
-### 팀 구련보등
 
+[❤ 팀 소개 ❤](#팀-소개)<br>
+[💛 게임 소개 💛](#게임-소개)<br>
+[💚 기능별 코드 보기 💚](#기능별-코드)
 
+<br>
+
+* * * 
+<br>
+
+### 팀 소개
+
+<br>
+
+* * *
+
+<br>
+
+### 게임 소개
 ![슬라이드1](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/4acca826-eda1-467d-8451-e8955eb4eccc)
 ![슬라이드2](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/d35604db-ce15-4e21-854c-1733784ae855)
 ![슬라이드3](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/4768b96c-874e-4e0c-b673-84fe163278bf)
@@ -20,7 +36,11 @@
 ![슬라이드16](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/0d02756f-3711-4d47-b51e-1af9a5c36382)
 ![슬라이드17](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/ab45ca5f-f22d-4339-8a49-02ddf53d8b42)
 
-<br><br>
+<br>
+
+* * *
+
+<br>
 
 ### 기능별 코드
 
