@@ -18,4 +18,61 @@
 ![슬라이드14](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/8c7b64f6-f86a-4b07-8580-5e2e9fe11ec9)
 ![슬라이드15](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/35652987-c5af-4a7d-8027-be5f202cc806)
 ![슬라이드16](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/0d02756f-3711-4d47-b51e-1af9a5c36382)
-![슬라이드17](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/a0e7ec4a-884f-4eb6-ae63-d98136cf287d)
+![슬라이드17](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/ab45ca5f-f22d-4339-8a49-02ddf53d8b42)
+
+<br><br>
+
+### 기능별 코드
+
+- Start Scene
+
+| Class | 기능 |
+| :---: | :---: |
+| GameManager | [닉네임 입력 받기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L134) |
+| GameManager | [직업 선택하기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L139C7-L139C7) |
+| StartSceneUI | [타이틀 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/StartSceneUI.cs#L12-L49) |
+| | [닉네임 입력 박스 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/StartSceneUI.cs#L51-L91) |
+| | [직업 선택 박스 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/StartSceneUI.cs#L93-L124) |
+
+<br>
+
+- Activity Scene
+
+| Class | 기능 |
+| :---: | :---: |
+| GameManager | [활동 선택하기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L151-L161) |
+| | [활동 선택 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/SelectActivitySceneUI.cs#L10-L31) |
+| StatusUI | [플레이어 상태 보기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/StatusUI.cs#L10-L118) |
+| GameManager | [인벤토리 보기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L208-L226) |
+| Inventory | [인벤토리 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Inventory/Inventory.cs#L31-L174) |
+| | [인벤토리 아이템 사용](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L228-L246) |
+| | [인벤토리 - 포션 아이템 사용]() |
+| | [인벤토리 - 장착 아이템 사용]() |
+| Stage 선택 | [Stage 선택](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Program.cs#L177-L204) |
+| | [Stage 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/SelectStageScene.cs#L12-L31) |
+
+<br>
+
+- Game Scene
+
+| Class | 기능 |
+| :---: | :---: |
+| Stage | [플레이어의 일반 공격](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L175C1-L232) |
+| | [플레이어의 치명타 공격](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L199-L205) |
+| | [플레이어의 스킬 공격](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L291-L399) |
+| Player | [플레이어 스킬 사용](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Character/Player.cs#L135-L150) |
+| Stage | [도망가기](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L401-L421) |
+| | [몬스터의 공격](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L243-L289) |
+| | [몬스터의 공격 회피](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L192-L193) |
+| | [스테이지 클리어](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L431-L467) |
+| | [스테이지 실패](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/Stage/Stage.cs#L468-L471) |
+| | [Game Scene 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/BattleSceneUI.cs#L14-L55) |
+| | [공격 당한 상태 출력]() |
+
+<br>
+
+- Ending Scene
+
+| Class | 기능 |
+| :---: | :---: |
+| | [Ending 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/7d1641462b05fef6dac8c78916111248f01344b1/FindingPotato/FindingPotato/UI/EndingScene.cs#L11-L174) |
