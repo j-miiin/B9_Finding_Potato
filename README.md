@@ -15,6 +15,9 @@
 <br>
 
 ## 게임 소개
+
+[💜 목차로 돌아가기 💜](#목차)
+
 ![슬라이드1](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/4acca826-eda1-467d-8451-e8955eb4eccc)
 ![슬라이드2](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/d35604db-ce15-4e21-854c-1733784ae855)
 ![슬라이드3](https://github.com/j-miiin/B9_Finding_Potato/assets/62470991/4768b96c-874e-4e0c-b673-84fe163278bf)
@@ -35,8 +38,6 @@
 
 <br>
 
-[💜 목차로 돌아가기 💜](#목차)
-
 <br>
 
 * * *
@@ -44,6 +45,8 @@
 <br>
 
 ## 기능별 코드
+
+[💜 목차로 돌아가기 💜](#목차)
 
 - Start Scene
 
@@ -116,9 +119,6 @@
 | | [사용자 입력 키보드로 받기](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L196-L237) |
 | | [스테이지에 따른 랜덤한 캐릭터 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L264-L275) |
 
-<br>
-
-[💜 목차로 돌아가기 💜](#목차)
 
 <br>
 
@@ -127,12 +127,11 @@
 <br>
 
 ## 만든 사람들
+
+[💜 목차로 돌아가기 💜](#목차)
+
 <a href="https://github.com/yujin1292/BreakingCodingTest/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=j-miiin/B9_Finding_Potato" />
 </a>
-
-<br><br>
-
-[💜 목차로 돌아가기 💜](#목차)
 
 <br><br>
