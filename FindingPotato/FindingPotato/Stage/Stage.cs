@@ -197,7 +197,7 @@ namespace FindingPotato.Stage
                     Console.SetCursorPosition(53, Console.CursorTop+1);
                     Console.Write($"Lv.{monster.Level} {monster.Name} 을(를) 맞췄습니다.");
                     // 15% 의 확률로 치명타 공격
-                    if (IsOccur(53))
+                    if (IsOccur(15))
                     {
                         damage = (int)(damage * 1.6);
                       
