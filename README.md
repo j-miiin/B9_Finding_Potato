@@ -88,7 +88,7 @@
 
 | Class | 기능 |
 | :---: | :---: |
-| UIExtension | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력 - 선택지에 제한 사항 X](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L14-L65) |
-| | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력 - 선택지에 제한 사항 O ](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L67-L126) |
+| UIExtension | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력<br>- 선택지에 제한 사항 X](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L14-L65) |
+| | [사용자의 방향키 또는 키패드 숫자 입력에 따른 선택 출력<br>- 선택지에 제한 사항 O ](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L67-L126) |
 | | [사용자 입력 키보드로 받기](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L196-L237) |
 | | [스테이지에 따른 랜덤한 캐릭터 출력](https://github.com/j-miiin/B9_Finding_Potato/blob/60a650202150babcdccde13640c27818e5a21287/FindingPotato/FindingPotato/UI/UIExtension.cs#L264-L275) |
