@@ -169,7 +169,7 @@ namespace FindingPotato.Character
             potionEffect = 0;
         }
 
-        // 경험치 관리 메서드
+        // 경험치 업데이트
         public void ExpUpdate(int totalExp)
         {
             TotalExp += totalExp; // 스테이지 클리어 Before Exp적용 용도 TotalExp 값 저장
@@ -178,28 +178,28 @@ namespace FindingPotato.Character
             LevelUpdate();
         }
 
-        // 레벨업 관리 메서드 -- 기능 구현 가능하도록 추가 필요
+        // 레벨 업데이트
         public void LevelUpdate()
         {
-            if (CurrentExp >= 0 && CurrentExp < 10)
+            if (CurrentExp >= 100)
             {
-                Level = 1;
+                Level = 5;
             }
-            else if (CurrentExp >= 10 && CurrentExp < 35)
-            {
-                Level = 2;
-            }
-            else if (CurrentExp >= 35 && CurrentExp < 65)
-            {
-                Level = 3;
-            }
-            else if (CurrentExp >= 65 && CurrentExp < 99)
+            else if (CurrentExp >= 65)
             {
                 Level = 4;
             }
+            else if (CurrentExp >= 35)
+            {
+                Level = 3;
+            }
+            else if (CurrentExp >= 10)
+            {
+                Level = 2;
+            }
             else
             {
-                Level = 5;
+                Level = 1;
             }
         }
     }
