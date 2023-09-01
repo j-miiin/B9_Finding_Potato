@@ -130,7 +130,7 @@
 
 [💜 목차로 돌아가기 💜](#목차)
 
-<a href="https://github.com/yujin1292/BreakingCodingTest/graphs/contributors">
+<a href="https://github.com/j-miiin/B9_Finding_Potato/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=j-miiin/B9_Finding_Potato" />
 </a>
 
