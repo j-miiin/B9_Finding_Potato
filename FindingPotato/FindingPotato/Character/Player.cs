@@ -181,25 +181,25 @@ namespace FindingPotato.Character
         // 레벨 업데이트
         public void LevelUpdate()
         {
-            if (CurrentExp >= 0 && CurrentExp < 10)
+            if (CurrentExp >= 100)
             {
-                Level = 1;
+                Level = 5;
             }
-            else if (CurrentExp >= 10 && CurrentExp < 35)
-            {
-                Level = 2;
-            }
-            else if (CurrentExp >= 35 && CurrentExp < 65)
-            {
-                Level = 3;
-            }
-            else if (CurrentExp >= 65 && CurrentExp < 99)
+            else if (CurrentExp >= 65)
             {
                 Level = 4;
             }
+            else if (CurrentExp >= 35)
+            {
+                Level = 3;
+            }
+            else if (CurrentExp >= 10)
+            {
+                Level = 2;
+            }
             else
             {
-                Level = 5;
+                Level = 1;
             }
         }
     }
