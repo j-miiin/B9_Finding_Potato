@@ -1,5 +1,5 @@
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=auto&customColorList=20&height=300&section=header&text=FINDING%20POTATO&fontSize=90&fontColor=FFDF91)
+![header](https://capsule-render.vercel.app/api?type=waving&color=auto&customColorList=15&height=300&section=header&text=FINDING%20POTATO&fontSize=90&fontColor=FFDF91)
 
 ## 목차
 
