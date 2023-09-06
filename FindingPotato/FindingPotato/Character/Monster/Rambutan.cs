@@ -25,7 +25,7 @@ namespace FindingPotato.Character.Monster
             base.PrintMonsterImage(x, y);
             y += 15;
             Console.SetCursorPosition(x, y++);
-            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.WriteLine($"Lv.{Level} {Name}");
             Console.SetCursorPosition(x, y);
             Console.WriteLine(desc);
         }

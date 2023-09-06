@@ -13,29 +13,18 @@ namespace FindingPotato.Character.Monster
         static string desc = "눈 매워서 아무것도 못하죠? 킹받죠?";
         static ConsoleColor color = ConsoleColor.DarkYellow;
 
-        public Onion(string name) : base(name, 70,25,3, image, desc, color) { }
+        public Onion(string name) : base(name, 70, 25, 3, image, desc, color) { }
 
         public override string AttackMessage()
         {
-            string message = " ";
-            switch (Random.Next(0, 2))
-            {
-                case 0:
-                    message = "양파즙 뿌리기!!";
-                    break;
-
-                case 1:
-                    message = "매운 향 뿜어내기!!";
-                    break;
-            }
-
-            return message;
+            return (Random.Next(0, 2) == 0) ? "양파즙 뿌리기!!" : "매운 향 뿜어내기!!";
         }
 
         public override void PrintMonsterImage(int x, int y)
         {
             base.PrintMonsterImage(x, y);
-            x -= 10; y += 15;
+            x -= 10;
+            y += 15;
             Console.SetCursorPosition(x, y++);
             Console.WriteLine($"Lv.{base.Level} {base.Name}");
             Console.SetCursorPosition(x, y);

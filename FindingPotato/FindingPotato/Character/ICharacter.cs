@@ -10,13 +10,13 @@ namespace FindingPotato.Character
     {
         string Name { get; }
         int CurrentHealth { get; set; }
-        public int MaxHealth { get; set; }
+        int MaxHealth { get; set; }
         int Attack { get; }
-        public int AttackPower { get; set; }
+        int AttackPower { get; set; }
         int Level { get; set; }
         bool IsDead { get; }
 
-        public string Image { get; set; }
+        string Image { get; set; }
         void TakeDamage(int damage);
     }
 }

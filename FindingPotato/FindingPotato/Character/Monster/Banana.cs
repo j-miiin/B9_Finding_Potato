@@ -13,7 +13,7 @@ namespace FindingPotato.Character.Monster
         static string desc = "다들 왜 내 껍질만 밟으면 넘어지는지 모르겠어";
         static ConsoleColor color = ConsoleColor.Yellow;
         
-        public Banana(string name) : base(name, 50,20,1, image, desc, color) { }
+        public Banana(string name) : base(name, 50, 20, 1, image, desc, color) { }
 
         public override string AttackMessage()
         {

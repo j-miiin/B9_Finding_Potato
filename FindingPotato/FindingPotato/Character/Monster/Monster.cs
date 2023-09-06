@@ -45,8 +45,10 @@ namespace FindingPotato.Character.Monster
         public void TakeDamage(int damage)
         {
             CurrentHealth -= damage;
-            if (IsDead) Extension.TypeWriting($"{Name} 이(가) 죽었습니다.");
-            else Extension.TypeWriting($"{Name} 이(가) {damage}의 데미지를 받았습니다.");
+            if (IsDead)
+                Extension.TypeWriting($"{Name} 이(가) 죽었습니다.");
+            else
+                Extension.TypeWriting($"{Name} 이(가) {damage}의 데미지를 받았습니다.");
         }
 
         public virtual void Avoid()

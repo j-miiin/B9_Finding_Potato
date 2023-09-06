@@ -21,8 +21,8 @@ namespace FindingPotato.Inventory
             { ItemType.Armor, "방어력" }
         };
 
-
         public List<IItem> InventoryItems;
+
         public InventoryClass()
         {
              InventoryItems = new List<IItem>();
@@ -53,13 +53,9 @@ namespace FindingPotato.Inventory
             Console.SetCursorPosition(52, 27);
 
             if (!isManagement)
-            {
                 Extension.ColorWriteLine("1. 아이템 장착 및 소모");
-            }
             else
-            { 
                 Extension.ColorWriteLine("1. 해당 아이템 장착 및 소모");
-            }
 
             Console.SetCursorPosition(52, 29);
             Extension.ColorWriteLine("0. 나가기");
@@ -67,10 +63,10 @@ namespace FindingPotato.Inventory
 
         public int PrintItemList(bool isManagement)
         {
-            int input;
             Console.SetCursorPosition(0, 14);
             Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
             Console.WriteLine("\n");
+
             if (InventoryItems == null || InventoryItems.Count == 0)
             {
                 Console.WriteLine("\n");
@@ -78,8 +74,7 @@ namespace FindingPotato.Inventory
                 Console.WriteLine("\n\n");
                 Extension.CenterAlign("------------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇----------◇------------      ");
                 PrintBorder();
-                input = 0;
-                
+                return 0;
             }
             else
             {
@@ -94,7 +89,7 @@ namespace FindingPotato.Inventory
                     {
                         Extension.CenterAlign(PrintItemInfo(item));
                     }
-                    input = 1;
+                    return 1;
                 }
                 else
                 {
@@ -104,27 +99,26 @@ namespace FindingPotato.Inventory
                     for (int i = 0; i < InventoryItems.Count; i++)
                     {
                         items[i] = PrintItemInfo(InventoryItems[i]);
-                        if (i != 0) isLimited[i] = false;
+                        if (i != 0)
+                            isLimited[i] = false;
                     }
 
                     string star = new string('*',  50);
                     string exit = string.Format($"    {star}    나가기    {star}");
 
                     items[InventoryItems.Count] = "";
-                    items[InventoryItems.Count + 1] = exit;//.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
+                    items[InventoryItems.Count + 1] = exit;     //.PadRight(items[0].Length + items[0].Count(c => c >= '\uAC00' && c <= '\uD7AF') - exit.Count(c => c >= '\uAC00' && c <= '\uD7AF')); 
                     isLimited[InventoryItems.Count] = false;
                     isLimited[InventoryItems.Count + 1] = true;
                     isLimited[InventoryItems.Count + 2] = false;
 
-                    int x = 15; int y = 17; 
+                    int x = 15;
+                    int y = 17; 
 
-                    input = UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true, isLimited);
+                    return UIExtension.GetPlayerSelectFromUI(x, y, 1, items, true, isLimited);
                 }
-                
             }
-            return input;
         }
-
 
         private static string PrintItemInfo(IItem item)
         {
@@ -133,14 +127,12 @@ namespace FindingPotato.Inventory
             string itemName = item.Name.PadRight(13 - item.Name.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
             string itemType = item.Type.ToString().PadRight(18);
             string itemEffect = "";
-            string effect;
-            if (EffectDictionary.TryGetValue(item.Type , out effect)) { itemEffect = effect.PadRight(12 - effect.Count(c => c >= '\uAC00' && c <= '\uD7AF')) + string.Format($" + {item.Effect}").PadRight(6); }
+            if (EffectDictionary.TryGetValue(item.Type, out string effect))
+                itemEffect = effect.PadRight(12 - effect.Count(c => c >= '\uAC00' && c <= '\uD7AF')) + string.Format($" + {item.Effect}").PadRight(6);
             string itemDesc = item.Desc.PadRight(38 - item.Desc.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
             string itemCount = item is IConsumable consumable ? string.Format($"보유 중 : {consumable.Quantity.ToString()} 개") : " ";
             string endPart = itemCount.PadRight(18 - itemCount.Count(c => c >= '\uAC00' && c <= '\uD7AF'));
-
-            string itemInfo = string.Format($"{equipMark}{itemName}|  {itemType}|  {itemEffect}|  {itemDesc}|  {endPart}");
-            return itemInfo;
+            return string.Format($"{equipMark}{itemName}|  {itemType}|  {itemEffect}|  {itemDesc}|  {endPart}");
         }
 
 

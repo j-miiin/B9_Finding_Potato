@@ -13,7 +13,7 @@ namespace FindingPotato.Character.Monster
         static string desc = "우리 두리안~";
         static ConsoleColor color = ConsoleColor.DarkGreen;
 
-        public Durian(string name) : base(name, 50,20, 1, image, desc, color) { }
+        public Durian(string name) : base(name, 50, 20, 1, image, desc, color) { }
 
         public override string AttackMessage()
         {

@@ -30,24 +30,15 @@ namespace FindingPotato.Character
                 {
                     case 1:
                         return 9;
-                        break;
                     case 2:
                         return 34;
-                        break;
                     case 3:
                         return 64;
-                        break;
                     case 5:
                         return 100;
-                        break;
                     default:
                         return 0;
-                        break;
                 }
-            }
-            set
-            {
-
             }
         }
 
@@ -75,11 +66,9 @@ namespace FindingPotato.Character
 
         public string Image { get; set; }
 
-        public int Attack => new Random().Next(AttackPower-5, AttackPower+5); 
-        // 공격력은 랜덤
+        public int Attack => new Random().Next(AttackPower - 5, AttackPower + 5);
 
         public int CurrentStage { get; set; } = 1;
-
 
         public InventoryClass PlayerInventory;
         
@@ -93,29 +82,31 @@ namespace FindingPotato.Character
             Type = type;
             Level = 1;
 
-            if (type == VegetableType.감자)
+            switch (type)
             {
-                MaxHealth = 120;
-                Defense = 10;
-                AttackPower = 50;
-                MaxMP = 50;
-                Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\  /\r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
-            }
-            else if (type == VegetableType.고구마)
-            {
-                MaxHealth = 140;
-                Defense = 20;
-                AttackPower = 40;
-                MaxMP = 20;
-                Image = "   \r\n           ______  \r\n          /      \\\r\n         |        |\r\n       \\ |  ⊙ ⊙ | / \r\n        \\|    ^   |/\r\n         |    V   |\r\n          \\______/\r\n             / \\\r\n            /   \\";
-            }
-            else // 당근
-            {
-                MaxHealth = 110;
-                Defense = 5;
-                AttackPower = 60;
-                MaxMP = 30;
-                Image = "       \\ | /\r\n       _\\|/__  \r\n      /      \\\r\n   \\ │  ⊙ ⊙│ / \r\n    \\│    ^  │/\r\n      \\   V  / \r\n       \\    /\r\n        \\  / \r\n       / \\/ \\\r\n      /      \\";
+                case VegetableType.감자:
+                    MaxHealth = 120;
+                    Defense = 10;
+                    AttackPower = 50;
+                    MaxMP = 50;
+                    Image = " \r\n     ______\r\n    /      \\  \r\n\\  /  ⊙ ⊙ \\  /\r\n \\|    ▲    |/\r\n  \\     V    /   \r\n   \\________/     \r\n       / \\\r\n      /   \\";
+                    break;
+
+                case VegetableType.고구마:
+                    MaxHealth = 140;
+                    Defense = 20;
+                    AttackPower = 40;
+                    MaxMP = 20;
+                    Image = "   \r\n           ______  \r\n          /      \\\r\n         |        |\r\n       \\ |  ⊙ ⊙ | / \r\n        \\|    ^   |/\r\n         |    V   |\r\n          \\______/\r\n             / \\\r\n            /   \\";
+                    break;
+
+                default:    // 당근
+                    MaxHealth = 110;
+                    Defense = 5;
+                    AttackPower = 60;
+                    MaxMP = 30;
+                    Image = "       \\ | /\r\n       _\\|/__  \r\n      /      \\\r\n   \\ │  ⊙ ⊙│ / \r\n    \\│    ^  │/\r\n      \\   V  / \r\n       \\    /\r\n        \\  / \r\n       / \\/ \\\r\n      /      \\";
+                    break;
             }
 
             CurrentHealth = MaxHealth;
@@ -128,38 +119,29 @@ namespace FindingPotato.Character
         public void TakeDamage(int damage)
         {
             CurrentHealth -= damage;
-            if (IsDead) Extension.TypeWriting($"{Name}이(가) 죽었습니다.");
-            else Extension.TypeWriting($"{Name}이(가) {damage}의 데미지를 받았습니다.");
+
+            if (IsDead)
+                Extension.TypeWriting($"{Name}이(가) 죽었습니다.");
+            else
+                Extension.TypeWriting($"{Name}이(가) {damage}의 데미지를 받았습니다.");
         }
 
         // Player가 스킬을 사용할 때 실행
         public List<int> UseSkill(SkillType type, List<ICharacter> monsterList)
         {
-            if (type == SkillType.ALPHA)
-            {
-                CurrentMP -= (int)SkillType.ALPHA;
-                int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.ALPHA);
-                return SkillList[skillIdx].Use(this, monsterList);
-            }
-            else
-            {
-                CurrentMP -= (int)SkillType.DOUBLE;
-                int skillIdx = SkillList.FindIndex(x => x.SkillType == SkillType.DOUBLE);
-                return SkillList[skillIdx].Use(this, monsterList);
-            }
+            currentMP -= (int)type;
+            int skillIdx = SkillList.FindIndex(x => x.SkillType == type);
+            return SkillList[skillIdx].Use(this, monsterList);
         }
 
         public void GetReward(IItem newItem)
         {
             IItem item = PlayerInventory.InventoryItems.Find(x => x.Name == newItem.Name);
-            if (item == null) PlayerInventory.InventoryItems.Add(newItem);
-            else
-            {
-                if (item.Type == ItemType.HealthPotion || item.Type == ItemType.StrengthPotion)
-                {
-                    ((IConsumable)item).Quantity++;
-                }
-            }
+
+            if (item == null)
+                PlayerInventory.InventoryItems.Add(newItem);
+            else if (item.Type == ItemType.HealthPotion || item.Type == ItemType.StrengthPotion)
+                ((IConsumable)item).Quantity++;
         }
 
         public void PotionEffectReset()
@@ -175,32 +157,11 @@ namespace FindingPotato.Character
             TotalExp += totalExp; // 스테이지 클리어 Before Exp적용 용도 TotalExp 값 저장
             CurrentExp += totalExp; // 현재 경험치 변경 용도
 
-            LevelUpdate();
-        }
-
-        // 레벨 업데이트
-        public void LevelUpdate()
-        {
-            if (CurrentExp >= 100)
-            {
-                Level = 5;
-            }
-            else if (CurrentExp >= 65)
-            {
-                Level = 4;
-            }
-            else if (CurrentExp >= 35)
-            {
-                Level = 3;
-            }
-            else if (CurrentExp >= 10)
-            {
-                Level = 2;
-            }
-            else
-            {
-                Level = 1;
-            }
+            if      (CurrentExp >= 100) { Level = 5; }
+            else if (CurrentExp >= 65)  { Level = 4; }
+            else if (CurrentExp >= 35)  { Level = 3; }
+            else if (CurrentExp >= 10)  { Level = 2; }
+            else                        { Level = 1; }
         }
     }
 }

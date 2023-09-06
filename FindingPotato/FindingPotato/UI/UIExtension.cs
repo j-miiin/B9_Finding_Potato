@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace FindingPotato.UI
@@ -30,38 +30,42 @@ namespace FindingPotato.UI
                 Console.SetCursorPosition(x, y);
 
                 bool[] isLimited = new bool[listLength + 1];
+
                 int[] inputArr = GetInputKey(selectedNum, listLength, isPossibleToExit, isLimited);
-                isSelected = (inputArr[0] == 0) ? false : true;
+                isSelected = inputArr[0] != 0;
                 selectedNum = inputArr[1];
 
                 string emptyStr = GetPaddingStr(selectStrList);
+
                 for (int i = 0; i < listLength; i++)
                 {
-                    if (i == (selectedNum - 1)) SetSelectedBackground(true);
-                    else SetSelectedBackground(false);
+                    SetSelectedBackground(i == (selectedNum - 1));
 
                     if (interval == 4)
                     {
                         Console.SetCursorPosition(x, y++);
                         Console.WriteLine(emptyStr);
                     }
+
                     Console.SetCursorPosition(x, y++);
                     string curStr = selectStrList[i];
-                    while (GetByteLength(curStr) < emptyStr.Length) curStr += " ";
+                    while (GetByteLength(curStr) < emptyStr.Length)
+                        curStr += " ";
                     Console.WriteLine(curStr);
+
                     if (interval == 4)
                     {
-                        Console.SetCursorPosition(x, y++);
+                        Console.SetCursorPosition(x, y);
                         Console.WriteLine(emptyStr);
+                        y += 2;
                     }
-                    if (interval == 4) y++;
                 }
             }
+
             Console.ResetColor();
             Console.CursorVisible = true;
 
-            if (isPossibleToExit && selectedNum == listLength) selectedNum = 0;
-            return selectedNum;
+            return (isPossibleToExit && selectedNum == listLength) ? 0 : selectedNum;
         }
 
         // 선택지에 제한 사항이 있을 경우 사용
@@ -199,7 +203,9 @@ namespace FindingPotato.UI
         private static int[] GetInputKey(int curNum, int maxIdx, bool isPossibleToExit, bool[] isLimited)
         {
             int minAvailableIdx = 1;
-            while (isLimited[minAvailableIdx]) minAvailableIdx++;
+            while (isLimited[minAvailableIdx])
+                minAvailableIdx++;
+
             int selectedNum = curNum;
             bool isSelected = false;
 
@@ -211,25 +217,29 @@ namespace FindingPotato.UI
                     case ConsoleKey.UpArrow:
                         do selectedNum--;
                         while (isLimited[selectedNum]);
+
                         selectedNum = Math.Max(selectedNum, minAvailableIdx);
                         break;
+
                     case ConsoleKey.DownArrow:
                         do selectedNum++;
                         while (selectedNum < isLimited.Length && isLimited[selectedNum]);
+
                         selectedNum = Math.Min(selectedNum, maxIdx);
                         break;
+
                     case ConsoleKey.Enter:
                         isSelected = true;
                         break;
+
                     default:
                         int pivotKeyInt = (int)ConsoleKey.NumPad0;
                         int curKeyInt = (int)key;
-                        if (curKeyInt == pivotKeyInt && isPossibleToExit) selectedNum = maxIdx;
-                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx 
-                            && !isLimited[curKeyInt - pivotKeyInt])
-                        {
+
+                        if (curKeyInt == pivotKeyInt && isPossibleToExit)
+                            selectedNum = maxIdx;
+                        else if ((curKeyInt > pivotKeyInt) && curKeyInt - pivotKeyInt <= maxIdx && !isLimited[curKeyInt - pivotKeyInt])
                             selectedNum = curKeyInt - pivotKeyInt;
-                        }
                         break;
                 }
             }
@@ -239,24 +249,19 @@ namespace FindingPotato.UI
         // 위아래 padding에 넣을 공백 길이 계산
         private static string GetPaddingStr(string[] selectStrList)
         {
-            string emptyStr = "";
             int maxLength = selectStrList.Max(str => str.Length);
             string longestStr = selectStrList.First(str => str.Length == maxLength);
 
-            int maxByteLength = GetByteLength(longestStr);
-
-            for (int i = 0; i < maxByteLength; i++) emptyStr += " ";
-            return emptyStr;
+            return new String(' ', GetByteLength(longestStr));
         }
 
         // 문자열의 byte 길이를 계산
         private static int GetByteLength(string str)
         {
             int length = 0;
-            for (int i = 0; i < str.Length; i++)
+            foreach (char c in str)
             {
-                if (str[i] >= '\uAC00' && str[i] <= '\uD7AF') length += 2;
-                else length++;
+                length += (c >= '\uAC00' && c <= '\uD7AF') ? 2 : 1;
             }
             return length;
         }
@@ -332,7 +337,6 @@ namespace FindingPotato.UI
             return result;
         }
 
-
         public static void ClearCharacter(int x, int y)
         {
             string clearStr = "";
@@ -364,15 +368,19 @@ namespace FindingPotato.UI
                 Console.SetCursorPosition(x, Console.CursorTop);
                 Console.WriteLine(str);
             }
+
             x += 16;
             y += supermarketFrameStrArr.Length;
             Console.SetCursorPosition(x, y);
             for (int i = 0; i <= 30; i++)
             {
                 Console.SetCursorPosition(x, Console.CursorTop);
-                Console.WriteLine("|                                                                                                   |"); Console.SetCursorPosition(x, y++);
+                Console.WriteLine("|                                                                                                   |");
+                Console.SetCursorPosition(x, y++);
             }
-            x -= 16; y -= 2;
+
+            x -= 16;
+            y -= 2;
             Console.SetCursorPosition(x, y);
             PrintFloor(y);
         }
@@ -390,6 +398,7 @@ namespace FindingPotato.UI
                 Console.ForegroundColor = ConsoleColor.Yellow;
             }
         }
+
         public static void PrintFloor(int y)
         {
             string floor = new string('_', 150);

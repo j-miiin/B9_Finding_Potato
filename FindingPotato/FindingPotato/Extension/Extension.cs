@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 public class Extension
 {
@@ -31,7 +31,8 @@ public class Extension
     {
         Console.SetCursorPosition(0, 35);
         CenterAlign("┌──────────────────────────────────────────────┐  ");
-        for (int i = 0; i < 7; i++) CenterAlign("│                                              │  ");
+        for (int i = 0; i < 7; i++)
+            CenterAlign("│                                              │  ");
         CenterAlign("└──────────────────────────────────────────────┘  ");
 
         Console.SetCursorPosition(0, 38);
@@ -53,7 +54,6 @@ public class Extension
             CenterAlign("                     ");
             Console.SetCursorPosition(73, 40);
         }
-        Console.CursorVisible= false;
     }
 
     public static void CenterAlign(string text, ConsoleColor _back = ConsoleColor.Black, ConsoleColor _front = ConsoleColor.White)

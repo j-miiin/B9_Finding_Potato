@@ -26,7 +26,8 @@ namespace FindingPotato.UI
 
             x = 40; y = 20;
             bool[] isLimited = new bool[stageStrList.Length + 1];
-            for (int i = stageState + 1; i < isLimited.Length - 1; i++) isLimited[i] = true;
+            for (int i = stageState + 1; i < isLimited.Length - 1; i++)
+                isLimited[i] = true;
             return UIExtension.GetPlayerSelectFromUI(x, y, 4, stageStrList, true, isLimited, imageList);
         }
     }

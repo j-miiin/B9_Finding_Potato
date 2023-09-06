@@ -13,31 +13,20 @@ namespace FindingPotato.Character.Monster
         static string desc = "ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㄱ!!!!!!";
         static ConsoleColor color = ConsoleColor.Green;
 
-        public Paprika(string name) : base(name, 80,25,4, image, desc, color) { }
+        public Paprika(string name) : base(name, 80, 25, 4, image, desc, color) { }
 
         public override string AttackMessage()
         {
-            string message = " ";
-            switch (Random.Next(0, 2))
-            {
-                case 0:
-                    message = "고함지르기!!";
-                    break;
-
-                case 1:
-                    message = "씨 뿌리기!!";
-                    break;
-            }
-
-            return message;
+            return (Random.Next(0, 2) == 0) ? "고함지르기!!" : "씨 뿌리기!!";
         }
 
         public override void PrintMonsterImage(int x, int y)
         {
             base.PrintMonsterImage(x, y);
-            x -= 10; y += 15;
+            x -= 10;
+            y += 15;
             Console.SetCursorPosition(x, y++);
-            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.WriteLine($"Lv.{Level} {Name}");
             Console.SetCursorPosition(x, y);
             Console.WriteLine(desc);
         }

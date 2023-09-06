@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace FindingPotato.UI
 {
@@ -36,15 +36,16 @@ namespace FindingPotato.UI
 
             string[] gameTitleStrArr = gameTitleStr.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
             Console.SetCursorPosition(x, y);
-            
-            int idx = 0;
-            foreach (string str in gameTitleStrArr)
+
+            for (int i = 0; i < gameTitleStrArr.Length; i++)
             {
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                if (idx == 0 || idx == gameTitleStrArr.Length - 1) Console.ResetColor();
+                if (i == 0 || i == gameTitleStrArr.Length - 1)
+                    Console.ResetColor();
+                else
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+
                 Console.SetCursorPosition(x, Console.CursorTop);
-                Console.WriteLine(str);
-                idx++;
+                Console.WriteLine(gameTitleStrArr[i]);
             }
         }
 
@@ -72,22 +73,21 @@ namespace FindingPotato.UI
                 Console.WriteLine(str);
             }
 
-            x = 62; y = 35;
-            string playerName = "";
+            x = 62;
+            y = 35;
             while (true)
             {
                 Console.SetCursorPosition(x + 6, y);
-                playerName = Console.ReadLine();
+                string playerName = Console.ReadLine();
+
                 if (playerName.Length == 0)
                 {
                     Console.SetCursorPosition(x, y + 1);
-                    Console.ForegroundColor = ConsoleColor.Red;
-                    Console.WriteLine("닉네임을 입력해주세요!");
-                    Console.ResetColor();
+                    Extension.ColorWriteLine("이름을 입력해주세요!", ConsoleColor.Black, ConsoleColor.Red);
                 }
-                else break;
+                else
+                    return playerName;
             }
-            return playerName;
         }
 
         public static int GetPlayerType()
@@ -114,11 +114,7 @@ namespace FindingPotato.UI
                 Console.WriteLine(str);
             }
 
-            string[] playerTypeStrList = { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 ", "0" };
-
-            x = 68; y = 34;
-
-            return UIExtension.GetPlayerSelectFromUI(x, y, 1, playerTypeStrList, false);
+            return UIExtension.GetPlayerSelectFromUI(68, 34, 1, new string[] { " 1. 감  자 ", " 2. 고구마 ", " 3. 당  근 ", "0" }, false);
         }
     }
 }

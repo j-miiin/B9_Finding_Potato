@@ -65,7 +65,7 @@ namespace FindingPotato.UI
         {
             Console.SetCursorPosition(36, 6);
             Console.WriteLine("▣===========================▣");
-            for (int i = 0;i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Console.SetCursorPosition(36, Console.CursorTop);
                 Console.WriteLine("||                           ||");

@@ -13,7 +13,7 @@ namespace FindingPotato.Character.Monster
         static string desc = "나를 만날 \"수박\"에";
         static ConsoleColor color = ConsoleColor.DarkGreen;
 
-        public Watermelon(string name) : base(name, 60,20, 2, image, desc, color) { }
+        public Watermelon(string name) : base(name, 60, 20, 2, image, desc, color) { }
 
         public override string AttackMessage()
         {
@@ -25,7 +25,7 @@ namespace FindingPotato.Character.Monster
             base.PrintMonsterImage(x, y);
             y += 15;
             Console.SetCursorPosition(x, y++);
-            Console.WriteLine($"Lv.{base.Level} {base.Name}");
+            Console.WriteLine($"Lv.{Level} {Name}");
             Console.SetCursorPosition(x, y);
             Console.WriteLine(desc);
         }
